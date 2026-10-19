@@ -1,25 +1,43 @@
 <div align="center">
+  <img src="assets/readme/banner-product.svg" alt="CryoGPTCHATFREEBIE – lokale KI-Chat-App im futuristischen Produktdesign (Illustration)" width="100%" />
 
-<img src="assets/readme-hero.svg" alt="CryoGPTCHATFREEBIE – neonfarbenes Personal AI Workspace mit lokalem KI-Modell" width="100%">
+  # ❄️ CryoGPTCHATFREEBIE
 
-# CryoGPTCHATFREEBIE
+  **Deine Chats. Deine Modelle. Deine Kontrolle.**
 
-**Deine Chats. Deine Modelle. Deine Kontrolle.**
+  Ein responsiver Chat-Workspace mit **lokaler Speicherung**, **JSON-Backups** und optionaler **Ollama-KI**.  
+  Für Ideen, Code und Gespräche – ohne verpflichtenden Cloud-Dienst.
 
-Ein lokal betriebener KI-Chat mit optionaler **Ollama-Anbindung**, Gesprächsverwaltung und JSON-Backups.  
-Kein Cloud-Zwang, keine verpflichtenden API-Schlüssel, kein KI-Fake-Modus.
+  <p>
+    <code>ALPHA 0.1</code> ·
+    <code>LOCAL-FIRST</code> ·
+    <code>NODE.JS 20+</code> ·
+    <code>OLLAMA OPTIONAL</code>
+  </p>
 
-**Alpha 0.1** · **Node.js 20+** · **Browser-Frontend** · **Local-first**
-
-[Starten](#-lokal-starten) · [Funktionen](#-bereits-umgesetzt) · [KI einrichten](#-ollama-optional) · [Tests](#-tests) · [Roadmap](#-roadmap)
-
+  <p>
+    <a href="#-in-60-sekunden-starten"><strong>▶ Jetzt starten</strong></a> ·
+    <a href="#-was-dich-erwartet">Features</a> ·
+    <a href="#-drei-designwelten">Designvarianten</a> ·
+    <a href="#-roadmap">Roadmap</a>
+  </p>
 </div>
 
 ---
 
-## 🚀 Lokal starten
+## ✨ Was dich erwartet
 
-Voraussetzung: [Node.js](https://nodejs.org/) **Version 20 oder höher**. Das Projekt hat **keine externen npm-Abhängigkeiten**.
+| 💬 **Gesprächszentrale** | 🧠 **Echte lokale KI** | 💾 **Deine Daten** |
+| :--- | :--- | :--- |
+| Chats anlegen, umbenennen, löschen und durchsuchen | Ollama-Modelle auf dem eigenen Rechner auswählen und ansprechen | Speicherung im Browser, JSON-Export und validierter Import |
+
+**Alpha 0.1 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung und echte Antworten bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
+
+> 🎨 **Designhinweis:** Die Illustrationen dieser README zeigen die Gestaltungsidee – keine unbearbeiteten Screenshots der laufenden App.
+
+## 🚀 In 60 Sekunden starten
+
+**Voraussetzung:** [Node.js](https://nodejs.org/) 20 oder neuer. Keine externen npm-Abhängigkeiten.
 
 ```bash
 git clone https://github.com/Pierreg99/CryoGPTCHATFREEBIE.git
@@ -27,84 +45,87 @@ cd CryoGPTCHATFREEBIE
 npm start
 ```
 
-Anschließend **[http://127.0.0.1:4173](http://127.0.0.1:4173)** im Browser öffnen.
+Öffne danach **[http://127.0.0.1:4173](http://127.0.0.1:4173)** auf demselben Rechner.
 
-Ohne KI-Modell speichert der Chat Texte als **lokale Notizen**. Er erfindet keine KI-Antworten.
-
-## 🧠 Ollama (optional)
+### Optional: Ollama verbinden
 
 1. [Ollama installieren](https://ollama.com/).
-2. Ein lokal nutzbares Modell herunterladen, beispielsweise:
-   ```bash
-   ollama pull qwen2.5:3b
-   ```
-3. Sicherstellen, dass Ollama auf `127.0.0.1:11434` läuft.
-4. In CryoGPTCHATFREEBIE **↻** klicken und im Modellmenü das lokale Modell auswählen.
+2. Ein kompaktes lokales Modell herunterladen: `ollama pull qwen2.5:3b`.
+3. Ollama lokal unter `127.0.0.1:11434` betreiben.
+4. In CryoGPTCHATFREEBIE die Modellliste aktualisieren und dein Modell auswählen.
 
-Bei Bedarf kann die Ollama-URL beim Start über die Umgebungsvariable `OLLAMA_URL` gesetzt werden. Für die normale lokale Nutzung ist keine Konfiguration erforderlich.
+Der Modellserver ist über `OLLAMA_URL` konfigurierbar. Eine Internetverbindung ist möglicherweise einmalig nötig, um das Modell herunterzuladen; **KI-Antworten benötigen danach keine obligatorische Cloud-API**.
 
-> **Hardware-Hinweis:** Die Modellgeschwindigkeit hängt von RAM, CPU und GPU ab. Für ältere Grafikkarten gibt es keine Leistungszusage; ein kleines quantisiertes Modell kann sinnvoll sein.
+## 🎨 Drei Designwelten
 
-## ✨ Bereits umgesetzt
+Hier stehen **drei vollständige, editierbare README-Alternativen** bereit. Jede hat ihren eigenen, lokal versionierten SVG-Header. Die Haupt-README kombiniert deren stärkste Elemente: Produktfokus, gute Lesbarkeit und Cryo-Neon-Identität.
 
-| Funktion | Status |
-| --- | --- |
-| Responsive Chat-Oberfläche mit dunklem Neon-Design | ✅ |
-| Gespräche erstellen, auswählen, umbenennen und löschen | ✅ |
-| Volltextsuche in Titeln und Nachrichten | ✅ |
-| Lokale Browser-Speicherung mit `localStorage` | ✅ |
-| JSON-Backup exportieren und validiert importieren | ✅ |
-| Lokale Ollama-Modelle erkennen und auswählen | ✅ |
-| Fragen an Ollama senden und echte Textantworten anzeigen | ✅ |
-| Automatisierte Node.js-Tests und GitHub Actions | ✅ |
-| Streaming, Nutzerauthentifizierung, Cloud-Synchronisation | ⏳ Nicht enthalten |
+<table>
+<tr>
+<td width="33%" align="center">
+<a href="docs/readme-variants/01-clean.md"><img src="assets/readme/banner-clean.svg" alt="Clean Design – helles und ruhiges Branding" width="100%"></a>
+<br><strong>01 · Professional / Clean</strong>
+<br>Minimalistisch, technisch, gut lesbar.
+<br><a href="docs/readme-variants/01-clean.md">Variante öffnen →</a>
+</td>
+<td width="33%" align="center">
+<a href="docs/readme-variants/02-neon.md"><img src="assets/readme/banner-neon.svg" alt="Neon Design – futuristische Cyber-Kristall-Grafik" width="100%"></a>
+<br><strong>02 · Futuristic / Neon</strong>
+<br>Holografisch, kontrastreich, cineastisch.
+<br><a href="docs/readme-variants/02-neon.md">Variante öffnen →</a>
+</td>
+<td width="33%" align="center">
+<a href="docs/readme-variants/03-product.md"><img src="assets/readme/banner-product.svg" alt="Produkt-Design – Chat-App als Produktillustration" width="100%"></a>
+<br><strong>03 · App / Landing Page</strong>
+<br>Produktnutzen, Einstieg und FAQ.
+<br><a href="docs/readme-variants/03-product.md">Variante öffnen →</a>
+</td>
+</tr>
+</table>
 
-## 🧩 Architektur
+**Alle Grafiken liegen im Repository:** [`assets/readme/`](assets/readme/). Keine externen Bild-CDNs notwendig.
 
-```text
-Browser / HTML + CSS + JavaScript
-    ├─ src/app.js       Oberfläche, Interaktion, lokale Speicherung
-    ├─ src/core.js      testbare Gesprächslogik & Backup-Validierung
-    └─ localStorage     lokale Chatdaten (unverschlüsselt)
-           │
-           │ /api/status + /api/chat
-           ▼
-    server.mjs          lokaler Node.js-HTTP-Server (127.0.0.1:4173)
-           │
-           ▼
-    Ollama (optional)   lokal installiertes Textmodell (127.0.0.1:11434)
-```
+## 🧩 So arbeitet CryoGPTCHAT
 
-Der Browser zeigt Nachrichten als Text, nicht als unkontrolliertes HTML. Der lokale HTTP-Server bindet ausschließlich an `127.0.0.1`, prüft Chat-Anfragen und dient nur vordefinierte Dateien aus.
+<img src="assets/readme/architecture.svg" alt="Lokale Architektur: Browser, Node.js-Server, optionaler Ollama-Modellserver" width="100%" />
 
-## 🧪 Tests
+| Schicht | Dateien | Aufgabe |
+| :--- | :--- | :--- |
+| **Browser** | [`index.html`](index.html), [`src/app.js`](src/app.js), [`src/styles.css`](src/styles.css) | Chat-Oberfläche, Nachrichten, Sitzungen, Suche |
+| **Chat-Core** | [`src/core.js`](src/core.js) | Testbare Datenlogik, Backup-Validierung |
+| **Local Server** | [`server.mjs`](server.mjs) | Localhost-Bridge und validierte Modell-Anfragen |
+| **Tests & CI** | [`tests/core.test.js`](tests/core.test.js), [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Automatische Core-Tests |
+
+### 🧪 Testen
 
 ```bash
 npm test
 ```
 
-Die vorhandenen Core-Tests prüfen das Datenschema, Chat-Erstellung, Titelfunktion, Suche, Löschen, Backup-Roundtrip, Eingabelimits und Nachrichtenformat für Ollama. GitHub Actions führt sie für Pull Requests unter Node.js 20 und 22 aus.
+Für die Alpha bestehen automatisierte Core-Tests. **Nicht vollständig abgedeckt:** Browser-End-to-End-Flows und echte Ollama-Inferenz auf unterschiedlichen Endgeräten.
 
-**Einschränkung:** Browser-End-to-End-Tests und echte Ollama-Inferenztests sind für die Alpha noch offen. Die Illustrationen in der README sind Designgrafiken, keine Laufzeit-Screenshots.
+## 🔐 Datenschutz & Grenzen
 
-## 🔐 Datenschutz und Grenzen
+- Chats liegen **unverschlüsselt in `localStorage`** des jeweiligen Browserprofils. Auch JSON-Exporte sind unverschlüsselt.
+- Beim Einsatz von Ollama wird Gesprächskontext an den konfigurierten Modellserver gesendet. Standardmäßig ist das der eigene Rechner.
+- Der Node.js-Server bindet an `127.0.0.1`; es gibt **keine Authentifizierung und keinen Mehrbenutzerbetrieb**.
+- **Nicht unverändert öffentlich ins Internet stellen.** Dies ist ein lokales Experiment, keine produktionsreife SaaS-Lösung.
+- Vor einem JSON-Import ein Backup exportieren; bestätigter Import ersetzt den aktuellen Datenbestand.
 
-- Die Chats werden **unverschlüsselt** in deinem Browserprofil abgelegt; exportierte JSON-Dateien sind ebenfalls unverschlüsselt.
-- Beim Einsatz von Ollama erhält das konfigurierte Modell die letzten Nachrichten der aktuellen Unterhaltung. Standardmäßig läuft diese Verbindung lokal.
-- Der Entwicklungsserver besitzt **kein Login und keinen Mehrbenutzerschutz**. **Nicht im öffentlichen Internet bereitstellen!**
-- Der Server wurde für lokale Entwicklungszwecke konzipiert, nicht als produktionsreife SaaS-Plattform.
-- Der Import ersetzt nach ausdrücklicher Bestätigung die bisherigen Chats. Vorher empfiehlt sich ein Export.
-- Keine Versprechen für Cloud-Anbieter oder kostenpflichtige APIs, die in dieser Version nicht eingebaut sind.
+## 🛣️ Roadmap
 
-## 🛠️ Roadmap
+- [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups, optionale Ollama-Integration und Tests.
+- [ ] **Alpha 0.2:** Token-Streaming, Generierung abbrechen und robustes Fehlermanagement.
+- [ ] **Alpha 0.3:** größere Chatverläufe, bessere Persistenz, Accessibility und Browser-E2E.
+- [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
 
-- [x] **Alpha 0.1:** Lokaler Chat, Ollama, Notizmodus, Suche, Import/Export, Tests.
-- [ ] **Alpha 0.2:** Antwort-Streaming, Abbrechen laufender KI-Generierungen, besseres Fehlermanagement.
-- [ ] **Alpha 0.3:** Versionierte IndexedDB, größere Chatverläufe, Barrierefreiheit und Browser-End-to-End-Tests.
-- [ ] **Später:** Optionaler GitHub-/Cryo-Omega-Skill-Katalog und kontrollierte Agenten-Workflows.
+## 🤝 Mitmachen
 
-Beiträge und Bugmeldungen sind willkommen. Bitte keine persönlichen Chat-Backups, API-Schlüssel oder Passwörter in öffentliche Issues hochladen.
+Für Bugs, Ideen und Verbesserungsvorschläge: [Issues öffnen](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues). Bitte keine API-Schlüssel oder Chat-Backups in öffentlichen Issues teilen. Pull Requests sollten `npm test` bestehen.
 
 ---
 
-<div align="center"><sub>CRYO GPT CHAT FREEBIE · LOCAL FIRST · BUILD WITHOUT LIMITS</sub></div>
+<div align="center">
+  <img src="assets/logo.svg" alt="CryoGPTCHAT Logo" width="58" />
+  <p><sub>CRYO GPT CHAT FREEBIE · BUILD LOCAL · THINK BIG</sub></p>
+</div>
