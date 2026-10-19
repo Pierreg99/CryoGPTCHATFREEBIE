@@ -1,8 +1,10 @@
+import { consumeOllamaStream } from './stream.js';
 import { emptyStore, createChat, renameChat, deleteChat, appendMessage, searchChats, parseBackup, toOllamaMessages } from './core.js';
 
 const KEY = 'crygptchat.alpha.v1';
 const el = id => document.getElementById(id);
 let store, models = [], sending = false, busyChatId = null, noticeTimer;
+let streamController = null, streamedText = '';
 
 function notice(message) {
   clearTimeout(noticeTimer);
@@ -58,8 +60,8 @@ function renderMessages() {
   el('chat-subtitle').textContent = chat?.messages.length
     ? 'Gesprächsverlauf – nur in deinem Browserprofil gespeichert.'
     : 'Dein Arbeitsbereich für Ideen, Code und Gespräche – ohne Cloud-Zwang.';
-  el('rename-chat').disabled = !chat;
-  el('delete-chat').disabled = !chat;
+  el('rename-chat').disabled = !chat || (sending && chat?.id === busyChatId);
+  el('delete-chat').disabled = !chat || (sending && chat?.id === busyChatId);
   for (const msg of chat?.messages || []) {
     const row = document.createElement('article');
     row.className = 'message ' + msg.role;
@@ -74,7 +76,9 @@ function renderMessages() {
   }
   if (sending && chat?.id === busyChatId) {
     const typing = document.createElement('p');
-    typing.className = 'typing'; typing.textContent = '◌ Lokales Modell antwortet …';
+    typing.className = 'typing'; typing.id = 'streaming-reply';
+    typing.setAttribute('aria-live', 'off');
+    typing.textContent = streamedText || '◌ Lokales Modell antwortet …';
     list.append(typing);
   }
   list.scrollTop = list.scrollHeight;
@@ -82,6 +86,7 @@ function renderMessages() {
 function render() { renderList(); renderMessages(); }
 
 async function refreshModels() {
+  if (sending) return;
   el('status').textContent = '○ Prüfe Ollama …';
   try {
     const res = await fetch('/api/status');
@@ -98,7 +103,9 @@ async function refreshModels() {
     const option = document.createElement('option');
     option.value = name; option.textContent = name; picker.append(option);
   }
-  picker.value = models.includes(store.settings.model) ? store.settings.model : (models[0] || '');
+  // Never switch automatically from explicit note-only mode to a paid or local model.
+  picker.value = models.includes(store.settings.model) ? store.settings.model : '';
+  el('model-state').textContent = picker.value ? 'Aktiv: ' + picker.value : 'Notizmodus · Modell manuell auswählen';
   store.settings.model = picker.value;
   persist();
 }
@@ -106,7 +113,11 @@ async function refreshModels() {
 el('new-chat').addEventListener('click', () => { mutate(s => createChat(s)); closeSidebar(); el('prompt').focus(); });
 el('search').addEventListener('input', renderList);
 el('refresh').addEventListener('click', refreshModels);
-el('model').addEventListener('change', e => { store.settings.model = e.target.value; persist(); });
+el('model').addEventListener('change', e => {
+  store.settings.model = e.target.value;
+  el('model-state').textContent = store.settings.model ? 'Aktiv: ' + store.settings.model : 'Notizmodus · Modell manuell auswählen';
+  persist();
+});
 el('rename-chat').addEventListener('click', () => {
   const chat = active(); if (!chat) return;
   const title = window.prompt('Neuer Chat-Titel:', chat.title);
@@ -128,6 +139,15 @@ el('prompt').addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); el('composer').requestSubmit(); }
 });
 
+function setGenerating(value) {
+  el('send').hidden = value;
+  el('stop').hidden = !value;
+  el('model').disabled = value;
+  el('refresh').disabled = value;
+}
+el('stop').addEventListener('click', () => {
+  if (streamController && !streamController.signal.aborted) streamController.abort();
+});
 el('composer').addEventListener('submit', async e => {
   e.preventDefault();
   if (sending) return;
@@ -139,21 +159,57 @@ el('composer').addEventListener('submit', async e => {
   el('prompt').value = '';
   const model = el('model').value;
   if (!model) { notice('Als lokale Notiz gespeichert. Wähle ein Modell für KI-Antworten.'); return; }
-  sending = true; busyChatId = chatId; el('send').disabled = true; render();
+  sending = true;
+  busyChatId = chatId;
+  streamedText = '';
+  streamController = new AbortController();
+  const controller = streamController;
+  setGenerating(true);
+  render();
   try {
     const chat = store.chats.find(c => c.id === chatId);
-    const res = await fetch('/api/chat', {
+    const res = await fetch('/api/chat/stream', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: controller.signal,
       body: JSON.stringify({ model, messages: toOllamaMessages(chat) })
     });
-    const data = await res.json();
-    if (!res.ok || typeof data.message !== 'string') throw new Error(data.error || 'Modellantwort fehlgeschlagen');
-    mutate(s => appendMessage(s, chatId, 'assistant', data.message));
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || 'Modellantwort fehlgeschlagen (HTTP ' + res.status + ').');
+    }
+    const reply = await consumeOllamaStream(res.body, {
+      signal: controller.signal,
+      onToken: text => {
+        streamedText = text;
+        const preview = el('streaming-reply');
+        if (preview) {
+          preview.textContent = text;
+          el('messages').scrollTop = el('messages').scrollHeight;
+        }
+      }
+    });
+    if (reply.trim()) mutate(s => appendMessage(s, chatId, 'assistant', reply));
+    else notice('Das Modell hat eine leere Antwort gesendet.');
   } catch (error) {
-    notice('Notiz gespeichert, aber KI-Anfrage fehlgeschlagen: ' + error.message);
+    if (controller.signal.aborted) {
+      if (streamedText.trim()) {
+        mutate(s => appendMessage(s, chatId, 'assistant', streamedText.trim().slice(0, 11960) + '\n\n[Antwort abgebrochen]'));
+      }
+      notice('KI-Generierung gestoppt. Bereits empfangener Text bleibt erhalten.');
+    } else {
+      if (streamedText.trim()) {
+        mutate(s => appendMessage(s, chatId, 'assistant', streamedText.trim().slice(0, 11960) + '\n\n[Antwort unvollständig]'));
+      }
+      notice('KI-Anfrage unterbrochen: ' + error.message);
+    }
   } finally {
-    sending = false; busyChatId = null; el('send').disabled = false; render();
+    sending = false;
+    busyChatId = null;
+    streamController = null;
+    streamedText = '';
+    setGenerating(false);
+    render();
   }
 });
 
@@ -167,6 +223,7 @@ el('export').addEventListener('click', () => {
 el('import').addEventListener('click', () => el('import-file').click());
 el('import-file').addEventListener('change', async e => {
   const file = e.target.files?.[0]; if (!file) return;
+  if (sending) { e.target.value = ''; notice('Bitte die laufende Antwort zuerst stoppen.'); return; }
   try {
     if (file.size > 3 * 1024 * 1024) throw new Error('Backups dürfen maximal 3 MB groß sein.');
     const backup = parseBackup(await file.text());
