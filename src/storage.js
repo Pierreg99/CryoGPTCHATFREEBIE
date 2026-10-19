@@ -76,8 +76,13 @@ export async function createPersistence({
     const clean = parseBackup(snapshot);
     queue = queue.catch(() => {}).then(async () => {
       if (db) {
+        // Never silently switch to localStorage after IndexedDB has become authoritative:
+        // an old IndexedDB snapshot would otherwise shadow new fallback writes on reload.
         try { await writeSnapshot(db, clean); return; }
-        catch { onWarning('IndexedDB-Speicherung fehlgeschlagen. Versuche lokalen Fallback.'); }
+        catch {
+          onWarning('IndexedDB-Speicherung fehlgeschlagen. Bitte Chats als JSON exportieren.');
+          throw new Error('IndexedDB-Speicherung fehlgeschlagen. Bitte Chats exportieren.');
+        }
       }
       try { fallback?.setItem(legacyKey, JSON.stringify(clean)); }
       catch { throw new Error('Chat-Speicherung fehlgeschlagen. Bitte Chats exportieren.'); }
