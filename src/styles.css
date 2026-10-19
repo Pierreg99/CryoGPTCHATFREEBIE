@@ -86,3 +86,16 @@ select{color:#d6f1fa;background:#172c43;border:1px solid #38546c;border-radius:7
 #streaming-reply{padding:14px 16px;white-space:pre-wrap;overflow-wrap:anywhere;border-radius:12px;background:#112d3b;border:1px solid #2e6579;color:#cceff5;max-width:100%;line-height:1.65}
 #streaming-reply:empty::after{content:"Modell antwortet …"}
 @media(max-width:540px){.generation-controls{justify-content:flex-end}.generation-controls button{width:auto}}
+
+/* Alpha 0.3: opt-in per-chat project memory */
+.project-panel{margin:14px 0 4px;padding:18px;border:1px solid #32607b;border-radius:14px;background:linear-gradient(135deg,#102940,#181b36);display:flex;flex-direction:column;gap:12px}
+.project-panel[hidden]{display:none}
+.project-panel>label{font-size:13px;color:#d8effb;font-weight:700}
+.project-panel textarea{border:1px solid #426078;border-radius:10px;background:#0c1b30;min-height:110px;padding:12px;resize:vertical}
+.project-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px;justify-content:space-between}
+.project-opt-in{font-size:12px;display:flex;align-items:center;gap:8px;color:#c1d8e9}
+.project-opt-in input{accent-color:#6fe9d7;width:16px;height:16px}
+#save-project-notes{padding:10px 13px;border-radius:9px;background:#164e5b;color:#e2faf8;border:1px solid #3b9da6}
+#project-notes-status{font-size:12px;color:#8bdccf;margin:0}
+.project-panel small{color:#839eb8;line-height:1.5}
+@media(max-width:540px){.project-actions{align-items:stretch;flex-direction:column}#save-project-notes{width:100%}}
