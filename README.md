@@ -9,7 +9,7 @@
   Für Ideen, Code und Gespräche – ohne verpflichtenden Cloud-Dienst.
 
   <p>
-    <code>ALPHA 0.1</code> ·
+    <code>ALPHA 0.2</code> ·
     <code>LOCAL-FIRST</code> ·
     <code>NODE.JS 20+</code> ·
     <code>OLLAMA OPTIONAL</code>
@@ -31,7 +31,7 @@
 | :--- | :--- | :--- |
 | Chats anlegen, umbenennen, löschen und durchsuchen | Ollama-Modelle auf dem eigenen Rechner auswählen und ansprechen | Speicherung im Browser, JSON-Export und validierter Import |
 
-**Alpha 0.1 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung und echte Antworten bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
+**Alpha 0.2 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung, echte tokenweise Streaming-Antworten und eine Stopp-Schaltfläche bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
 
 > 🎨 **Designhinweis:** Die Illustrationen dieser README zeigen die Gestaltungsidee – keine unbearbeiteten Screenshots der laufenden App.
 
@@ -102,7 +102,7 @@ Hier stehen **drei vollständige, editierbare README-Alternativen** bereit. Jede
 npm test
 ```
 
-Für die Alpha bestehen automatisierte Core-Tests. **Nicht vollständig abgedeckt:** Browser-End-to-End-Flows und echte Ollama-Inferenz auf unterschiedlichen Endgeräten.
+Automatisierte Core-Tests sowie Tests für NDJSON-Streaming, Fehlerfälle und einen simulierten Ollama-Server sind enthalten. **Nicht vollständig abgedeckt:** Browser-End-to-End-Flows und echte Ollama-Inferenz auf unterschiedlichen Endgeräten.
 
 ## 🔐 Datenschutz & Grenzen
 
@@ -114,7 +114,7 @@ Für die Alpha bestehen automatisierte Core-Tests. **Nicht vollständig abgedeck
 
 ## 🛣️ Roadmap
 
-- [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups, optionale Ollama-Integration und Tests.
+- [x] **Alpha 0.2:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups, optionale Ollama-Integration und Tests.
 - [ ] **Alpha 0.2:** Token-Streaming, Generierung abbrechen und robustes Fehlermanagement.
 - [ ] **Alpha 0.3:** größere Chatverläufe, bessere Persistenz, Accessibility und Browser-E2E.
 - [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
