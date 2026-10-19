@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" role="img" aria-labelledby="ttl dsc"><title id="ttl">CryoGPTCHAT – Product Edition</title><desc id="dsc">Produkt-Landingpage-Grafik mit Chat-App-Vorschau und Nutzenversprechen</desc><rect width="1200" height="370" rx="20" fill="#0D1427"/>
+<defs><linearGradient id="accent" x1="0" x2="1"><stop stop-color="#5AEEDB"/><stop offset="1" stop-color="#8892FF"/></linearGradient>
+<linearGradient id="panel" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#17253F"/><stop offset="1" stop-color="#0B172B"/></linearGradient></defs>
+<circle cx="1088" cy="12" r="220" fill="#4345AC" opacity=".16"/><circle cx="570" cy="370" r="220" fill="#28A0AB" opacity=".07"/>
+<rect x="48" y="43" width="156" height="30" rx="15" fill="#173D48"/><text x="126" y="63" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#72F6E8" letter-spacing="2" text-anchor="middle">YOUR AI SPACE</text>
+<text x="45" y="142" font-size="61" font-family="Arial,Helvetica,sans-serif" font-weight="900" fill="#F7FDFF">Chat smarter.</text>
+<text x="45" y="210" font-size="61" font-family="Arial,Helvetica,sans-serif" font-weight="900" fill="url(#accent)">Stay local.</text>
+<text x="49" y="258" font-size="19" font-family="Arial,Helvetica,sans-serif" fill="#B6C8DF">CryoGPTCHATFREEBIE — dein Workspace</text>
+<text x="49" y="288" font-size="18" font-family="Arial,Helvetica,sans-serif" fill="#B6C8DF">für Chats, Ideen und lokale Modelle.</text>
+<rect x="49" y="312" width="162" height="34" rx="17" fill="#5BE4D6"/><text x="130" y="334" font-size="13" font-family="Arial,Helvetica,sans-serif" font-weight="800" fill="#082530" text-anchor="middle">START LOCAL</text>
+<rect x="222" y="312" width="135" height="34" rx="17" fill="#142741" stroke="#64849E"/><text x="289" y="334" font-size="13" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#DBEEFB" text-anchor="middle">NO API KEY</text>
+<g font-family="Arial,Helvetica,sans-serif"><rect x="606" y="40" width="537" height="285" rx="19" fill="#101E32" stroke="#507A9A" stroke-width="1.6"/>
+<rect x="608" y="41" width="144" height="283" rx="17" fill="#0B1528"/><rect x="609" y="73" width="143" height="251" fill="#0B1528"/>
+<circle cx="631" cy="64" r="9" fill="#5BDBD2"/><text x="649" y="68" font-size="12" fill="#F3FBFF" font-weight="800">CRYO</text>
+<rect x="619" y="96" width="122" height="31" rx="9" fill="#155260"/><text x="631" y="116" font-size="11" fill="#D1F8F6">+ Neuer Chat</text>
+<text x="621" y="158" font-size="10" fill="#84A8C5" letter-spacing="1">GESPRÄCHE</text>
+<rect x="619" y="172" width="121" height="36" rx="8" fill="#20344E"/><text x="627" y="195" font-size="11" fill="#F0F8FF">Projektideen</text>
+<text x="625" y="231" font-size="10" fill="#8DAAC7">Code Review</text><text x="625" y="262" font-size="10" fill="#8DAAC7">Meine Notizen</text>
+<rect x="753" y="41" width="387" height="38" rx="12" fill="#152944"/><text x="774" y="65" font-size="12" fill="#ECF8FF" font-weight="700">Projektideen</text><rect x="1036" y="52" width="93" height="20" rx="10" fill="#254D4F"/><circle cx="1049" cy="62" r="4" fill="#55EDC2"/><text x="1061" y="65" font-size="9" fill="#B0F4DC">LOCAL</text>
+<rect x="797" y="109" width="291" height="46" rx="11" fill="#273A56"/><text x="809" y="130" font-size="12" fill="#F2F8FF">Wie baue ich einen lokalen Chat?</text><text x="809" y="145" font-size="10" fill="#A9C3DB">User</text>
+<rect x="771" y="168" width="294" height="64" rx="11" fill="#154248"/><text x="785" y="191" font-size="12" fill="#D8FFF9">Starte klein: UI, Speicher und</text><text x="785" y="207" font-size="12" fill="#D8FFF9">optional Ollama als Modellserver.</text>
+<text x="786" y="222" font-size="10" fill="#7FDACA">Ollama • Illustration</text>
+<rect x="771" y="261" width="344" height="42" rx="10" fill="#172A45" stroke="#3D5875"/><text x="785" y="287" font-size="12" fill="#83A9C2">Frag CryoGPTCHAT …</text><circle cx="1095" cy="282" r="11" fill="#6EEADC"/></g>
+<rect x="5" y="5" width="1190" height="360" rx="16" fill="none" stroke="#6286BA" stroke-opacity=".25" stroke-width="2"/></svg>
