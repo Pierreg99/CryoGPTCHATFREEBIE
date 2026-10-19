@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" role="img" aria-labelledby="ttl dsc"><title id="ttl">CryoGPTCHAT – Clean Edition</title><desc id="dsc">Minimalistische helle Produktgrafik mit Chatdialogen und lokalen Daten</desc><rect width="1200" height="370" rx="20" fill="#F6FAFC"/>
+<defs><linearGradient id="shade" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#D7F5FC"/><stop offset="1" stop-color="#DFE1FE"/></linearGradient></defs>
+<path d="M0 320Q440 210 1200 356" fill="none" stroke="#CEE0EC" stroke-width="1.5"/><circle cx="976" cy="158" r="160" fill="url(#shade)" opacity=".68"/>
+<rect x="44" y="38" width="200" height="33" rx="16" fill="#E5F2F9"/><circle cx="61" cy="54" r="5" fill="#0698AA"/><text x="75" y="60" fill="#1D5870" font-size="13" font-weight="700" font-family="Arial,Helvetica,sans-serif" letter-spacing="1.5">LOCAL-FIRST / ALPHA</text>
+<text x="42" y="143" font-size="65" font-family="Arial,Helvetica,sans-serif" font-weight="800" letter-spacing="-3" fill="#14293F">CryoGPT<tspan fill="#008FAD">CHAT</tspan></text>
+<text x="47" y="189" font-size="30" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#263B51">FREEBIE</text>
+<text x="47" y="238" font-size="21" font-family="Arial,Helvetica,sans-serif" fill="#426177">Deine Chats. Deine Modelle. Deine Kontrolle.</text>
+<text x="47" y="277" font-size="16" font-family="Arial,Helvetica,sans-serif" fill="#5A7689">Ein leichtgewichtiger Chat-Workspace für lokale KI.</text>
+<g font-family="Arial,Helvetica,sans-serif"><rect x="712" y="53" width="427" height="270" rx="22" fill="#FFF" stroke="#CEE1EB" stroke-width="2"/>
+<rect x="736" y="77" width="379" height="31" rx="8" fill="#ECF6F9"/><circle cx="752" cy="92" r="5" fill="#0BA1B5"/><text x="765" y="97" font-size="14" fill="#33566B" font-weight="700">Local Chat Workspace</text>
+<rect x="760" y="126" width="255" height="49" rx="12" fill="#E8F1F7"/><text x="774" y="154" font-size="14" fill="#38596E">Kannst du mir beim Code helfen?</text>
+<rect x="825" y="191" width="274" height="58" rx="12" fill="#D9F8F2"/><text x="839" y="214" font-size="14" fill="#1B615C">Lokales Modell verbunden</text><text x="839" y="233" font-size="12" fill="#387E7B">Antworten über Ollama</text>
+<rect x="737" y="267" width="377" height="34" rx="10" fill="#F7FAFC" stroke="#CADCE6"/><text x="752" y="289" font-size="13" fill="#89A0AF">Nachricht eingeben …</text></g>
+<rect x="1" y="1" width="1198" height="368" rx="19" fill="none" stroke="#D6E7EF" stroke-width="2"/>
+</svg>
