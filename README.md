@@ -114,8 +114,8 @@ Automatisierte Core-Tests sowie Tests für NDJSON-Streaming, Fehlerfälle und ei
 
 ## 🛣️ Roadmap
 
-- [x] **Alpha 0.2:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups, optionale Ollama-Integration und Tests.
-- [ ] **Alpha 0.2:** Token-Streaming, Generierung abbrechen und robustes Fehlermanagement.
+- [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups und optionale Ollama-Integration.
+- [x] **Alpha 0.2:** Streaming-Ausgabe, Stopp-Schaltfläche, gekennzeichnete Teilantworten, manuelle Modellauswahl und neue Stream-Tests.
 - [ ] **Alpha 0.3:** größere Chatverläufe, bessere Persistenz, Accessibility und Browser-E2E.
 - [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
 
