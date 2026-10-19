@@ -194,12 +194,12 @@ el('composer').addEventListener('submit', async e => {
   } catch (error) {
     if (controller.signal.aborted) {
       if (streamedText.trim()) {
-        mutate(s => appendMessage(s, chatId, 'assistant', streamedText.trim().slice(0, 11960) + '\\n\\n[Antwort abgebrochen]'));
+        mutate(s => appendMessage(s, chatId, 'assistant', streamedText.trim().slice(0, 11960) + '\n\n[Antwort abgebrochen]'));
       }
       notice('KI-Generierung gestoppt. Bereits empfangener Text bleibt erhalten.');
     } else {
       if (streamedText.trim()) {
-        mutate(s => appendMessage(s, chatId, 'assistant', streamedText.trim().slice(0, 11960) + '\\n\\n[Antwort unvollständig]'));
+        mutate(s => appendMessage(s, chatId, 'assistant', streamedText.trim().slice(0, 11960) + '\n\n[Antwort unvollständig]'));
       }
       notice('KI-Anfrage unterbrochen: ' + error.message);
     }
