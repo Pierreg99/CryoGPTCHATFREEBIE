@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 350" role="img" aria-labelledby="t d">
+<title id="t">CryoGPTCHATFREEBIE – Personal AI Workspace</title>
+<desc id="d">Futuristisches Neon-Cyan-Chat-Cockpit mit Cyber-Kreisbahnen und dem Schriftzug CryoGPTCHAT FREEBIE.</desc>
+<defs>
+<linearGradient id="bg" x2="1" y2="1"><stop stop-color="#080F20"/><stop offset=".62" stop-color="#101D39"/><stop offset="1" stop-color="#15122C"/></linearGradient>
+<linearGradient id="ice" x2="1" y2=".2"><stop stop-color="#62F8E8"/><stop offset=".55" stop-color="#6DC9FF"/><stop offset="1" stop-color="#AD91FF"/></linearGradient>
+<radialGradient id="orb"><stop stop-color="#153F60"/><stop offset=".7" stop-color="#152044"/><stop offset="1" stop-color="#0D1429"/></radialGradient>
+<pattern id="lines" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#74D7EF" opacity=".08"/></pattern>
+</defs>
+<rect width="1200" height="350" rx="18" fill="url(#bg)"/><rect width="1200" height="350" rx="18" fill="url(#lines)"/>
+<rect x="5" y="5" width="1190" height="340" rx="14" fill="none" stroke="#4CBECF" opacity=".25" stroke-width="2"/>
+<circle cx="970" cy="175" r="116" fill="url(#orb)" stroke="#6BEAEA" stroke-width="2"/>
+<circle cx="970" cy="175" r="149" fill="none" stroke="#69CDEB" stroke-dasharray="6 11" opacity=".4"/>
+<ellipse cx="970" cy="175" rx="191" ry="78" transform="rotate(-27 970 175)" fill="none" stroke="#6BF3ED" stroke-width="3" opacity=".6"/>
+<ellipse cx="970" cy="175" rx="163" ry="50" transform="rotate(36 970 175)" fill="none" stroke="#9A91FA" stroke-width="2" opacity=".45"/>
+<path d="M1011 120A70 70 0 1 0 1011 230" fill="none" stroke="url(#ice)" stroke-width="22" stroke-linecap="round"/>
+<path d="M970 40V310M839 175H1101M878 83L1062 267M1062 83L878 267" stroke="#67E8ED" opacity=".14" stroke-width="3"/>
+<circle cx="1131" cy="87" r="6" fill="#7CF4E7"/><circle cx="798" cy="235" r="5" fill="#B498FF"/>
+<rect x="57" y="46" width="226" height="30" rx="15" fill="#17394B" stroke="#56A7BB" opacity=".95"/>
+<text x="74" y="66" font-size="13" font-weight="bold" font-family="Arial,Helvetica,sans-serif" letter-spacing="2" fill="#B4E7E9">LOCAL-FIRST / ALPHA 0.1</text>
+<text x="50" y="163" font-family="Arial,Helvetica,sans-serif" font-weight="900" letter-spacing="-2" font-size="74" fill="url(#ice)">CRYO GPT</text>
+<text x="54" y="231" font-family="Arial,Helvetica,sans-serif" font-weight="900" letter-spacing="1" font-size="64" fill="#EDF6FF">CHAT</text>
+<text x="306" y="230" font-family="Arial,Helvetica,sans-serif" font-weight="800" letter-spacing="4" font-size="30" fill="#9C8DF2">FREEBIE</text>
+<path d="M54 247H695" stroke="url(#ice)" opacity=".75" stroke-width="2"/>
+<text x="55" y="281" font-family="Arial,Helvetica,sans-serif" font-size="17" letter-spacing="2" fill="#BED8E8">PERSONAL AI WORKSPACE</text>
+<text x="56" y="316" font-family="Arial,Helvetica,sans-serif" font-size="15" fill="#98B7D1">Deine Chats. Deine Modelle. Deine Kontrolle.</text>
+</svg>

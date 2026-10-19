@@ -1,0 +1,87 @@
+import http from 'node:http';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = path.dirname(fileURLToPath(import.meta.url));
+const port = Number(process.env.PORT || 4173);
+const ollama = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
+const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json; charset=utf-8' };
+const allow = new Set(['/index.html', '/src/app.js', '/src/core.js', '/src/styles.css', '/assets/logo.svg']);
+
+function json(res, status, body) {
+  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+  res.end(JSON.stringify(body));
+}
+
+async function getModels() {
+  const r = await fetch(`${ollama}/api/tags`, { signal: AbortSignal.timeout(2800) });
+  if (!r.ok) throw new Error('Ollama antwortet mit HTTP ' + r.status);
+  const data = await r.json();
+  return Array.isArray(data.models) ? data.models.map(m => m.name).filter(x => typeof x === 'string') : [];
+}
+
+async function parseRequest(req) {
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of req) {
+    size += chunk.length;
+    if (size > 200000) throw new Error('Nachricht zu groß');
+    chunks.push(chunk);
+  }
+  return JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}');
+}
+
+const server = http.createServer(async (req, res) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'no-referrer');
+  res.setHeader('Content-Security-Policy', "default-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'");
+  try {
+    const url = new URL(req.url, `http://127.0.0.1:${port}`);
+    if (url.pathname === '/api/status' && req.method === 'GET') {
+      try { return json(res, 200, { online: true, models: await getModels() }); }
+      catch { return json(res, 200, { online: false, models: [] }); }
+    }
+    if (url.pathname === '/api/chat' && req.method === 'POST') {
+      if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'JSON erwartet.' });
+      const origin = req.headers.origin;
+      if (origin && origin !== `http://127.0.0.1:${port}`) return json(res, 403, { error: 'Fremder Ursprung nicht erlaubt.' });
+      let body;
+      try { body = await parseRequest(req); }
+      catch { return json(res, 400, { error: 'Ungültiges JSON oder zu große Eingabe.' }); }
+      const { model, messages } = body;
+      if (typeof model !== 'string' || !model.trim() || model.length > 100 || !Array.isArray(messages) || !messages.length || messages.length > 24 || !messages.every(m => m && ['user', 'assistant'].includes(m.role) && typeof m.content === 'string' && m.content.length <= 12000)) {
+        return json(res, 400, { error: 'Ungültige Anfrage.' });
+      }
+      try {
+        const available = await getModels();
+        if (!available.includes(model)) return json(res, 400, { error: 'Das Modell ist nicht lokal installiert.' });
+        const r = await fetch(`${ollama}/api/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model, messages, stream: false }),
+          signal: AbortSignal.timeout(120000)
+        });
+        if (!r.ok) return json(res, 502, { error: 'Ollama konnte die Antwort nicht erzeugen.' });
+        const response = await r.json();
+        if (typeof response.message?.content !== 'string') return json(res, 502, { error: 'Ungültige Ollama-Antwort.' });
+        return json(res, 200, { message: response.message.content });
+      } catch {
+        return json(res, 503, { error: 'Ollama ist nicht erreichbar oder antwortet nicht rechtzeitig.' });
+      }
+    }
+    if (req.method !== 'GET' && req.method !== 'HEAD') return json(res, 405, { error: 'Methode nicht erlaubt.' });
+    let pathname;
+    try { pathname = decodeURIComponent(url.pathname); }
+    catch { return json(res, 400, { error: 'Ungültiger Pfad.' }); }
+    if (pathname === '/') pathname = '/index.html';
+    if (!allow.has(pathname)) return json(res, 404, { error: 'Nicht gefunden.' });
+    const content = await readFile(path.join(root, pathname.slice(1)));
+    res.writeHead(200, { 'Content-Type': mime[path.extname(pathname)] || 'application/octet-stream' });
+    res.end(req.method === 'HEAD' ? undefined : content);
+  } catch {
+    json(res, 500, { error: 'Interner Serverfehler.' });
+  }
+});
+
+server.listen(port, '127.0.0.1', () => console.log(`CryoGPTCHATFREEBIE läuft auf http://127.0.0.1:${port}`));

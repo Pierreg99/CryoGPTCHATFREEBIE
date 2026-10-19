@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+<title id="title">CryoGPTCHAT Logo</title>
+<defs><linearGradient id="ice" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#67F8ED"/><stop offset="1" stop-color="#8D80FF"/></linearGradient></defs>
+<rect x="2" y="2" width="124" height="124" rx="33" fill="#101A31" stroke="#4CBCC9" stroke-width="2"/>
+<circle cx="64" cy="64" r="34" fill="none" stroke="url(#ice)" stroke-width="6"/>
+<path d="M64 12V116M12 64H116M28 28L100 100M100 28L28 100" stroke="#57D9ED" stroke-width="3" stroke-linecap="round" opacity=".42"/>
+<path d="M82 49A22 22 0 1 0 82 79" fill="none" stroke="#D7F9FF" stroke-width="8" stroke-linecap="round"/>
+<circle cx="64" cy="64" r="5" fill="#91F7F3"/>
+</svg>
