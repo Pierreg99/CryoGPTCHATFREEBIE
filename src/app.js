@@ -1,10 +1,11 @@
 import { consumeOllamaStream } from './stream.js';
-import { emptyStore, createChat, renameChat, deleteChat, appendMessage, searchChats, parseBackup, toOllamaMessages } from './core.js';
+import { createPersistence } from './storage.js';
+import { emptyStore, createChat, renameChat, deleteChat, appendMessage, searchChats, parseBackup, toOllamaMessages, setProjectContext } from './core.js';
 
-const KEY = 'crygptchat.alpha.v1';
 const el = id => document.getElementById(id);
-let store, models = [], sending = false, busyChatId = null, noticeTimer;
-let streamController = null, streamedText = '';
+let store = emptyStore(), models = [], sending = false, busyChatId = null, noticeTimer;
+let streamController = null, streamedText = '', persistence = null;
+const storageWarnings = [];
 
 function notice(message) {
   clearTimeout(noticeTimer);
@@ -12,16 +13,16 @@ function notice(message) {
   noticeTimer = setTimeout(() => { el('notice').textContent = ''; }, 8000);
 }
 try {
-  const saved = localStorage.getItem(KEY);
-  store = saved ? parseBackup(saved) : emptyStore();
+  persistence = await createPersistence({ onWarning: message => storageWarnings.push(message) });
+  store = persistence.state;
 } catch {
-  store = emptyStore();
-  queueMicrotask(() => notice('Gespeicherte Chats konnten nicht gelesen werden. Importiere bei Bedarf ein Backup.'));
+  // Do not overwrite a malformed existing backup with an empty store.
+  storageWarnings.push('Vorhandene Daten konnten nicht gelesen werden. Bitte erst dein altes Backup sichern und reparieren.');
 }
 
 function persist() {
-  try { localStorage.setItem(KEY, JSON.stringify(store)); }
-  catch { notice('Lokaler Speicher ist voll oder blockiert. Bitte exportiere deine Daten.'); }
+  if (!persistence) { notice('Speichern gesperrt: Datenproblem. Bitte vorhandene Daten sichern.'); return; }
+  persistence.save(store).catch(error => notice(error.message));
 }
 function active() { return store.chats.find(c => c.id === store.activeChatId) || null; }
 function mutate(fn) {
@@ -83,7 +84,20 @@ function renderMessages() {
   }
   list.scrollTop = list.scrollHeight;
 }
-function render() { renderList(); renderMessages(); }
+function renderProjectPanel() {
+  const chat = active();
+  const button = el('notes-toggle');
+  button.disabled = !chat || (sending && chat.id === busyChatId);
+  el('project-context').disabled = !chat || (sending && chat.id === busyChatId);
+  el('project-share').disabled = !chat || (sending && chat.id === busyChatId);
+  el('save-project-notes').disabled = !chat || (sending && chat.id === busyChatId);
+  el('project-context').value = chat?.projectContext || '';
+  el('project-share').checked = Boolean(chat?.shareProjectContext);
+  el('project-notes-status').textContent = chat
+    ? (chat.shareProjectContext ? 'Diese Notizen werden bei der nächsten Modellanfrage mitgesendet.' : 'Privat gespeichert – noch nicht an ein Modell freigegeben.')
+    : 'Erstelle zuerst einen Chat.';
+}
+function render() { renderList(); renderMessages(); renderProjectPanel(); }
 
 async function refreshModels() {
   if (sending) return;
@@ -110,6 +124,18 @@ async function refreshModels() {
   persist();
 }
 
+el('notes-toggle').addEventListener('click', () => {
+  if (!active()) { notice('Bitte zuerst einen Chat erstellen.'); return; }
+  const panel = el('project-panel');
+  panel.hidden = !panel.hidden;
+  el('notes-toggle').setAttribute('aria-expanded', String(!panel.hidden));
+});
+el('save-project-notes').addEventListener('click', () => {
+  const chat = active();
+  if (!chat) return;
+  const saved = mutate(state => setProjectContext(state, chat.id, el('project-context').value, el('project-share').checked));
+  if (saved) notice('Projektwissen gespeichert.' + (active()?.shareProjectContext ? ' Beim nächsten Ollama-Aufruf wird es einbezogen.' : ' Es bleibt lokal privat.'));
+});
 el('new-chat').addEventListener('click', () => { mutate(s => createChat(s)); closeSidebar(); el('prompt').focus(); });
 el('search').addEventListener('input', renderList);
 el('refresh').addEventListener('click', refreshModels);
@@ -235,3 +261,4 @@ el('import-file').addEventListener('change', async e => {
 
 render();
 refreshModels();
+if (storageWarnings.length) queueMicrotask(() => notice(storageWarnings.join(' ')));
