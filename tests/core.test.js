@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { emptyStore, createChat, appendMessage, deleteChat, renameChat, searchChats, parseBackup, toOllamaMessages, MAX_MESSAGE_LENGTH } from '../src/core.js';
+const T = '2026-10-19T18:00:00.000Z';
+test('leerer Store hat stabiles Schema', () => { const s = emptyStore(); assert.equal(s.version, 1); assert.equal(s.chats.length, 0); });
+test('Chat anlegen und Titel aus erster Nachricht ableiten', () => { let s = createChat(emptyStore(), 'a', 'Neuer Chat', T); s = appendMessage(s, 'a', 'user', '  Hallo CryGPTCHAT  ', 'm1', T); assert.equal(s.chats[0].title, 'Hallo CryGPTCHAT'); assert.equal(s.chats[0].messages[0].content, 'Hallo CryGPTCHAT'); });
+test('Chat umbenennen und löschen', () => { let s = createChat(emptyStore(), 'a', 'X', T); s = renameChat(s, 'a', '  Z  ', T); assert.equal(s.chats[0].title, 'Z'); s = deleteChat(s, 'a'); assert.equal(s.activeChatId, null); });
+test('Suche findet Nachrichteninhalte, nicht nur Titel', () => { let s = createChat(emptyStore(), 'a', 'Test', T); s = appendMessage(s, 'a', 'user', 'Kubernetes bitte', 'm1', T); assert.equal(searchChats(s, 'kube').length, 1); assert.equal(searchChats(s, 'xyz').length, 0); });
+test('Backup-Roundtrip mit aktiver Unterhaltung', () => { let s = createChat(emptyStore(), 'a', 'Hi', T); s = appendMessage(s, 'a', 'assistant', 'Antwort', 'm2', T); assert.deepEqual(parseBackup(JSON.stringify(s)), s); });
+test('Ungültige Rollen oder zu lange Nachrichten werden abgelehnt', () => { const s = createChat(emptyStore(), 'a', 'X', T); assert.throws(() => appendMessage(s, 'a', 'system', 'foo')); assert.throws(() => appendMessage(s, 'a', 'user', 'x'.repeat(MAX_MESSAGE_LENGTH + 1))); });
+test('Manipuliertes Backup wird verworfen', () => { const s = createChat(emptyStore(), 'a', 'X', T); s.chats[0].messages = [{ id: 'z', role: 'system', content: 'oops', createdAt: T }]; assert.throws(() => parseBackup(s)); });
+test('Nur Rollen und Inhalte werden an Ollama geschickt', () => { let s = createChat(emptyStore(), 'a', 'X', T); s = appendMessage(s, 'a', 'user', 'Frage', 'm', T); assert.deepEqual(toOllamaMessages(s.chats[0]), [{ role: 'user', content: 'Frage' }]); });
