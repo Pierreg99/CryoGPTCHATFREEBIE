@@ -48,27 +48,33 @@ export async function createPersistence({
   let legacyRaw = null;
   try { legacyRaw = fallback?.getItem(legacyKey) || null; }
   catch { onWarning('Lokaler Browser-Speicher kann nicht gelesen werden.'); }
-  // A malformed legacy backup must be reported rather than silently overwritten.
-  const legacy = legacyRaw ? parseBackup(legacyRaw) : emptyStore();
-  let db = null, state = legacy, kind = 'localStorage';
+  // IndexedDB becomes authoritative after migration. Read it before legacy data
+  // so that an old damaged localStorage copy cannot shadow a healthy DB.
+  const parseLegacy = () => legacyRaw ? parseBackup(legacyRaw) : emptyStore();
+  let db = null, state = emptyStore(), kind = 'localStorage';
   if (idb) {
     try {
       db = await openDatabase(idb);
       const stored = await readSnapshot(db);
       if (stored !== undefined) {
         state = parseBackup(stored);
-      } else if (legacyRaw) {
-        await writeSnapshot(db, legacy);
-        try { fallback?.removeItem(legacyKey); } catch { /* old backup is still safe */ }
+      } else {
+        state = parseLegacy();
+        if (legacyRaw) {
+          await writeSnapshot(db, state);
+          try { fallback?.removeItem(legacyKey); } catch { /* old backup is still safe */ }
+        }
       }
       kind = 'IndexedDB';
     } catch {
       db?.close();
       db = null;
-      state = legacy;
+      // Corrupt backups throw here instead of being overwritten silently.
+      state = parseLegacy();
       onWarning('IndexedDB nicht verfügbar. Als Fallback wird localStorage genutzt.');
     }
   } else {
+    state = parseLegacy();
     onWarning('IndexedDB ist deaktiviert. Als Fallback wird localStorage genutzt.');
   }
   let queue = Promise.resolve();
