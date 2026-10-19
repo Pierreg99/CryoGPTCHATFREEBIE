@@ -95,3 +95,13 @@ test('malformed legacy backup is rejected instead of overwritten', async () => {
   await assert.rejects(() => createPersistence({ idb: fakeIndexedDB(), fallback }));
   assert.equal(fallback.getItem(LEGACY_KEY), 'BROKEN BACKUP');
 });
+
+test('healthy IndexedDB snapshot wins over stale corrupted legacy localStorage', async () => {
+  const idb = fakeIndexedDB(), fallback = memoryStorage();
+  const a = await createPersistence({ idb, fallback });
+  await a.save(createChat(a.state, 'healthy', 'Recovery'));
+  fallback.setItem(LEGACY_KEY, 'BROKEN LEGACY VALUE');
+  const b = await createPersistence({ idb, fallback });
+  assert.equal(b.state.chats[0].id, 'healthy');
+  assert.equal(b.kind, 'IndexedDB');
+});
