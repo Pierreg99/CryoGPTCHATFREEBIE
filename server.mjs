@@ -1,5 +1,8 @@
 import http from 'node:http';
 import { callGodotMcp, godotMcpConfigured } from './src/godot-mcp-client.mjs';
+import { prepareScene } from './src/godot-scene-plan.mjs';
+import { randomBytes } from 'node:crypto';
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,6 +11,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 4173);
 const ollama = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json; charset=utf-8' };
+const pendingScenePlans = new Map();
 const allow = new Set(['/index.html', '/src/app.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
 
 function json(res, status, body) {
@@ -39,8 +43,56 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Content-Security-Policy', "default-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'");
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
+    if ((url.pathname === '/api/godot/scene/preview' || url.pathname === '/api/godot/scene/create') && req.method === 'POST') {
+      if (process.env.GODOT_SCENE_WRITES !== 'true' || !godotMcpConfigured()) {
+        return json(res, 503, { error: 'Szenenbearbeitung muss lokal eingerichtet und ausdrücklich aktiviert sein.' });
+      }
+      if (req.headers.origin !== `http://127.0.0.1:${port}`) {
+        return json(res, 403, { error: 'Nur die lokale Bedienoberfläche darf Godot-Werkzeuge aufrufen.' });
+      }
+      if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'JSON erwartet.' });
+      let data;
+      try { data = await parseRequest(req); }
+      catch { return json(res, 400, { error: 'Ungültiges JSON oder zu große Eingabe.' }); }
+      if (url.pathname.endsWith('/preview')) {
+        let plan;
+        try { plan = prepareScene(process.env.GODOT_PROJECT_PATH, data?.sceneName, data?.rootNodeType); }
+        catch (error) { return json(res, 400, { error: String(error.message) }); }
+        // Drop expired plans and keep memory usage bounded.
+        const now = Date.now();
+        for (const [key, value] of pendingScenePlans) if (value.expiresAt < now) pendingScenePlans.delete(key);
+        if (pendingScenePlans.size >= 25) return json(res, 429, { error: 'Zu viele offene Voransichten.' });
+        const ticket = randomBytes(24).toString('hex');
+        const expiresAt = now + 120000;
+        pendingScenePlans.set(ticket, { sceneName: plan.sceneName, rootNodeType: plan.rootNodeType, expiresAt });
+        return json(res, 200, { ticket, summary: plan.summary, expiresAt });
+      }
+      if (!data || typeof data.ticket !== 'string' || !/^[0-9a-f]{48}$/.test(data.ticket)) {
+        return json(res, 400, { error: 'Ungültige Bestätigung.' });
+      }
+      const pending = pendingScenePlans.get(data.ticket);
+      pendingScenePlans.delete(data.ticket); // one-shot; consume even after validation failure
+      if (!pending || pending.expiresAt < Date.now()) return json(res, 409, { error: 'Voransicht abgelaufen. Bitte neu prüfen.' });
+      let plan;
+      try { plan = prepareScene(process.env.GODOT_PROJECT_PATH, pending.sceneName, pending.rootNodeType); }
+      catch (error) { return json(res, 409, { error: String(error.message) }); }
+      try {
+        const output = await callGodotMcp('create_scene', {
+          scene: { sceneName: plan.sceneName, rootNodeType: plan.rootNodeType }
+        });
+        // External tool responses alone cannot prove a scene was actually created.
+        if (!existsSync(plan.absolutePath)) return json(res, 502, { error: 'MCP meldet Erfolg, aber die Szenendatei fehlt. Bitte Projekt prüfen.' });
+        return json(res, 200, { scenePath: plan.scenePath, rootNodeType: plan.rootNodeType, output });
+      } catch (error) {
+        return json(res, 502, { error: String(error.message || 'Godot-Szenenerstellung fehlgeschlagen.').slice(0, 600) });
+      }
+    }
     if (url.pathname === '/api/godot/status' && req.method === 'GET') {
-      return json(res, 200, { configured: godotMcpConfigured(), mode: 'manual-inspection' });
+      return json(res, 200, {
+        configured: godotMcpConfigured(),
+        mode: 'manual-inspection',
+        ...(process.env.GODOT_SCENE_WRITES === 'true' ? { canCreateScenes: godotMcpConfigured() } : {})
+      });
     }
     if (url.pathname === '/api/godot/inspect' && req.method === 'POST') {
       // Require a same-origin browser click; do not expose generic MCP tool calls.
