@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { callGodotMcp, godotMcpConfigured } from './src/godot-mcp-client.mjs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -38,6 +39,26 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Content-Security-Policy', "default-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'");
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
+    if (url.pathname === '/api/godot/status' && req.method === 'GET') {
+      return json(res, 200, { configured: godotMcpConfigured(), mode: 'manual-inspection' });
+    }
+    if (url.pathname === '/api/godot/inspect' && req.method === 'POST') {
+      // Require a same-origin browser click; do not expose generic MCP tool calls.
+      if (req.headers.origin !== `http://127.0.0.1:${port}`) return json(res, 403, { error: 'Nur die lokale Bedienoberfläche darf Godot-Werkzeuge aufrufen.' });
+      if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'JSON erwartet.' });
+      if (!godotMcpConfigured()) return json(res, 503, { error: 'Godot MCP ist nicht eingerichtet.' });
+      let request;
+      try { request = await parseRequest(req); }
+      catch { return json(res, 400, { error: 'Ungültige Anfrage.' }); }
+      if (!request || typeof request !== 'object' || !['get_godot_version', 'get_project_info'].includes(request.tool)) {
+        return json(res, 400, { error: 'Dieses Godot-Werkzeug ist nicht freigegeben.' });
+      }
+      try {
+        return json(res, 200, { tool: request.tool, output: await callGodotMcp(request.tool) });
+      } catch (error) {
+        return json(res, 502, { error: String(error.message || 'Godot-Abfrage fehlgeschlagen.').slice(0, 600) });
+      }
+    }
     if (url.pathname === '/api/status' && req.method === 'GET') {
       try { return json(res, 200, { online: true, models: await getModels() }); }
       catch { return json(res, 200, { online: false, models: [] }); }
