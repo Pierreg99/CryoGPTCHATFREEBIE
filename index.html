@@ -33,10 +33,21 @@
       </header>
       <div class="chat-area">
         <section class="intro">
-          <div class="eyebrow">ALPHA 0.2 &nbsp;•&nbsp; PRIVATE AI WORKSPACE</div>
+          <div class="eyebrow">ALPHA 0.3 &nbsp;•&nbsp; PRIVATE AI WORKSPACE</div>
           <h1 id="chat-heading">CryoGPT<span>Chat.</span></h1>
           <p id="chat-subtitle">Dein Arbeitsbereich für Ideen, Code und Gespräche – ohne Cloud-Zwang.</p>
-          <div class="chat-tools"><button id="rename-chat" type="button">✎ Umbenennen</button><button id="delete-chat" type="button">⌫ Löschen</button></div>
+          <div class="chat-tools"><button id="rename-chat" type="button">✎ Umbenennen</button><button id="delete-chat" type="button">⌫ Löschen</button><button id="notes-toggle" type="button" aria-expanded="false" aria-controls="project-panel">◈ Projektwissen</button></div>
+          <section class="project-panel" id="project-panel" aria-label="Projektwissen dieser Unterhaltung" hidden>
+            <div class="eyebrow">PROJECT KNOWLEDGE / NUR FÜR DIESEN CHAT</div>
+            <label for="project-context">Notizen, Entscheidungen und Hintergrundwissen</label>
+            <textarea id="project-context" rows="5" maxlength="4000" placeholder="Zum Beispiel: Ziele, Technologien, Entscheidungen, wichtige Begriffe …"></textarea>
+            <div class="project-actions">
+              <label class="project-opt-in"><input id="project-share" type="checkbox"> Bei KI-Antworten berücksichtigen</label>
+              <button id="save-project-notes" type="button">Projektwissen speichern</button>
+            </div>
+            <p id="project-notes-status" role="status">Privat gespeichert – noch nicht an ein Modell freigegeben.</p>
+            <small>Nur die Notizen dieses Chats werden nach deiner Freigabe als Kontext mitgesendet. Kein automatischer Zugriff auf Dateien oder GitHub.</small>
+          </section>
         </section>
         <section class="messages" id="messages" aria-label="Chatverlauf" aria-live="polite"></section>
         <section class="welcome" id="welcome">
@@ -62,7 +73,7 @@
             </div>
             <p class="model-state" id="model-state">Notizmodus · Modell manuell auswählen</p>
           </form>
-          <p class="disclaimer">Alpha-Software: Nachrichten werden unverschlüsselt im Browser gespeichert. Ohne lokales Modell entstehen keine KI-Antworten.</p>
+          <p class="disclaimer">Alpha-Software: Nachrichten und Projektwissen werden unverschlüsselt im Browser gespeichert. Ohne lokales Modell entstehen keine KI-Antworten.</p>
         </div>
       </div>
     </main>

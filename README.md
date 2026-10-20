@@ -5,11 +5,11 @@
 
   **Deine Chats. Deine Modelle. Deine Kontrolle.**
 
-  Ein responsiver Chat-Workspace mit **lokaler Speicherung**, **JSON-Backups** und optionaler **Ollama-KI**.  
+  Ein responsiver Chat-Workspace mit **lokaler IndexedDB-Speicherung**, **JSON-Backups** und optionaler **Ollama-KI**.  
   Für Ideen, Code und Gespräche – ohne verpflichtenden Cloud-Dienst.
 
   <p>
-    <code>ALPHA 0.2</code> ·
+    <code>ALPHA 0.3</code> ·
     <code>LOCAL-FIRST</code> ·
     <code>NODE.JS 20+</code> ·
     <code>OLLAMA OPTIONAL</code>
@@ -29,9 +29,9 @@
 
 | 💬 **Gesprächszentrale** | 🧠 **Echte lokale KI** | 💾 **Deine Daten** |
 | :--- | :--- | :--- |
-| Chats anlegen, umbenennen, löschen und durchsuchen | Ollama-Modelle auf dem eigenen Rechner auswählen und ansprechen | Speicherung im Browser, JSON-Export und validierter Import |
+| Chats anlegen, umbenennen, löschen und durchsuchen | Ollama-Modelle auf dem eigenen Rechner auswählen und ansprechen | IndexedDB im Browser, JSON-Export und validierter Import |
 
-**Alpha 0.2 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung, echte tokenweise Streaming-Antworten und eine Stopp-Schaltfläche bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
+**Alpha 0.3 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung, echte tokenweise Streaming-Antworten und eine Stopp-Schaltfläche bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
 
 > 🎨 **Designhinweis:** Die Illustrationen dieser README zeigen die Gestaltungsidee – keine unbearbeiteten Screenshots der laufenden App.
 
@@ -92,7 +92,8 @@ Hier stehen **drei vollständige, editierbare README-Alternativen** bereit. Jede
 | Schicht | Dateien | Aufgabe |
 | :--- | :--- | :--- |
 | **Browser** | [`index.html`](index.html), [`src/app.js`](src/app.js), [`src/styles.css`](src/styles.css) | Chat-Oberfläche, Nachrichten, Sitzungen, Suche |
-| **Chat-Core** | [`src/core.js`](src/core.js) | Testbare Datenlogik, Backup-Validierung |
+| **Chat-Core** | [`src/core.js`](src/core.js) | Datenlogik, Projektwissen und Backup-Validierung |
+| **Speicherung** | [`src/storage.js`](src/storage.js) | IndexedDB-Snapshots, Migration und Fallback |
 | **Local Server** | [`server.mjs`](server.mjs) | Localhost-Bridge und validierte Modell-Anfragen |
 | **Tests & CI** | [`tests/core.test.js`](tests/core.test.js), [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Automatische Core-Tests |
 
@@ -102,21 +103,38 @@ Hier stehen **drei vollständige, editierbare README-Alternativen** bereit. Jede
 npm test
 ```
 
-Automatisierte Core-Tests sowie Tests für NDJSON-Streaming, Fehlerfälle und einen simulierten Ollama-Server sind enthalten. **Nicht vollständig abgedeckt:** Browser-End-to-End-Flows und echte Ollama-Inferenz auf unterschiedlichen Endgeräten.
+Automatisierte Core-, Streaming- und IndexedDB-Migrationstests sowie Tests mit simuliertem Ollama-Server sind enthalten. **Nicht vollständig abgedeckt:** Browser-End-to-End-Flows und echte Ollama-Inferenz auf unterschiedlichen Endgeräten.
 
 ## 🔐 Datenschutz & Grenzen
 
-- Chats liegen **unverschlüsselt in `localStorage`** des jeweiligen Browserprofils. Auch JSON-Exporte sind unverschlüsselt.
+- Chats und Projektwissen liegen **unverschlüsselt in IndexedDB** des jeweiligen Browserprofils. Falls IndexedDB nicht verfügbar ist, kommt \`localStorage\` als Fallback zum Einsatz. Auch JSON-Exporte sind unverschlüsselt.
 - Beim Einsatz von Ollama wird Gesprächskontext an den konfigurierten Modellserver gesendet. Standardmäßig ist das der eigene Rechner.
 - Der Node.js-Server bindet an `127.0.0.1`; es gibt **keine Authentifizierung und keinen Mehrbenutzerbetrieb**.
 - **Nicht unverändert öffentlich ins Internet stellen.** Dies ist ein lokales Experiment, keine produktionsreife SaaS-Lösung.
 - Vor einem JSON-Import ein Backup exportieren; bestätigter Import ersetzt den aktuellen Datenbestand.
 
+## 🧠 Projektwissen je Chat
+
+Über **„Projektwissen“** kannst du pro Unterhaltung wichtige Ziele, Architekturentscheidungen und Hintergrundinfos in einem eigenen Textfeld speichern (maximal **4.000 Zeichen**).
+
+**Datenschutz und Kontrolle:** Standardmäßig werden diese Notizen **nicht** an das Modell gesendet. Erst wenn du **„Bei KI-Antworten berücksichtigen“** aktivierst und speicherst, werden sie bei der nächsten Anfrage als normaler, vom Nutzer bereitgestellter Kontext mitgegeben – **nicht** als privilegierte Systemanweisung. Bei einem extern konfigurierten Ollama-Endpunkt können diese Notizen folglich an diesen Server übertragen werden.
+
+### Bessere Chat-Speicherung
+
+- **IndexedDB:** gesamter Chat-Stand als atomarer Snapshot gespeichert; Schreibzugriffe erfolgen nacheinander.
+- **Sichere Migration:** Beim ersten Start wird eine vorhandene Alpha-0.1/0.2-Speicherung aus `localStorage` gelesen, zu Backup-Version 2 migriert und erst **nach erfolgreichem IndexedDB-Commit** aus dem alten Speicher entfernt.
+- **Alte Backups:** JSON-Backups mit Version 1 lassen sich weiterhin importieren. Neue Exporte enthalten auch das Projektwissen und die Freigabe-Einstellung.
+- **Fallback:** Wenn IndexedDB nicht verfügbar ist, wird `localStorage` genutzt und eine Warnung angezeigt.
+- **Kein Cloud-Sync und keine Verschlüsselung:** Browserdaten können beim Löschen des Profils verloren gehen; wichtige Chats regelmäßig als JSON exportieren.
+
+**Noch nicht enthalten:** automatische Wissenssuche (RAG), Dateizugriff, GitHub-Sync, Skill-Ausführung oder browserübergreifende Synchronisierung.
+
 ## 🛣️ Roadmap
 
 - [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups und optionale Ollama-Integration.
 - [x] **Alpha 0.2:** Streaming-Ausgabe, Stopp-Schaltfläche, gekennzeichnete Teilantworten, manuelle Modellauswahl und neue Stream-Tests.
-- [ ] **Alpha 0.3:** größere Chatverläufe, bessere Persistenz, Accessibility und Browser-E2E.
+- [x] **Alpha 0.3 (erster Schritt):** IndexedDB-Migration, versionierte Backups und manuell freigegebenes Projektwissen pro Chat.
+- [ ] **Alpha 0.3 (weitere Schritte):** Browser-E2E, Accessibility und robuste größere Chatverläufe.
 - [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
 
 ## 🤝 Mitmachen
