@@ -61,6 +61,7 @@ export async function callGodotMcp(tool, {
       child.stdin.write(JSON.stringify({ jsonrpc: '2.0', ...message }) + '\n');
     };
     child.on('error', () => stop(new Error('Godot MCP konnte nicht gestartet werden.')));
+    child.stdin.on('error', () => stop(new Error('Kommunikation mit Godot MCP fehlgeschlagen.')));
     child.on('exit', () => stop(new Error('Godot MCP wurde vorzeitig beendet.')));
     child.stdout.on('data', chunk => {
       buffer += chunk.toString('utf8');
