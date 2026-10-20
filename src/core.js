@@ -74,7 +74,7 @@ export function parseBackup(raw) {
     });
     if (c.projectContext !== undefined && (typeof c.projectContext !== 'string' || c.projectContext.length > MAX_PROJECT_CONTEXT)) throw new Error('Ungültiges Projektwissen im Backup');
     const projectContext = c.projectContext || '';
-    return { id: c.id, title: c.title.slice(0, 100), createdAt: validDate(c.createdAt) ? c.createdAt : new Date().toISOString(), updatedAt: validDate(c.updatedAt) ? c.updatedAt : new Date().toISOString(), messages, projectContext, shareProjectContext: Boolean(c.shareProjectContext) && Boolean(projectContext.trim()) };
+    return { id: c.id, title: c.title.slice(0, 100), createdAt: validDate(c.createdAt) ? c.createdAt : new Date().toISOString(), updatedAt: validDate(c.updatedAt) ? c.updatedAt : new Date().toISOString(), messages, projectContext, shareProjectContext: value.version === VERSION && c.shareProjectContext === true && Boolean(projectContext.trim()) };
   });
   return { version: VERSION, chats, activeChatId: chats.some(c => c.id === value.activeChatId) ? value.activeChatId : (chats[0]?.id || null), settings: { model: typeof value.settings?.model === 'string' ? value.settings.model.slice(0, 100) : '' } };
 }
