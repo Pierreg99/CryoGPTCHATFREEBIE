@@ -1,8 +1,9 @@
 import { spawn } from 'node:child_process';
 import { existsSync, realpathSync } from 'node:fs';
 import path from 'node:path';
+import { prepareScene } from './godot-scene-plan.mjs';
 
-const PERMITTED = new Set(['get_godot_version', 'get_project_info']);
+const PERMITTED = new Set(['get_godot_version', 'get_project_info', 'create_scene']);
 
 export function godotMcpConfigured(env = process.env) {
   const entry = env.GODOT_MCP_ENTRY;
@@ -23,6 +24,7 @@ export async function callGodotMcp(tool, {
   entry = process.env.GODOT_MCP_ENTRY,
   projectPath = process.env.GODOT_PROJECT_PATH,
   godotPath = process.env.GODOT_PATH,
+  scene = null,
   timeoutMs = 25000
 } = {}) {
   if (!PERMITTED.has(tool)) throw new Error('Dieses Godot-MCP-Werkzeug ist nicht freigegeben.');
@@ -35,7 +37,15 @@ export async function callGodotMcp(tool, {
   const realProjectPath = realpathSync(projectPath);
   if (!Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 30000) throw new Error('Ungültiges Zeitlimit.');
 
-  const params = tool === 'get_project_info' ? { projectPath: realProjectPath } : {};
+  if (tool === 'create_scene' && process.env.GODOT_SCENE_WRITES !== 'true') {
+    throw new Error('Godot-Szenenerstellung ist nur mit GODOT_SCENE_WRITES=true möglich.');
+  }
+  const validatedScene = tool === 'create_scene'
+    ? prepareScene(realProjectPath, scene?.sceneName, scene?.rootNodeType)
+    : null;
+  const params = validatedScene
+    ? { projectPath: realProjectPath, scenePath: validatedScene.scenePath, rootNodeType: validatedScene.rootNodeType }
+    : tool === 'get_project_info' ? { projectPath: realProjectPath } : {};
   const env = {};
   for (const key of ['PATH', 'HOME', 'USERPROFILE', 'APPDATA', 'TMP', 'TMPDIR', 'SystemRoot', 'WINDIR']) {
     if (process.env[key]) env[key] = process.env[key];
@@ -97,7 +107,7 @@ export async function callGodotMcp(tool, {
     });
     send({
       id: 1, method: 'initialize',
-      params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'CryoGPTCHATFREEBIE', version: '0.3.1' } }
+      params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'CryoGPTCHATFREEBIE', version: '0.4.0' } }
     });
   });
 }
