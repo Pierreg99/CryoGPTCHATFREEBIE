@@ -124,6 +124,61 @@ async function refreshModels() {
   persist();
 }
 
+let godotConfigured = false, godotBusy = false;
+function setGodotControls() {
+  el('godot-version').disabled = !godotConfigured || godotBusy;
+  el('godot-project').disabled = !godotConfigured || godotBusy;
+}
+async function checkGodotStatus() {
+  try {
+    const res = await fetch('/api/godot/status', { cache: 'no-store' });
+    if (!res.ok) throw new Error('Godot-Status nicht abrufbar.');
+    const data = await res.json();
+    godotConfigured = data.configured === true;
+    el('godot-status').textContent = godotConfigured
+      ? '● Optionales Godot MCP eingerichtet. Keine Abfrage läuft.'
+      : '○ Nicht eingerichtet. Anleitung: docs/integrations/godot-mcp.md';
+  } catch {
+    godotConfigured = false;
+    el('godot-status').textContent = '○ Godot MCP ist aktuell nicht erreichbar.';
+  }
+  setGodotControls();
+}
+el('godot-toggle').addEventListener('click', async () => {
+  const panel = el('godot-panel');
+  panel.hidden = !panel.hidden;
+  el('godot-toggle').setAttribute('aria-expanded', String(!panel.hidden));
+  if (!panel.hidden) await checkGodotStatus();
+});
+async function inspectGodot(tool) {
+  if (!godotConfigured || godotBusy) return;
+  const title = tool === 'get_godot_version' ? 'Godot-Version prüfen' : 'Godot-Projektinformationen auslesen';
+  if (!window.confirm(title + '? Dazu wird der lokal konfigurierte Godot-MCP-Prozess einmalig gestartet.')) return;
+  godotBusy = true;
+  setGodotControls();
+  el('godot-status').textContent = '◌ Lokale Abfrage läuft …';
+  el('godot-output').textContent = 'Godot MCP wird geprüft …';
+  try {
+    const res = await fetch('/api/godot/inspect', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tool })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Godot-Abfrage fehlgeschlagen.');
+    el('godot-output').textContent = String(data.output || 'Keine Informationen verfügbar.');
+    el('godot-status').textContent = '● Abfrage abgeschlossen. Ergebnis wurde nur angezeigt, nicht automatisch gespeichert oder an KI gesendet.';
+  } catch (error) {
+    el('godot-output').textContent = 'Fehler: ' + error.message;
+    el('godot-status').textContent = '○ Abfrage fehlgeschlagen.';
+  } finally {
+    godotBusy = false;
+    setGodotControls();
+  }
+}
+el('godot-version').addEventListener('click', () => inspectGodot('get_godot_version'));
+el('godot-project').addEventListener('click', () => inspectGodot('get_project_info'));
+
 el('notes-toggle').addEventListener('click', () => {
   if (!active()) { notice('Bitte zuerst einen Chat erstellen.'); return; }
   const panel = el('project-panel');
