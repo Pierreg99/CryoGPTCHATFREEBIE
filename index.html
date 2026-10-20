@@ -36,7 +36,7 @@
           <div class="eyebrow">ALPHA 0.3 &nbsp;•&nbsp; PRIVATE AI WORKSPACE</div>
           <h1 id="chat-heading">CryoGPT<span>Chat.</span></h1>
           <p id="chat-subtitle">Dein Arbeitsbereich für Ideen, Code und Gespräche – ohne Cloud-Zwang.</p>
-          <div class="chat-tools"><button id="rename-chat" type="button">✎ Umbenennen</button><button id="delete-chat" type="button">⌫ Löschen</button><button id="notes-toggle" type="button" aria-expanded="false" aria-controls="project-panel">◈ Projektwissen</button></div>
+          <div class="chat-tools"><button id="rename-chat" type="button">✎ Umbenennen</button><button id="delete-chat" type="button">⌫ Löschen</button><button id="notes-toggle" type="button" aria-expanded="false" aria-controls="project-panel">◈ Projektwissen</button><button id="godot-toggle" type="button" aria-expanded="false" aria-controls="godot-panel">🎮 Godot MCP</button></div>
           <section class="project-panel" id="project-panel" aria-label="Projektwissen dieser Unterhaltung" hidden>
             <div class="eyebrow">PROJECT KNOWLEDGE / NUR FÜR DIESEN CHAT</div>
             <label for="project-context">Notizen, Entscheidungen und Hintergrundwissen</label>
@@ -47,6 +47,17 @@
             </div>
             <p id="project-notes-status" role="status">Privat gespeichert – noch nicht an ein Modell freigegeben.</p>
             <small>Nur die Notizen dieses Chats werden nach deiner Freigabe als Kontext mitgesendet. Kein automatischer Zugriff auf Dateien oder GitHub.</small>
+          </section>
+          <section class="project-panel godot-panel" id="godot-panel" aria-label="Godot MCP – manuelle Projektprüfung" hidden>
+            <div class="eyebrow">GODOT MCP / MANUAL INSPECTION</div>
+            <strong>Godot lokal untersuchen</strong>
+            <p class="godot-status" id="godot-status" role="status">Verbindungsstatus noch nicht geprüft.</p>
+            <div class="godot-actions">
+              <button id="godot-version" type="button" disabled>Godot-Version anzeigen</button>
+              <button id="godot-project" type="button" disabled>Projektinformationen auslesen</button>
+            </div>
+            <pre class="godot-output" id="godot-output" aria-live="polite">Keine Abfrage gestartet.</pre>
+            <small>Jede Abfrage erfordert deine Bestätigung. Nur zwei Informationswerkzeuge sind freigegeben. Godot MCP wird niemals automatisch installiert oder gestartet. Einrichtung: docs/integrations/godot-mcp.md</small>
           </section>
         </section>
         <section class="messages" id="messages" aria-label="Chatverlauf" aria-live="polite"></section>
