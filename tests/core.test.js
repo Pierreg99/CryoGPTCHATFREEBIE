@@ -55,3 +55,13 @@ test('Projektkontext benötigt explizite Freigabe und respektiert das 24-Nachric
   assert.match(messages[0].content, /Projektplan/);
   assert.equal(messages.at(-1).content, 'Prompt 29');
 });
+
+test('Freigabe aus alten oder manipulierten Backups wird nicht automatisch aktiviert', () => {
+  const s = createChat(emptyStore(), 'x', 'X', T);
+  s.chats[0].projectContext = 'Nicht automatisch weitergeben';
+  s.chats[0].shareProjectContext = 'true';
+  assert.equal(parseBackup(s).chats[0].shareProjectContext, false);
+  s.version = 1;
+  s.chats[0].shareProjectContext = true;
+  assert.equal(parseBackup(s).chats[0].shareProjectContext, false);
+});
