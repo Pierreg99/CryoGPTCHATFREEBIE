@@ -25,6 +25,7 @@ export async function callGodotMcp(tool, {
   projectPath = process.env.GODOT_PROJECT_PATH,
   godotPath = process.env.GODOT_PATH,
   scene = null,
+  allowSceneWrites = process.env.GODOT_SCENE_WRITES === 'true',
   timeoutMs = 25000
 } = {}) {
   if (!PERMITTED.has(tool)) throw new Error('Dieses Godot-MCP-Werkzeug ist nicht freigegeben.');
@@ -37,8 +38,8 @@ export async function callGodotMcp(tool, {
   const realProjectPath = realpathSync(projectPath);
   if (!Number.isInteger(timeoutMs) || timeoutMs < 100 || timeoutMs > 30000) throw new Error('Ungültiges Zeitlimit.');
 
-  if (tool === 'create_scene' && process.env.GODOT_SCENE_WRITES !== 'true') {
-    throw new Error('Godot-Szenenerstellung ist nur mit GODOT_SCENE_WRITES=true möglich.');
+  if (tool === 'create_scene' && !allowSceneWrites) {
+    throw new Error('Dieses Godot-MCP-Werkzeug ist nicht freigegeben (Schreibzugriff deaktiviert).');
   }
   const validatedScene = tool === 'create_scene'
     ? prepareScene(realProjectPath, scene?.sceneName, scene?.rootNodeType)
