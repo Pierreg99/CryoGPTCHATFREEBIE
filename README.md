@@ -129,6 +129,19 @@ Automatisierte Core-, Streaming- und IndexedDB-Migrationstests sowie Tests mit s
 
 **Noch nicht enthalten:** automatische Wissenssuche (RAG), Dateizugriff, GitHub-Sync, Skill-Ausführung oder browserübergreifende Synchronisierung.
 
+## 🎮 Godot MCP – optionale lokale Projektprüfung
+
+CryoGPTCHATFREEBIE kann über eine **manuell konfigurierte** Verbindung zu [Coding-Solo/godot-mcp](https://github.com/Coding-Solo/godot-mcp) zwei Godot-Abfragen ausführen:
+
+- **Installierte Godot-Version** anzeigen (`get_godot_version`)
+- **Projektmetadaten** für einen fest konfigurierten lokalen Godot-Projektordner auslesen (`get_project_info`)
+
+Über den Button **🎮 Godot MCP** öffnet sich ein eigenes Panel. Jede Abfrage erfordert einen weiteren Bestätigungsdialog. Ohne lokale Installation bleibt das Panel deaktiviert; KI-Modelle können nicht automatisch auf Godot-Werkzeuge zugreifen.
+
+**Keine Szene bearbeiten, kein Spiel starten, keine automatische Skriptausführung durch den Chat.** Der externe Godot-MCP-Prozess selbst ist ausführbarer Fremdcode und muss vor der Verwendung geprüft werden. Die Integration ersetzt weder eine Sicherheitsprüfung noch eine echte Godot-End-to-End-Testumgebung.
+
+**[Godot MCP installieren und sicher konfigurieren →](docs/integrations/godot-mcp.md)**
+
 ## 🛣️ Roadmap
 
 - [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups und optionale Ollama-Integration.
