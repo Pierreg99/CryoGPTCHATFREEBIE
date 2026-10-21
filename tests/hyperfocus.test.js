@@ -103,5 +103,5 @@ test('Offline brief handles missing optional skill repository without inventing 
   const plan = validateHyperfocusPlan({ ...input, skillRepo: '' }, { allowlist });
   const result = buildOfflineBrief(plan, { readme: { text: 'README' } });
   assert.match(result, /Keine passenden Skill-Einträge geladen/);
-  assert.match(result, /15 min/);
+  assert.match(result, /Zeitbudget: 15 Minuten/);
 });
