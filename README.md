@@ -1,41 +1,45 @@
 <div align="center">
-  <img src="assets/readme/banner-product.svg" alt="CryoGPTCHATFREEBIE – lokale KI-Chat-App im futuristischen Produktdesign (Illustration)" width="100%" />
+  <img src="assets/readme/hero-v2.svg" alt="CryoGPTCHATFREEBIE – futuristisches Cryo-Neon-Banner mit illustrativem Chat-Workspace" width="100%" />
 
   # ❄️ CryoGPTCHATFREEBIE
 
   **Deine Chats. Deine Modelle. Deine Kontrolle.**
 
-  Ein responsiver Chat-Workspace mit **lokaler IndexedDB-Speicherung**, **JSON-Backups** und optionaler **Ollama-KI**.  
-  Für Ideen, Code und Gespräche – ohne verpflichtenden Cloud-Dienst.
+  Local-First KI-Workspace für Chats, Projektwissen und Entwickler-Workflows.  
+  **Ollama lokal**, **OpenAI optional**, **GitHub-/Cryo-Omega-Skills als geprüfte Referenz** und **Godot MCP nur mit manueller Freigabe**.
 
   <p>
     <code>ALPHA 0.4</code> ·
-    <code>LOCAL-FIRST</code> ·
+    <code>LOCAL FIRST</code> ·
     <code>NODE.JS 20+</code> ·
-    <code>OLLAMA OPTIONAL</code>
+    <code>MODEL PROVIDERS: OPT-IN</code>
   </p>
 
   <p>
-    <a href="#-in-60-sekunden-starten"><strong>▶ Jetzt starten</strong></a> ·
-    <a href="#-was-dich-erwartet">Features</a> ·
-    <a href="#-drei-designwelten">Designvarianten</a> ·
-    <a href="#-roadmap">Roadmap</a>
+    <a href="#-schnellstart"><strong>▶ Schnellstart</strong></a> ·
+    <a href="#-funktionen">Funktionen</a> ·
+    <a href="#-drei-designwelten">Designwelten</a> ·
+    <a href="#-systemarchitektur">Architektur</a> ·
+    <a href="#-datenschutz--grenzen">Sicherheit</a>
   </p>
 </div>
 
 ---
 
-## ✨ Was dich erwartet
+## ✨ Funktionen
 
-| 💬 **Gesprächszentrale** | 🧠 **Echte lokale KI** | 💾 **Deine Daten** |
-| :--- | :--- | :--- |
-| Chats anlegen, umbenennen, löschen und durchsuchen | Ollama-Modelle auf dem eigenen Rechner auswählen und ansprechen | IndexedDB im Browser, JSON-Export und validierter Import |
+<img src="assets/readme/capabilities.svg" alt="Vier Module: lokaler Chat mit Ollama, optionaler OpenAI-Modellanbieter, GitHub-/Cryo-Omega-Skills nur lesend und manuell freigegebene Godot-MCP-Aktionen" width="100%" />
 
-**Alpha 0.3 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung, echte tokenweise Streaming-Antworten und eine Stopp-Schaltfläche bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
+| Funktion | Im aktuellen Stand |
+| :--- | :--- |
+| **Chat & Daten** | Responsive Oberfläche, Volltextsuche, IndexedDB, JSON-Export/-Import und gespeichertes Projektwissen |
+| **KI-Modelle** | Ollama lokal; optional OpenAI API mit serverseitigem Schlüssel und Bestätigung **vor jeder** Cloud-Anfrage |
+| **Integrationen** | GitHub-README-Vorschau, Suche im Cryo-Omega-Skill-Katalog, Freigabe einzelner lesender Agentenschritte |
+| **Godot MCP** | Versions- und Projektinspektion; neue Szenen ausschließlich nach Opt-in, Vorschau und Bestätigung |
 
-> 🎨 **Designhinweis:** Die Illustrationen dieser README zeigen die Gestaltungsidee – keine unbearbeiteten Screenshots der laufenden App.
+> **Das Design zeigt Konzeptillustrationen, keine echten Screenshots.** Ohne ausgewähltes Modell arbeitet die App als lokales Chat-Notizbuch; sie simuliert keine KI-Antworten.
 
-## 🚀 In 60 Sekunden starten
+## 🚀 Schnellstart
 
 **Voraussetzung:** [Node.js](https://nodejs.org/) 20 oder neuer. Keine externen npm-Abhängigkeiten.
 
@@ -58,7 +62,7 @@ Der Modellserver ist über `OLLAMA_URL` konfigurierbar. Eine Internetverbindung 
 
 ## 🎨 Drei Designwelten
 
-Hier stehen **drei vollständige, editierbare README-Alternativen** bereit. Jede hat ihren eigenen, lokal versionierten SVG-Header. Die Haupt-README kombiniert deren stärkste Elemente: Produktfokus, gute Lesbarkeit und Cryo-Neon-Identität.
+Die **drei ursprünglichen Designwelten** bleiben erhalten. Jede besitzt einen eigenen editierbaren SVG-Header. Die neue Hauptansicht kombiniert Produktklarheit, holografische Cyan-/Violett-Akzente und gut lesbare Architektur-Grafiken.
 
 <table>
 <tr>
@@ -85,30 +89,32 @@ Hier stehen **drei vollständige, editierbare README-Alternativen** bereit. Jede
 
 **Alle Grafiken liegen im Repository:** [`assets/readme/`](assets/readme/). Keine externen Bild-CDNs notwendig.
 
-## 🧩 So arbeitet CryoGPTCHAT
+## 🧩 Systemarchitektur
 
-<img src="assets/readme/architecture.svg" alt="Lokale Architektur: Browser, Node.js-Server, optionaler Ollama-Modellserver" width="100%" />
+<img src="assets/readme/architecture-v2.svg" alt="Schematische Alpha-0.4-Architektur: Browser mit IndexedDB, lokaler Node.js-Server und optional Ollama, OpenAI API, erlaubte GitHub-/Skill-Referenzen und Godot MCP" width="100%" />
 
 | Schicht | Dateien | Aufgabe |
 | :--- | :--- | :--- |
 | **Browser** | [`index.html`](index.html), [`src/app.js`](src/app.js), [`src/styles.css`](src/styles.css) | Chat-Oberfläche, Nachrichten, Sitzungen, Suche |
 | **Chat-Core** | [`src/core.js`](src/core.js) | Datenlogik, Projektwissen und Backup-Validierung |
 | **Speicherung** | [`src/storage.js`](src/storage.js) | IndexedDB-Snapshots, Migration und Fallback |
-| **Local Server** | [`server.mjs`](server.mjs) | Localhost-Bridge und validierte Modell-Anfragen |
+| **Local Server** | [`server.mjs`](server.mjs), [`src/providers.mjs`](src/providers.mjs) | Localhost-Bridge, Ollama und optionales OpenAI-Streaming |
+| **Integrationen** | [`src/github-integration.mjs`](src/github-integration.mjs), [`src/agent-ui.js`](src/agent-ui.js) | Freigegebene GitHub-Leseaktionen und kontrollierte Agentenschritte |
+| **Godot MCP** | [`src/godot-mcp-client.mjs`](src/godot-mcp-client.mjs), [`src/godot-scene-plan.mjs`](src/godot-scene-plan.mjs) | Manuelle Projektprüfung und optional neue Szenen |
 | **Tests & CI** | [`tests/core.test.js`](tests/core.test.js), [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Automatische Core-Tests |
 
-### 🧪 Testen
+### 🧪 Tests und Qualität
 
 ```bash
 npm test
 ```
 
-Automatisierte Core-, Streaming- und IndexedDB-Migrationstests sowie Tests mit simuliertem Ollama-Server sind enthalten. **Nicht vollständig abgedeckt:** Browser-End-to-End-Flows und echte Ollama-Inferenz auf unterschiedlichen Endgeräten.
+Automatisierte Tests decken Core, Streaming, Speicherung, GitHub-Adapter, optionale Modellanbieter und Godot-MCP-Mockabläufe ab. **Nicht vollständig abgedeckt:** Browser-End-to-End-Flows und echte Ollama-Inferenz auf unterschiedlichen Endgeräten.
 
 ## 🔐 Datenschutz & Grenzen
 
-- Chats und Projektwissen liegen **unverschlüsselt in IndexedDB** des jeweiligen Browserprofils. Falls IndexedDB nicht verfügbar ist, kommt \`localStorage\` als Fallback zum Einsatz. Auch JSON-Exporte sind unverschlüsselt.
-- Beim Einsatz von Ollama wird Gesprächskontext an den konfigurierten Modellserver gesendet. Standardmäßig ist das der eigene Rechner.
+- Chats und Projektwissen liegen **unverschlüsselt in IndexedDB** des jeweiligen Browserprofils. Falls IndexedDB nicht verfügbar ist, kommt `localStorage` als Fallback zum Einsatz. Auch JSON-Exporte sind unverschlüsselt.
+- Bei Ollama wird Gesprächskontext an den konfigurierten Modellserver gesendet. **Bei explizit ausgewählter OpenAI API** werden freigegebene Inhalte an den Cloud-Anbieter übertragen; es können zusätzliche API-Kosten entstehen.
 - Der Node.js-Server bindet an `127.0.0.1`; es gibt **keine Authentifizierung und keinen Mehrbenutzerbetrieb**.
 - **Nicht unverändert öffentlich ins Internet stellen.** Dies ist ein lokales Experiment, keine produktionsreife SaaS-Lösung.
 - Vor einem JSON-Import ein Backup exportieren; bestätigter Import ersetzt den aktuellen Datenbestand.
@@ -135,7 +141,7 @@ CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Agentic-L
 
 Über **„Projektwissen“** kannst du pro Unterhaltung wichtige Ziele, Architekturentscheidungen und Hintergrundinfos in einem eigenen Textfeld speichern (maximal **4.000 Zeichen**).
 
-**Datenschutz und Kontrolle:** Standardmäßig werden diese Notizen **nicht** an das Modell gesendet. Erst wenn du **„Bei KI-Antworten berücksichtigen“** aktivierst und speicherst, werden sie bei der nächsten Anfrage als normaler, vom Nutzer bereitgestellter Kontext mitgegeben – **nicht** als privilegierte Systemanweisung. Bei einem extern konfigurierten Ollama-Endpunkt können diese Notizen folglich an diesen Server übertragen werden.
+**Datenschutz und Kontrolle:** Standardmäßig werden diese Notizen **nicht** an ein Modell gesendet. Erst wenn du **„Bei KI-Antworten berücksichtigen“** aktivierst und speicherst, werden sie bei der nächsten Anfrage als normaler, vom Nutzer bereitgestellter Kontext mitgegeben – **nicht** als privilegierte Systemanweisung. Bei extern konfiguriertem Ollama oder ausdrücklich ausgewähltem OpenAI-Modell können diese Notizen folglich an diesen Anbieter übertragen werden.
 
 ### Bessere Chat-Speicherung
 
@@ -175,10 +181,8 @@ Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade o
 - [x] **Alpha 0.3 (erster Schritt):** IndexedDB-Migration, versionierte Backups und manuell freigegebenes Projektwissen pro Chat.
 - [x] **Optionale Integration (experimentell):** GitHub-README-Vorschau, kontrollierte Skill-Katalogsuche und manuelle Übernahme ins Projektwissen.
 - [x] **Alpha 0.4 (MVP):** Optionale OpenAI-API, getrennte Modellauswahl und bestätigungspflichtige GitHub-Agentenschritte.
-- [ ] **Alpha 0.3 (weitere Schritte):** Browser-E2E, Accessibility und robuste größere Chatverläufe.
-- [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
-
 - [x] **Godot MCP (optional):** Versions-/Projektprüfung und manuell bestätigte Erstellung neuer Szenen im festgelegten Testprojekt; ohne automatische KI-Tool-Ausführung.
+- [ ] **Nächste Schritte:** Browser-E2E, Barrierefreiheit, sichere MCP-Isolation, größere Chatverläufe und kontrollierte Agenten-Erweiterungen.
 
 ## 🤝 Mitmachen
 
