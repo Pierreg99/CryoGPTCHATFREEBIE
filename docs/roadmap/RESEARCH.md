@@ -26,7 +26,7 @@ Bei der Untersuchung waren in der öffentlichen Issues-Liste **keine offenen, re
 
 ## Laufender Ausbau
 
-Im Branch [`feat/hyperfocus-autopilot`](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/tree/feat/hyperfocus-autopilot) wurde v0.5 als zustimmungsbasierter, fest begrenzter Forschungs-/Fokusworkflow vorbereitet. **Status in diesem Dokument: Entwicklungsbranch, keine Behauptung einer gemergten Funktion.** Der Autopilot führt ohne eigenes Tool-Reasoning ausschließlich öffentliche README-/Skill-Lesevorgänge und optional eine einmalige lokale Ollama-Planung durch. Die Ziele 15/25/45 Minuten bezeichnen Arbeitsblöcke, keine länger laufenden Serverprozesse.
+Hyperfocus v0.5 wurde über [PR #10](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/10) in `main` gemergt. Ein Test zur Schreibweise von „15 Minuten“ wurde danach über [PR #12](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/12) behoben; dessen Node-CI war erfolgreich. **Noch offen:** Browser-End-to-End, Live-GitHub-Probelauf und echter Ollama-Durchstich. Der Autopilot führt ohne eigenes Tool-Reasoning ausschließlich öffentliche README-/Skill-Lesevorgänge und optional eine einmalige lokale Ollama-Planung durch. Die Ziele 15/25/45 Minuten bezeichnen Arbeitsblöcke, keine länger laufenden Serverprozesse.
 
 ## Einordnung der Risiken
 
@@ -42,6 +42,6 @@ Die 100 Einträge in [`ROADMAP-100.md`](ROADMAP-100.md) enthalten je **ein Liefe
 
 ## Nächster überprüfbarer Schritt
 
-- Für v0.5: PR prüfen, CI abwarten, manuelle Browser-Durchsicht, danach explizit freigeben.
+- Für v0.5: bereits gemergten MVP im echten Browser testen, insbesondere Abbruch, Quelle und Consent vor dem Live-Einsatz.
 - Für v0.6: echte Browser-E2E-Abdeckung priorisieren; vor neuen Agentenrechten den Aufruf-/Berechtungsplan härten.
 - Änderungen an Scope oder Priorität in GitHub-Issues/PRs nachhalten statt unbelegte Erfolgsmeldungen in die README zu schreiben.
