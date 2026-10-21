@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { configuredRepositories, githubPreview, searchGithubSkills } from './src/github-integration.mjs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -7,7 +8,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 4173);
 const ollama = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json; charset=utf-8' };
-const allow = new Set(['/index.html', '/src/app.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
+const allow = new Set(['/index.html', '/src/app.js', '/src/integrations.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
 
 function json(res, status, body) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
@@ -41,6 +42,25 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/api/status' && req.method === 'GET') {
       try { return json(res, 200, { online: true, models: await getModels() }); }
       catch { return json(res, 200, { online: false, models: [] }); }
+    }
+    if (url.pathname === '/api/integrations' && req.method === 'GET') {
+      return json(res, 200, { github: { readonly: true, repositories: configuredRepositories() }, skills: { readonly: true, executable: false } });
+    }
+    if (url.pathname === '/api/integrations/github' && req.method === 'GET') {
+      try {
+        const result = await githubPreview({ repo: url.searchParams.get('repo') || '', path: url.searchParams.get('path') || '' });
+        return json(res, 200, result);
+      } catch (error) {
+        return json(res, Number.isInteger(error.status) ? error.status : 500, { error: error.message || 'GitHub-Integration fehlgeschlagen.' });
+      }
+    }
+    if (url.pathname === '/api/integrations/skills' && req.method === 'GET') {
+      try {
+        const result = await searchGithubSkills({ repo: url.searchParams.get('repo') || '', query: url.searchParams.get('q') || '' });
+        return json(res, 200, result);
+      } catch (error) {
+        return json(res, Number.isInteger(error.status) ? error.status : 500, { error: error.message || 'Skill-Suche fehlgeschlagen.' });
+      }
     }
     if ((url.pathname === '/api/chat' || url.pathname === '/api/chat/stream') && req.method === 'POST') {
       if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'JSON erwartet.' });

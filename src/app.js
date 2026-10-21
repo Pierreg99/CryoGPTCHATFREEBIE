@@ -1,4 +1,5 @@
 import { consumeOllamaStream } from './stream.js';
+import { setupIntegrations } from './integrations.js';
 import { createPersistence } from './storage.js';
 import { emptyStore, createChat, renameChat, deleteChat, appendMessage, searchChats, parseBackup, toOllamaMessages, setProjectContext } from './core.js';
 
@@ -260,5 +261,6 @@ el('import-file').addEventListener('change', async e => {
 });
 
 render();
+setupIntegrations({ el, active, mutate, notice });
 refreshModels();
 if (storageWarnings.length) queueMicrotask(() => notice(storageWarnings.join(' ')));
