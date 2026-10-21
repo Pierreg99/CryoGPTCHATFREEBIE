@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { configuredRepositories, githubPreview, searchGithubSkills } from './src/github-integration.mjs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -41,6 +42,25 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/api/status' && req.method === 'GET') {
       try { return json(res, 200, { online: true, models: await getModels() }); }
       catch { return json(res, 200, { online: false, models: [] }); }
+    }
+    if (url.pathname === '/api/integrations' && req.method === 'GET') {
+      return json(res, 200, { github: { readonly: true, repositories: configuredRepositories() }, skills: { readonly: true, executable: false } });
+    }
+    if (url.pathname === '/api/integrations/github' && req.method === 'GET') {
+      try {
+        const result = await githubPreview({ repo: url.searchParams.get('repo') || '', path: url.searchParams.get('path') || '' });
+        return json(res, 200, result);
+      } catch (error) {
+        return json(res, Number.isInteger(error.status) ? error.status : 500, { error: error.message || 'GitHub-Integration fehlgeschlagen.' });
+      }
+    }
+    if (url.pathname === '/api/integrations/skills' && req.method === 'GET') {
+      try {
+        const result = await searchGithubSkills({ repo: url.searchParams.get('repo') || '', query: url.searchParams.get('q') || '' });
+        return json(res, 200, result);
+      } catch (error) {
+        return json(res, Number.isInteger(error.status) ? error.status : 500, { error: error.message || 'Skill-Suche fehlgeschlagen.' });
+      }
     }
     if ((url.pathname === '/api/chat' || url.pathname === '/api/chat/stream') && req.method === 'POST') {
       if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'JSON erwartet.' });
