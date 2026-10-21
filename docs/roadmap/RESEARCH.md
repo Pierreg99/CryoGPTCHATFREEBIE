@@ -1,5 +1,13 @@
 # Rechercheprotokoll · CryoGPTCHATFREEBIE Roadmap (2026-10-21)
 
+## Aktualisierung nach PR #13
+
+Der folgende Recherchebericht dokumentiert den historischen Stand vor dem Workspace-Umbau. Seit [PR #13](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/13) gibt es Browser-E2E und axe-Prüfungen, ein responsives Designsystem, Modellfavoriten, Hyperfocus-Historie, freizugebende Agentenfolgen und separat aktivierbare Markdown-Ausgabe. Node 20/22 und Chromium auf Node 24 wurden in CI erfolgreich geprüft. Externe Modell-/Godot-/GitHub-Schreibdienste bleiben in Tests simuliert.
+
+Die Roadmap wird jetzt zusätzlich als browsbare Ansicht aus derselben Markdown-Datei dargestellt. v0.6 ist umgesetzt; v0.7 und v6.1 sind teilweise umgesetzt. Die übrigen offenen Gates sind weiterhin Planung und keine Release-Tags. Aktuelle Bedienung und Grenzen: [Workspace-Dokumentation](../workspace.md).
+
+## Historischer Recherchebericht
+
 ## Untersuchungsumfang
 
 Die Bewertung basiert auf dem öffentlich verbundenen Repository [Pierreg99/CryoGPTCHATFREEBIE](https://github.com/Pierreg99/CryoGPTCHATFREEBIE) (Branch `main` vor Erstellung dieses Dokumentationsbranches). Einbezogen wurden README, Dokumentationsdateien, Quellcode, CI und die Pull-Request-Historie. Dies ist ein **Code-/Dokumentations-Audit**, kein ausgelieferter Penetrationstest, kein vollständiger Browser-E2E-Test und keine Gewähr, dass optionale Provider/Godot lokal eingerichtet sind.
