@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" role="img" aria-labelledby="ttl dsc"><title id="ttl">CryoGPTCHAT – Clean Edition</title><desc id="dsc">Minimalistische helle Produktgrafik mit Chatdialogen und lokalen Daten</desc><rect width="1200" height="370" rx="20" fill="#F6FAFC"/>
 <defs><linearGradient id="shade" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#D7F5FC"/><stop offset="1" stop-color="#DFE1FE"/></linearGradient></defs>
 <path d="M0 320Q440 210 1200 356" fill="none" stroke="#CEE0EC" stroke-width="1.5"/><circle cx="976" cy="158" r="160" fill="url(#shade)" opacity=".68"/>
-<rect x="44" y="38" width="200" height="33" rx="16" fill="#E5F2F9"/><circle cx="61" cy="54" r="5" fill="#0698AA"/><text x="75" y="60" fill="#1D5870" font-size="13" font-weight="700" font-family="Arial,Helvetica,sans-serif" letter-spacing="1.5">LOCAL-FIRST / ALPHA</text>
+<rect x="44" y="38" width="200" height="33" rx="16" fill="#E5F2F9"/><circle cx="61" cy="54" r="5" fill="#0698AA"/><text x="75" y="60" fill="#1D5870" font-size="13" font-weight="700" font-family="Arial,Helvetica,sans-serif" letter-spacing="1.5">LOCAL FIRST / RC</text>
 <text x="42" y="143" font-size="65" font-family="Arial,Helvetica,sans-serif" font-weight="800" letter-spacing="-3" fill="#14293F">CryoGPT<tspan fill="#008FAD">CHAT</tspan></text>
 <text x="47" y="189" font-size="30" font-family="Arial,Helvetica,sans-serif" font-weight="700" fill="#263B51">FREEBIE</text>
 <text x="47" y="238" font-size="21" font-family="Arial,Helvetica,sans-serif" fill="#426177">Deine Chats. Deine Modelle. Deine Kontrolle.</text>

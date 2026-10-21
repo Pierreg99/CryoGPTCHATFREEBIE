@@ -1965,7 +1965,11 @@ textarea::placeholder {
   font-weight: 620;
 }
 .prompt-grid button::after {
-  content: "↗";
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
   position: absolute;
   right: 16px;
   top: 18px;

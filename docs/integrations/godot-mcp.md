@@ -48,7 +48,7 @@ npm start
 - `GODOT_PROJECT_PATH`: Absoluter Pfad zu genau **einem** Projekt mit `project.godot`.
 - `GODOT_PATH`: Optional der Pfad zum installierten Godot-Binary; wenn nicht gesetzt, kann Upstream die Installation selbst erkennen.
 
-Öffne [http://127.0.0.1:4173](http://127.0.0.1:4173) lokal im Browser und wähle **🎮 Godot MCP**. Bei erfolgreicher Konfiguration werden beide Schaltflächen aktiv. Jede Abfrage erfordert eine zusätzliche Bestätigung. Ergebnisse werden nur **als Text angezeigt**; sie werden **nicht automatisch als Modellkontext gespeichert oder weitergeleitet**.
+Öffne [http://127.0.0.1:4173](http://127.0.0.1:4173) lokal im Browser und öffne **Godot MCP** in der Navigation. Bei erfolgreicher Konfiguration werden beide Schaltflächen aktiv. Jede Abfrage erfordert eine zusätzliche Bestätigung. Ergebnisse werden nur **als Text angezeigt**; sie werden **nicht automatisch als Modellkontext gespeichert oder weitergeleitet**.
 
 Die Integration funktioniert auch dann, wenn Ollama nicht installiert ist.
 
@@ -68,7 +68,7 @@ GODOT_SCENE_WRITES=true npm start
 
 Setze die Umgebungsvariablen `GODOT_MCP_ENTRY`, `GODOT_PROJECT_PATH` und optional `GODOT_PATH` im gleichen Terminal, bevor du den Server startest.
 
-1. In **🎮 Godot MCP** einen Szenennamen eingeben (z. B. `MeinLevel`) und einen Knoten-Typ wählen: `Node2D`, `Node3D` oder `Control`.
+1. In **Godot MCP** einen Szenennamen eingeben (z. B. `MeinLevel`) und einen Knoten-Typ wählen: `Node2D`, `Node3D` oder `Control`.
 2. Auf **„Szene prüfen (ohne Schreiben)“** klicken. Die Vorschau zeigt Projekt, Dateipfad und Wurzelknoten. Dabei wird **keine Szene angelegt**.
 3. Erst über **„Geprüfte Szene erstellen“** und Eingabe von **`ERSTELLEN`** im Bestätigungsdialog wird eine einmalige, maximal zwei Minuten gültige Freigabe verwendet.
 4. Die neue `.tscn`-Datei im Godot-Editor kontrollieren, bevor du unbekannte Skripte im Projekt startest.

@@ -7,9 +7,9 @@ export function createRoadmapPanel() {
   const panel = document.createElement("section");
   panel.className = "roadmap-panel";
   panel.setAttribute("aria-label", "Produkt-Roadmap");
-  panel.innerHTML = `<div class="roadmap-summary"><div><span class="eyebrow">V0.1 → V10.0</span><h2>Große Vision. Prüfbare Schritte.</h2><p>100 Meilensteine, zehn Phasen. Entwicklungsziele sind keine veröffentlichten Releases.</p></div><div class="roadmap-counts" aria-label="Umsetzungsstand"></div></div>
+  panel.innerHTML = `<div class="roadmap-summary"><div><span class="eyebrow">V0.1 BIS V10.0</span><h2>Große Vision. Prüfbare Schritte.</h2><p>100 Meilensteine, zehn Phasen. Entwicklungsziele sind keine veröffentlichten Releases.</p></div><div class="roadmap-counts" aria-label="Umsetzungsstand"></div></div>
     <div class="roadmap-toolbar"><div class="field-group"><label for="roadmap-search">Version oder Thema suchen</label><input id="roadmap-search" type="search" placeholder="z. B. v0.6, Godot, Sandbox …"></div><div class="field-group"><label for="roadmap-phase">Phase</label><select id="roadmap-phase"><option value="">Alle zehn Phasen</option></select></div><div class="field-group"><label for="roadmap-status">Status</label><select id="roadmap-status"><option value="">Alle Status</option><option value="implemented">Umgesetzt</option><option value="partial">Teilweise umgesetzt</option><option value="planned">Geplant</option></select></div></div>
-    <p id="roadmap-result-count" role="status">Roadmap wird geladen …</p><div class="roadmap-layout"><div><ol id="roadmap-list" class="roadmap-list" tabindex="-1" aria-label="Versions-Meilensteine"></ol><div class="roadmap-pagination"><button id="roadmap-prev" type="button">← Zurück</button><span id="roadmap-page"></span><button id="roadmap-next" type="button">Weiter →</button></div></div><section class="roadmap-detail" aria-label="Versionsdetails"><h2 tabindex="-1" id="roadmap-detail-title">Version auswählen</h2><div id="roadmap-detail-content"></div></section></div>`;
+    <p id="roadmap-result-count" role="status">Roadmap wird geladen …</p><div class="roadmap-layout"><div><ol id="roadmap-list" class="roadmap-list" tabindex="-1" aria-label="Versions-Meilensteine"></ol><div class="roadmap-pagination"><button id="roadmap-prev" type="button">Zurück</button><span id="roadmap-page"></span><button id="roadmap-next" type="button">Weiter</button></div></div><section class="roadmap-detail" aria-label="Versionsdetails"><h2 tabindex="-1" id="roadmap-detail-title">Version auswählen</h2><div id="roadmap-detail-content"></div></section></div>`;
   const find = (id) => panel.querySelector("#" + id);
   let data,
     page = 0,
@@ -53,7 +53,7 @@ export function createRoadmapPanel() {
     const source = document.createElement("a");
     source.href =
       "https://github.com/Pierreg99/CryoGPTCHATFREEBIE/blob/main/docs/roadmap/ROADMAP-100.md";
-    source.textContent = "Quell-Roadmap ansehen ↗";
+    source.textContent = "Quell-Roadmap ansehen";
     source.target = "_blank";
     source.rel = "noopener noreferrer";
     const back = document.createElement("button");

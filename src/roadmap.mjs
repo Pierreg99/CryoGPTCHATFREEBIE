@@ -1,4 +1,12 @@
 // The Markdown document remains the source of truth for all version details.
+const statuses = {
+  "Historisch implementiert": "implemented",
+  "MVP im Code": "implemented",
+  Implementiert: "implemented",
+  "Teilweise umgesetzt": "partial",
+  Geplant: "planned",
+};
+
 export function parseRoadmap(markdown) {
   const lines = markdown.split("\n");
   const phases = [];
@@ -18,11 +26,9 @@ export function parseRoadmap(markdown) {
       /^\*\*Lieferobjekt:\*\* (.+) \*\*Abnahme:\*\* (.+)$/,
     );
     if (!phase || !fields) throw new Error("Ungültiger Roadmap-Meilenstein.");
-    const status = match[1].includes("✅")
-      ? "implemented"
-      : match[1].includes("Teilweise")
-        ? "partial"
-        : "planned";
+    if (!Object.hasOwn(statuses, match[1]))
+      throw new Error("Unbekannter Roadmap-Status.");
+    const status = statuses[match[1]];
     milestones.push({
       version: match[2],
       title: match[3],

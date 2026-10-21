@@ -30,6 +30,11 @@ for (const width of [360, 768, 1440])
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto("/");
     await expect(page.locator(".workspace-nav a")).toHaveCount(8);
+    await expect(
+      page.locator(".workspace-nav svg[aria-hidden=true]"),
+    ).toHaveCount(8);
+    if (width > 850) await expect(page.locator("#nav-toggle")).toBeHidden();
+    else await expect(page.locator("#nav-toggle")).toBeVisible();
     for (const view of [
       "chat",
       "knowledge",
@@ -41,6 +46,9 @@ for (const width of [360, 768, 1440])
       "roadmap",
     ]) {
       await page.goto("/#" + view);
+      await expect(page.locator("body")).not.toHaveText(
+        /\p{Extended_Pictographic}|\uFE0F/u,
+      );
       await expect(
         page.locator(".workspace-nav a[aria-current=page]"),
       ).toHaveAttribute("href", "#" + view);
@@ -94,9 +102,9 @@ test("local chat, context, backup and model favorites survive reload", async ({
   await page.locator("#save-project-notes").click();
   await expect(page.locator("#project-share")).not.toBeChecked();
   await page.goto("/#models");
-  await page.getByRole("button", { name: "☆ Merken" }).first().click();
+  await page.getByRole("button", { name: "Merken" }).first().click();
   await page.reload();
-  await expect(page.getByRole("button", { name: "★ Favorit" })).toHaveCount(1);
+  await expect(page.getByRole("button", { name: "Favorit" })).toHaveCount(1);
   await page.locator("#model-search").fill("unavailable");
   await expect(page.locator("#model-cards")).toContainText(
     "Keine Modelle gefunden",
@@ -454,4 +462,30 @@ test("roadmap loading failure offers recovery without duplicate summary data", a
   await page.getByRole("button", { name: "Erneut laden", exact: true }).click();
   await expect(page.locator("#roadmap-list button")).toHaveCount(10);
   await expect(page.locator(".roadmap-counts > div")).toHaveCount(3);
+});
+
+test("emoji-free application controls preserve Unicode messages through save, reload and export", async ({
+  page,
+}) => {
+  await mock(page);
+  await page.goto("/");
+  await page.locator("#new-chat").click();
+  const message = "Projektstart 🚀 – Hallo 🌍, 日本語 und Grüße";
+  await page.locator("#prompt").fill(message);
+  await page.locator("#send").click();
+  await expect(page.locator(".message pre")).toHaveText(message);
+  await page.reload();
+  await expect(page.locator(".message pre")).toHaveText(message);
+  await expect(page.locator("#send")).toHaveAccessibleName("Senden");
+  await expect(page.locator("#send svg")).toHaveAttribute(
+    "aria-hidden",
+    "true",
+  );
+  const download = page.waitForEvent("download");
+  await page.locator("#export").click();
+  const stream = await (await download).createReadStream();
+  const chunks = [];
+  for await (const chunk of stream) chunks.push(chunk);
+  const backup = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+  expect(backup.chats[0].messages[0].content).toBe(message);
 });

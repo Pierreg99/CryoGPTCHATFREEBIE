@@ -191,7 +191,7 @@ function renderMessages() {
     typing.className = "typing";
     typing.id = "streaming-reply";
     typing.setAttribute("aria-live", "off");
-    typing.textContent = streamedText || "◌ KI-Modell antwortet …";
+    typing.textContent = streamedText || "KI-Modell antwortet …";
     list.append(typing);
   }
   list.scrollTop = list.scrollHeight;
@@ -224,7 +224,7 @@ function render() {
 async function refreshModels() {
   if (sending || restoring) return;
   const request = ++modelRefreshSerial;
-  el("status").textContent = "○ Prüfe Modellanbieter …";
+  el("status").textContent = "Prüfe Modellanbieter …";
   try {
     const res = await fetch("/api/status");
     if (!res.ok) throw new Error("Server nicht erreichbar");
@@ -245,12 +245,12 @@ async function refreshModels() {
         : [];
     models = [...local, ...cloud.map((name) => "openai:" + name)];
     el("status").textContent = models.length
-      ? "● " + local.length + " lokal · " + cloud.length + " Cloud"
-      : "○ Nur lokale Notizen";
+      ? "" + local.length + " lokal · " + cloud.length + " Cloud"
+      : "Nur lokale Notizen";
   } catch {
     if (request !== modelRefreshSerial || restoring) return;
     models = [];
-    el("status").textContent = "○ Keine KI-Verbindung";
+    el("status").textContent = "Keine KI-Verbindung";
   }
   const picker = el("model");
   picker.replaceChildren();
@@ -262,8 +262,8 @@ async function refreshModels() {
     const option = document.createElement("option");
     option.value = name;
     option.textContent = name.startsWith("openai:")
-      ? "☁ OpenAI / " + name.slice(7) + " (API-Kosten möglich)"
-      : "◉ Ollama / " + name;
+      ? "OpenAI / " + name.slice(7) + " (API-Kosten möglich)"
+      : "Ollama / " + name;
     picker.append(option);
   }
   // Never switch automatically from explicit note-only mode to a paid or local model.
@@ -315,13 +315,12 @@ async function checkGodotStatus() {
     godotConfigured = data.configured === true;
     canCreateScenes = godotConfigured && data.canCreateScenes === true;
     el("godot-status").textContent = godotConfigured
-      ? "● Optionales Godot MCP eingerichtet. Keine Abfrage läuft."
-      : "○ Nicht eingerichtet. Anleitung: docs/integrations/godot-mcp.md";
+      ? "Optionales Godot MCP eingerichtet. Keine Abfrage läuft."
+      : "Nicht eingerichtet. Anleitung: docs/integrations/godot-mcp.md";
   } catch {
     godotConfigured = false;
     canCreateScenes = false;
-    el("godot-status").textContent =
-      "○ Godot MCP ist aktuell nicht erreichbar.";
+    el("godot-status").textContent = "Godot MCP ist aktuell nicht erreichbar.";
   }
   setGodotControls();
 }
@@ -346,7 +345,7 @@ async function inspectGodot(tool) {
     return;
   godotBusy = true;
   setGodotControls();
-  el("godot-status").textContent = "◌ Lokale Abfrage läuft …";
+  el("godot-status").textContent = "Lokale Abfrage läuft …";
   el("godot-output").textContent = "Godot MCP wird geprüft …";
   try {
     const res = await fetch("/api/godot/inspect", {
@@ -360,10 +359,10 @@ async function inspectGodot(tool) {
       data.output || "Keine Informationen verfügbar.",
     );
     el("godot-status").textContent =
-      "● Abfrage abgeschlossen. Ergebnis wurde nur angezeigt, nicht automatisch gespeichert oder an KI gesendet.";
+      "Abfrage abgeschlossen. Ergebnis wurde nur angezeigt, nicht automatisch gespeichert oder an KI gesendet.";
   } catch (error) {
     el("godot-output").textContent = "Fehler: " + error.message;
-    el("godot-status").textContent = "○ Abfrage fehlgeschlagen.";
+    el("godot-status").textContent = "Abfrage fehlgeschlagen.";
   } finally {
     godotBusy = false;
     setGodotControls();

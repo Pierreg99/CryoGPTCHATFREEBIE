@@ -1,66 +1,32 @@
 <div align="center">
-  <img src="assets/readme/hero-v2.svg" alt="CryoGPTCHATFREEBIE – futuristisches Cryo-Neon-Banner mit illustrativem Chat-Workspace" width="100%" />
-
-  # ❄️ CryoGPTCHATFREEBIE
-
-  **Deine Chats. Deine Modelle. Deine Kontrolle.**
-
-  Local-First KI-Workspace für Chats, Projektwissen und Entwickler-Workflows.  
-  **Ollama lokal**, **OpenAI optional**, **GitHub-/Cryo-Omega-Skills als geprüfte Referenz** und **Godot MCP nur mit manueller Freigabe**.
-
+  <img src="assets/readme/hero-v2.svg" alt="CryoGPTCHATFREEBIE – Cryo-Neon-Illustration des lokalen KI-Workspace" width="100%" />
+  <h1>CryoGPTCHATFREEBIE</h1>
+  <p><strong>Deine Chats. Deine Modelle. Deine Kontrolle.</strong></p>
+  <p>Ein lokaler KI-Workspace für Chats, Projektwissen und kontrollierte Entwickler-Workflows.</p>
+  <p><code>1.0.0-rc.1</code> · <code>LOCAL FIRST</code> · <code>PROVIDER: OPT-IN</code></p>
   <p>
-    <code>1.0.0-rc.1</code> ·
-    <code>LOCAL FIRST</code> ·
-    <code>NODE.JS 20+</code> ·
-    <code>MODEL PROVIDERS: OPT-IN</code>
-  </p>
-
-  <p>
-    <a href="#-schnellstart"><strong>▶ Schnellstart</strong></a> ·
-    <a href="#-funktionen">Funktionen</a> ·
-    <a href="#-drei-designwelten">Designwelten</a> ·
-    <a href="#-systemarchitektur">Architektur</a> ·
-    <a href="#-datenschutz--grenzen">Sicherheit</a> ·
-    <a href="docs/roadmap/ROADMAP-100.md">100-Versionen-Roadmap</a>
+    <a href="#schnellstart">Schnellstart</a> ·
+    <a href="#funktionen">Funktionen</a> ·
+    <a href="#drei-designwelten">Designwelten</a> ·
+    <a href="#systemarchitektur">Architektur</a> ·
+    <a href="#datenschutz-und-grenzen">Sicherheit</a> ·
+    <a href="#roadmap">Roadmap</a>
   </p>
 </div>
 
----
+## Aktueller Stand
 
-## Auf dem Weg zu 1.0 · Release-Candidate
+**1.0.0-rc.1 ist ein Release Candidate.** Die stabile 1.0 wartet auf die dokumentierte manuelle WCAG-2.2-AA-Abnahme mit echter assistiver Technik. Offene Gates blockieren den stabilen Paketbau. [Release-Politik](docs/RELEASE.md) · [Release-Checkliste](docs/RELEASE-CHECKLIST.md) · [Changelog](CHANGELOG.md)
 
-**Stabile 1.0 ist noch nicht freigegeben:** Die manuelle Accessibility-Abnahme bleibt offen. Paketbau, Plattform-/Migrationspolitik und blockierende Release-Gates stehen in [docs/RELEASE.md](docs/RELEASE.md).
+Der Cryo-Neon-Workspace bietet acht Ansichten: Chat, Projektwissen, Hyperfocus, Agenten, GitHub & Skills, Godot MCP, Roadmap und Modellzentrale. Die Oberfläche nutzt einheitliche SVG-Icons, mobile Navigation, Tastaturbedienung und pausierbare Animationen. Ohne ausgewähltes Modell dient sie als lokales Chat-Notizbuch.
 
-Backups vor dem Import prüfen, einen lesbaren Fehlerbericht herunterladen und den letzten Import bei Bedarf zurücksetzen. Die neue Wiederherstellung speichert Chats und Rücksetzpunkt in IndexedDB atomar. Dazu kommen pausierbare Animationen, dauerhaft lesbare Meldungen und verbesserte Tastatur-/Live-Statusführung. Das Backupformat bleibt mit Version 1 und 2 kompatibel. [Wiederherstellung und Grenzen](docs/backup-recovery.md) · [Accessibility-Prüfbericht](docs/accessibility-report.md)
+![Aktueller Cryo-Neon-Workspace auf Desktop](docs/screenshots/workspace-desktop.png)
 
-## ❄️ Cryo-Neon-Workspace
+[Mobile Ansicht](docs/screenshots/workspace-mobile.png) · [Bedienung und Konfiguration](docs/workspace.md)
 
-![Echter Screenshot des neuen Cryo-Neon-Workspace](docs/screenshots/workspace-desktop.png)
+## Schnellstart
 
-Acht eigene Ansichten einschließlich einer durchsuchbaren Roadmap mit allen 100 Versions-Meilensteinen, mobile Navigation, einheitliche Freigabedialoge und reduzierte Bewegung auf Wunsch. Neu sind Modellfavoriten, kopierbare Nachrichten, Skill-Karten, lokale Hyperfocus-Historie und einzeln freigegebene Agenten-Schrittfolgen. Markdown-Ausgaben lokal oder über neue GitHub-Branches und PRs bleiben standardmäßig gesperrt und benötigen eigene serverseitige Opt-ins. [Bedienung, Konfiguration und Grenzen →](docs/workspace.md)
-
-### Alle Versionen im Blick
-
-![Interaktive Roadmap mit Versionsdetails und belegtem Status](docs/screenshots/roadmap.png)
-
-Suche nach Themen oder Versionsnummern, filtere nach Phase und Status und prüfe Lieferobjekt und Abnahmekriterium jeder Version. Die Ansicht liest die bestehende Markdown-Roadmap; geplante Funktionen bleiben als geplant gekennzeichnet.
-
-## ✨ Funktionen
-
-<img src="assets/readme/capabilities.svg" alt="Vier Module: lokaler Chat mit Ollama, optionaler OpenAI-Modellanbieter, GitHub-/Cryo-Omega-Skills nur lesend und manuell freigegebene Godot-MCP-Aktionen" width="100%" />
-
-| Funktion | Im aktuellen Stand |
-| :--- | :--- |
-| **Chat & Daten** | Responsive Oberfläche, Volltextsuche, IndexedDB, JSON-Export/-Import und gespeichertes Projektwissen |
-| **KI-Modelle** | Ollama lokal; optional OpenAI API mit serverseitigem Schlüssel und Bestätigung **vor jeder** Cloud-Anfrage |
-| **Integrationen** | README-/Datei-/Strukturvorschau, Skill-Karten, Agenten-Schrittfolgen und optionale geprüfte Markdown-Ausgabe |
-| **Godot MCP** | Versions- und Projektinspektion; neue Szenen ausschließlich nach Opt-in, Vorschau und Bestätigung |
-
-> **Die SVG-Banner sind Konzeptillustrationen.** Echte Screenshots und Bedienhinweise zum neuen Workspace stehen in [docs/workspace.md](docs/workspace.md). Ohne ausgewähltes Modell arbeitet die App als lokales Chat-Notizbuch; sie simuliert keine KI-Antworten.
-
-## 🚀 Schnellstart
-
-**Voraussetzung:** [Node.js](https://nodejs.org/) 20 oder neuer. Keine npm-Laufzeitabhängigkeiten; Browser-Tests verwenden Entwicklungsabhängigkeiten.
+**Empfohlen:** Node.js 22.12+ oder Node 24, Linux x64 und aktuelles Chromium. Die Node-Tests prüfen weiterhin Kompatibilität mit Node 20. Andere Plattformen und Browser sind experimentell; Details stehen in der [Kompatibilitätspolitik](docs/RELEASE.md).
 
 ```bash
 git clone https://github.com/Pierreg99/CryoGPTCHATFREEBIE.git
@@ -68,162 +34,122 @@ cd CryoGPTCHATFREEBIE
 npm start
 ```
 
-Öffne danach **[http://127.0.0.1:4173](http://127.0.0.1:4173)** auf demselben Rechner.
+Öffne **[http://127.0.0.1:4173](http://127.0.0.1:4173)** auf demselben Rechner. Der Start benötigt keine npm-Laufzeitabhängigkeiten. `npm ci` wird für Browser-Tests benötigt. Der Server akzeptiert die kanonische Loopback-Adresse; verwende diese auch anstelle von `localhost`.
 
 ### Optional: Ollama verbinden
 
-1. [Ollama installieren](https://ollama.com/).
-2. Ein kompaktes lokales Modell herunterladen: `ollama pull qwen2.5:3b`.
-3. Ollama lokal unter `127.0.0.1:11434` betreiben.
-4. In CryoGPTCHATFREEBIE die Modellliste aktualisieren und dein Modell auswählen.
+1. [Ollama installieren](https://ollama.com/) und lokal starten.
+2. Ein Modell herunterladen, beispielsweise `ollama pull qwen2.5:3b`.
+3. Ollama unter `127.0.0.1:11434` bereitstellen.
+4. In der Modellzentrale die Liste aktualisieren und das Modell ausdrücklich auswählen.
 
-Der Modellserver ist über `OLLAMA_URL` konfigurierbar. Eine Internetverbindung ist möglicherweise einmalig nötig, um das Modell herunterzuladen; **KI-Antworten benötigen danach keine obligatorische Cloud-API**.
+`OLLAMA_URL` kann einen anderen Modellserver festlegen. Bei einem externen Server verlässt der übermittelte Kontext deinen Rechner. Ohne Modell werden keine KI-Antworten simuliert.
 
-## 🎨 Drei Designwelten
+## Funktionen
 
-Die **drei ursprünglichen Designwelten** bleiben erhalten. Jede besitzt einen eigenen editierbaren SVG-Header. Die neue Hauptansicht kombiniert Produktklarheit, holografische Cyan-/Violett-Akzente und gut lesbare Architektur-Grafiken.
+<img src="assets/readme/capabilities.svg" alt="Vier Bereiche: lokaler Chat, optionale Modellanbieter, geprüfte GitHub-/Skill-Referenzen und manuell freigegebene Godot-Werkzeuge" width="100%" />
 
-<table>
-<tr>
-<td width="33%" align="center">
-<a href="docs/readme-variants/01-clean.md"><img src="assets/readme/banner-clean.svg" alt="Clean Design – helles und ruhiges Branding" width="100%"></a>
-<br><strong>01 · Professional / Clean</strong>
-<br>Minimalistisch, technisch, gut lesbar.
-<br><a href="docs/readme-variants/01-clean.md">Variante öffnen →</a>
-</td>
-<td width="33%" align="center">
-<a href="docs/readme-variants/02-neon.md"><img src="assets/readme/banner-neon.svg" alt="Neon Design – futuristische Cyber-Kristall-Grafik" width="100%"></a>
-<br><strong>02 · Futuristic / Neon</strong>
-<br>Holografisch, kontrastreich, cineastisch.
-<br><a href="docs/readme-variants/02-neon.md">Variante öffnen →</a>
-</td>
-<td width="33%" align="center">
-<a href="docs/readme-variants/03-product.md"><img src="assets/readme/banner-product.svg" alt="Produkt-Design – Chat-App als Produktillustration" width="100%"></a>
-<br><strong>03 · App / Landing Page</strong>
-<br>Produktnutzen, Einstieg und FAQ.
-<br><a href="docs/readme-variants/03-product.md">Variante öffnen →</a>
-</td>
-</tr>
-</table>
+| Bereich | Aktuelles Verhalten |
+| :--- | :--- |
+| Chat | Unterhaltungen erstellen, durchsuchen, umbenennen und löschen; Antworten streamen, stoppen und kopieren |
+| Daten | IndexedDB mit localStorage-Fallback; JSON-Export und Import für Backup-Schema 1/2 mit Dry-run, Fehlerbericht und Rücksetzpunkt |
+| Projektwissen | Bis zu 4.000 Zeichen je Chat; Übergabe an ein Modell erst nach gespeicherter Freigabe |
+| Modelle | Ollama und optional OpenAI; manuelle Auswahl, Suche und lokal gespeicherte Favoriten |
+| Hyperfocus | Ein freigegebener, begrenzter Rechercheplan; optional Ollama-Zusammenfassung und lokale Historie |
+| Agenten | Bis zu fünf einzeln bestätigte Leseaktionen; optionale Markdown-Ausgabe nach separater Aktivierung und Vorschau |
+| GitHub & Skills | Öffentliche freigegebene README-, Datei-, Struktur- und Skill-Referenzen prüfen und bewusst übernehmen |
+| Godot MCP | Lokale Versions-/Projektprüfung; neue Szenen nur mit Opt-in, Vorschau und Bestätigung |
+| Roadmap | Alle 100 Meilensteine mit Suche, Phasen-/Statusfilter, Lieferobjekt und Abnahmekriterium |
 
-**Alle Grafiken liegen im Repository:** [`assets/readme/`](assets/readme/). Keine externen Bild-CDNs notwendig.
+### Modelle und kontrollierte Agenten
 
-## 🧩 Systemarchitektur
+OpenAI benötigt serverseitig `OPENAI_API_KEY` und die Modellfreigabeliste `CRYO_OPENAI_MODELS`. Jede Cloud-Anfrage verlangt eine Bestätigung und kann API-Kosten verursachen. Der Browser speichert keine API-Schlüssel. [Modellanbieter und Agentenschritte](docs/model-providers-and-agents.md)
 
-<img src="assets/readme/architecture-v2.svg" alt="Schematische Alpha-0.4-Architektur: Browser mit IndexedDB, lokaler Node.js-Server und optional Ollama, OpenAI API, erlaubte GitHub-/Skill-Referenzen und Godot MCP" width="100%" />
-
-| Schicht | Dateien | Aufgabe |
-| :--- | :--- | :--- |
-| **Browser** | [`index.html`](index.html), [`src/app.js`](src/app.js), [`src/styles.css`](src/styles.css) | Chat-Oberfläche, Nachrichten, Sitzungen, Suche |
-| **Chat-Core** | [`src/core.js`](src/core.js) | Datenlogik, Projektwissen und Backup-Validierung |
-| **Speicherung** | [`src/storage.js`](src/storage.js) | IndexedDB-Snapshots, Migration und Fallback |
-| **Local Server** | [`server.mjs`](server.mjs), [`src/providers.mjs`](src/providers.mjs) | Localhost-Bridge, Ollama und optionales OpenAI-Streaming |
-| **Integrationen** | [`src/github-integration.mjs`](src/github-integration.mjs), [`src/agent-ui.js`](src/agent-ui.js) | Freigegebene GitHub-Leseaktionen und kontrollierte Agentenschritte |
-| **Godot MCP** | [`src/godot-mcp-client.mjs`](src/godot-mcp-client.mjs), [`src/godot-scene-plan.mjs`](src/godot-scene-plan.mjs) | Manuelle Projektprüfung und optional neue Szenen |
-| **Tests & CI** | [`tests/core.test.js`](tests/core.test.js), [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Automatische Core-Tests |
-
-### 🧪 Tests und Qualität
-
-```bash
-npm test
-```
-
-Automatisierte Node- und Browser-Tests decken Core, Streaming, Speicherung, GitHub-Adapter, optionale Modellanbieter, Agentenfreigaben und Godot-MCP-Mockabläufe ab. Browser- und Accessibility-Tests starten mit `npm ci`, `npx playwright install chromium` und `npm run test:e2e` (Node 24 empfohlen). Externe Dienste werden simuliert; echte Ollama-Inferenz bleibt separat zu prüfen.
-
-## 🔐 Datenschutz & Grenzen
-
-- Chats und Projektwissen liegen **unverschlüsselt in IndexedDB** des jeweiligen Browserprofils. Falls IndexedDB nicht verfügbar ist, kommt `localStorage` als Fallback zum Einsatz. Auch JSON-Exporte sind unverschlüsselt.
-- Bei Ollama wird Gesprächskontext an den konfigurierten Modellserver gesendet. **Bei explizit ausgewählter OpenAI API** werden freigegebene Inhalte an den Cloud-Anbieter übertragen; es können zusätzliche API-Kosten entstehen.
-- Der Node.js-Server bindet an `127.0.0.1`; es gibt **keine Authentifizierung und keinen Mehrbenutzerbetrieb**.
-- **Nicht unverändert öffentlich ins Internet stellen.** Dies ist ein lokales Experiment, keine produktionsreife SaaS-Lösung.
-- Vor einem JSON-Import ein Backup exportieren; bestätigter Import ersetzt den aktuellen Datenbestand.
-
-## 🤖 Optionale KI-Anbieter und kontrollierte Agentenschritte
-
-**Neu:** Ollama und eine optionale OpenAI-Chat-Completions-API können in derselben Modellauswahl genutzt werden. Die OpenAI-Anbindung benötigt serverseitig `OPENAI_API_KEY` **und** die explizite Modell-Allowlist `CRYO_OPENAI_MODELS`. Cloud-Nutzung bleibt standardmäßig aus; vor jeder Cloud-Anfrage wird der Nutzer gefragt. Die OpenAI API ist separat kostenpflichtig.
-
-Der **Agenten-Workspace** bietet bis zu fünf einzeln freigegebene Leseaktionen: README, Skills, Repository-Struktur und begrenzte Textdateien. Ergebnisse werden nur auf Wunsch in einen Nachrichtenentwurf übertragen. Optionale Markdown-Ausgabe benötigt getrennte serverseitige Opt-ins und eine vollständige Vorschau; GitHub-Ausgabe erzeugt neue Branches und PRs, keine direkten Änderungen auf `main`.
-
-**Einrichtung, Datenschutz und Grenzen:** [Modellanbieter & Agentenschritte](docs/model-providers-and-agents.md) und [Workspace-Konfiguration](docs/workspace.md). Keine Shell-Kommandos und keine automatische Ausführung von Skills.
-
-## 🔌 Optionale Integrationen (experimentell)
-
-Die neue GitHub-Anbindung kann explizit freigegebene **öffentliche** Repositories und den Cryo-Omega-Skill-Katalog schreibgeschützt einlesen. Die App zeigt eine Vorschau und übernimmt Inhalte nur nach deiner Bestätigung als privates Projektwissen. **Keine automatischen KI-Aufrufe, keine GitHub-Schreibrechte und keine Skill-Ausführung.**
+Die GitHub-Leseintegration wird mit einer expliziten Liste öffentlicher Repositories aktiviert:
 
 ```bash
 CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Agentic-Learn-Packages npm start
 ```
 
-Öffne dann in der Navigation **GitHub & Skills**. Ohne diese Umgebungsvariable bleibt die Integration ausgeschaltet. Weitere Hinweise und API-Details: [Integrationsanleitung](docs/integrations.md).
+Öffne **GitHub & Skills** in der Navigation. Skills werden als Referenzdaten behandelt und nicht automatisch ausgeführt. Hyperfocus verwendet einen festen, zuvor bestätigten Ablauf. [Integrationen](docs/integrations.md) · [Hyperfocus](docs/hyperfocus-workflow.md)
 
-## 🧠 Projektwissen je Chat
+Markdown-Ausgabe ist standardmäßig gesperrt. Lokale Ausgabe benötigt `CRYO_LOCAL_WRITES=true` und einen vorhandenen `CRYO_OUTPUT_DIR`; sie erstellt ausschließlich neue `.md`-Dateien und verwendet Linux `/proc/self/fd`. GitHub-Ausgabe benötigt eigene Schreibfreigaben und erzeugt neue Branches und Pull Requests. Sie ändert `main` nicht direkt und führt keinen Merge durch. [Vollständige Konfiguration und Grenzen](docs/workspace.md)
 
-Über **„Projektwissen“** kannst du pro Unterhaltung wichtige Ziele, Architekturentscheidungen und Hintergrundinfos in einem eigenen Textfeld speichern (maximal **4.000 Zeichen**).
+### Backup-Wiederherstellung
 
-**Datenschutz und Kontrolle:** Standardmäßig werden diese Notizen **nicht** an ein Modell gesendet. Erst wenn du **„Bei KI-Antworten berücksichtigen“** aktivierst und speicherst, werden sie bei der nächsten Anfrage als normaler, vom Nutzer bereitgestellter Kontext mitgegeben – **nicht** als privilegierte Systemanweisung. Bei extern konfiguriertem Ollama oder ausdrücklich ausgewähltem OpenAI-Modell können diese Notizen folglich an diesen Anbieter übertragen werden.
+**Import** prüft die Datei vor jeder Änderung. Der Assistent zeigt Format, Umfang, Kontextfreigaben und Fehler und bietet einen Export des bisherigen Stands. Nach ausdrücklicher Zustimmung werden neuer Stand und Rücksetzpunkt in IndexedDB atomar gespeichert. **Letzten Import zurücksetzen** stellt die vorherigen Chats wieder her; **Rücksetzpunkt löschen** entfernt die zusätzliche lokale Kopie. [Backup-Anleitung und Fallback-Grenzen](docs/backup-recovery.md)
 
-### Bessere Chat-Speicherung
+### Godot MCP
 
-- **IndexedDB:** gesamter Chat-Stand als atomarer Snapshot gespeichert; Schreibzugriffe erfolgen nacheinander.
-- **Sichere Migration:** Beim ersten Start wird eine vorhandene Alpha-0.1/0.2-Speicherung aus `localStorage` gelesen, zu Backup-Version 2 migriert und erst **nach erfolgreichem IndexedDB-Commit** aus dem alten Speicher entfernt.
-- **Alte Backups:** JSON-Backups mit Version 1 lassen sich weiterhin importieren. Neue Exporte enthalten auch das Projektwissen und die Freigabe-Einstellung.
-- **Fallback:** Wenn IndexedDB nicht verfügbar ist, wird `localStorage` genutzt und eine Warnung angezeigt.
-- **Kein Cloud-Sync und keine Verschlüsselung:** Browserdaten können beim Löschen des Profils verloren gehen; wichtige Chats regelmäßig als JSON exportieren.
+Eine manuell konfigurierte Verbindung zu [Coding-Solo/godot-mcp](https://github.com/Coding-Solo/godot-mcp) unterstützt `get_godot_version` und `get_project_info`. Jede Abfrage benötigt eine Freigabe.
 
-**Noch nicht enthalten:** automatische Wissenssuche (RAG), beliebiger lokaler Dateizugriff, GitHub-Schreib-/Cloud-Sync, autonome Skill-Ausführung oder browserübergreifende Synchronisierung.
+Optional erstellt der Szenenassistent neue `Node2D`-, `Node3D`- oder `Control`-Szenen in `scenes/cryogptchat/`. Er benötigt `GODOT_SCENE_WRITES=true`, eine Vorschau und die Bestätigung `ERSTELLEN`. Tickets sind einmalig und zwei Minuten gültig; bestehende Szenen werden nicht überschrieben. Das externe MCP-Programm ist ausführbarer Fremdcode und bleibt auf ein geprüftes lokales Projekt zu beschränken. [Installation und Sicherheitsgrenzen](docs/integrations/godot-mcp.md)
 
-## 🎮 Godot MCP – optionale lokale Projektprüfung
+## Drei Designwelten
 
-CryoGPTCHATFREEBIE kann über eine **manuell konfigurierte** Verbindung zu [Coding-Solo/godot-mcp](https://github.com/Coding-Solo/godot-mcp) zwei Godot-Abfragen ausführen:
+Clean, Neon und Produktansicht verwenden dieselben aktuellen Funktions- und Release-Angaben. Ihre Banner bleiben editierbare SVG-Illustrationen; sie sind keine Live-Screenshots.
 
-- **Installierte Godot-Version** anzeigen (`get_godot_version`)
-- **Projektmetadaten** für einen fest konfigurierten lokalen Godot-Projektordner auslesen (`get_project_info`)
+| Clean | Neon | Produkt |
+| :---: | :---: | :---: |
+| [![Helles, ruhiges Clean-Design](assets/readme/banner-clean.svg)](docs/readme-variants/01-clean.md) | [![Neon-Design mit holografischem Kristall](assets/readme/banner-neon.svg)](docs/readme-variants/02-neon.md) | [![Produktillustration des Chat-Workspace](assets/readme/banner-product.svg)](docs/readme-variants/03-product.md) |
+| [Professional / Clean](docs/readme-variants/01-clean.md) | [Futuristic / Neon](docs/readme-variants/02-neon.md) | [App / Landing Page](docs/readme-variants/03-product.md) |
 
-Über den Button **🎮 Godot MCP** öffnet sich ein eigenes Panel. Jede Abfrage erfordert einen weiteren Bestätigungsdialog. Ohne lokale Installation bleibt das Panel deaktiviert; KI-Modelle können nicht automatisch auf Godot-Werkzeuge zugreifen.
+Alle Grafiken liegen in [assets/readme](assets/readme/); externe Bild-CDNs sind nicht erforderlich.
 
-**Keine bestehende Szene bearbeiten, kein Spiel automatisch starten.** Ab Alpha 0.4 kann optional eine *neue* Szene nach Vorschau, aktivierter Schreibfreigabe und manueller Bestätigung angelegt werden. Das externe MCP-Programm kann trotzdem ausführbaren Godot-Code starten. Der externe Godot-MCP-Prozess selbst ist ausführbarer Fremdcode und muss vor der Verwendung geprüft werden. Die Integration ersetzt weder eine Sicherheitsprüfung noch eine echte Godot-End-to-End-Testumgebung.
+## Systemarchitektur
 
-**[Godot MCP installieren, Szenenerstellung aktivieren und Grenzen prüfen →](docs/integrations/godot-mcp.md)**
+<img src="assets/readme/architecture-v2.svg" alt="Browser mit IndexedDB und Rücksetzpunkt, lokaler Node.js-Server und ausdrücklich konfigurierte Modell-, GitHub- und Godot-Verbindungen" width="100%" />
 
-## 🧱 Alpha 0.4 – neue Godot-Szene mit Vorschau
-
-Im Godot-Panel steht nun ein optionaler Szenenassistent bereit. Er erlaubt **Node2D**, **Node3D** oder **Control** als neuen Wurzelknoten und schreibt ausschließlich **neue Dateien** in `scenes/cryogptchat/` eines vorher fest konfigurierten lokalen Godot-Projekts.
-
-Der Ablauf ist zweistufig: **Vorschau ohne Dateischreibzugriff**, dann **einmalige Ausführung** nach zusätzlicher Bestätigung durch Eingabe von `ERSTELLEN`. Die Freigabe verfällt nach zwei Minuten und darf nur einmal verwendet werden. Ohne `GODOT_SCENE_WRITES=true` bleibt die Schreibfunktion gesperrt.
-
-Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade oder Godot-Klassen aus einer KI-Antwort ausgeführt. **Ein fremdes Godot-Projekt kann dennoch Skript-Seiteneffekte verursachen:** Ausschließlich in einer überprüften lokalen Testumgebung verwenden.
-
-## 🗺️ Masterplan: 100 Versionen (v0.1 bis v10.0)
-
-**Von der lokalen Chat-Alpha zum modularen KI-Workspace:** Die [Master Roadmap mit 100 Versions-Meilensteinen](docs/roadmap/ROADMAP-100.md) ist in zehn Phasen gegliedert. Jeder Schritt benennt ein konkretes Lieferobjekt und ein prüfbares Abnahmekriterium.
-
-| Zeitraum im Versionsraster | Schwerpunkt | Status |
+| Schicht | Einstieg | Aufgabe |
 | :--- | :--- | :--- |
-| **v0.1–v0.4** | Chat, Streaming, IndexedDB, OpenAI Opt-in, GitHub-/Skill-Read-only und Godot MCP | ✅ Im Code / historische Phasen |
-| **v0.5** | Hyperfocus: einmal bestätigte, begrenzte read-only Recherche mit optionaler Ollama-Planung | ✅ MVP mit Browser-E2E |
-| **v0.6–v1.0** | Browser-Tests, Accessibility, Datenrettung und Security-Baseline | v0.6/v0.8/v0.9 umgesetzt; v0.7 und v1.0 teilweise |
-| **v1.1–v3.0** | Zuverlässigkeit, Projektwissen, Skill-Registry und zitierte Quellen | ⬜ Vision |
-| **v3.1–v5.0** | Geprüfte Agentenrechte, sichere GitHub-Workflows und Godot/3D | ⬜ Vision |
-| **v5.1–v10.0** | Multimodalität, optionaler Sync, Plugin-SDK und Plattformreife | ⬜ Vision |
+| Oberfläche | [index.html](index.html), [Workspace](src/workspace.js), [Designsystem](src/interface.css) | Acht Ansichten, SVG-Icons, mobile Navigation und Fokusführung |
+| Chat und Speicher | [Core](src/core.js), [Speicherung](src/storage.js), [Recovery](src/recovery-storage.js) | Schema, Migration, atomare Snapshots und Wiederherstellung |
+| Server und Modelle | [Server](server.mjs), [Provider](src/providers.mjs), [Request-Grenzen](src/security.mjs) | Loopback-API, Streaming, Validierung und Limits |
+| Entwickler-Werkzeuge | [GitHub](src/github-integration.mjs), [Agenten-Ausgabe](src/agent-workspace.mjs), [Godot MCP](src/godot-mcp-client.mjs) | Explizite Freigaben und begrenzte Zugriffe |
+| Qualität und Release | [Tests](tests/), [Browser-Tests](e2e/), [CI](.github/workflows/ci.yml), [Paketbau](scripts/release.mjs) | Node-/Browser-Prüfungen und reproduzierbare Quellarchive |
 
-**Wichtig:** Die Versionsreihe ist ein Planungsraster, **keine Zusage von 100 Releases** oder festen Terminen. Änderungen mit Schreibrechten bleiben bis zur eigenen Sicherheitsfreigabe deaktiviert. [Quellencheck und Ist-/Soll-Abgleich](docs/roadmap/RESEARCH.md).
+## Tests und Release-Prüfung
 
-## 🛣️ Roadmap
+```bash
+npm test
+npm ci
+npx playwright install chromium
+npm run test:e2e
+# Aus einem sauberen, committed Checkout:
+npm run release:verify
+```
 
-- [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups und optionale Ollama-Integration.
-- [x] **Alpha 0.2:** Streaming-Ausgabe, Stopp-Schaltfläche, gekennzeichnete Teilantworten, manuelle Modellauswahl und neue Stream-Tests.
-- [x] **Alpha 0.3 (erster Schritt):** IndexedDB-Migration, versionierte Backups und manuell freigegebenes Projektwissen pro Chat.
-- [x] **Optionale Integration (experimentell):** GitHub-README-Vorschau, kontrollierte Skill-Katalogsuche und manuelle Übernahme ins Projektwissen.
-- [x] **Alpha 0.4 (MVP):** Optionale OpenAI-API, getrennte Modellauswahl und bestätigungspflichtige GitHub-Agentenschritte.
-- [x] **Godot MCP (optional):** Versions-/Projektprüfung und manuell bestätigte Erstellung neuer Szenen im festgelegten Testprojekt; ohne automatische KI-Tool-Ausführung.
-- [x] **Cryo-Neon-Workspace:** Mobile Navigation, Modellfavoriten, Hyperfocus-Historie, kontrollierte Agenten-Erweiterungen, Browser-E2E und automatische Accessibility-Prüfungen.
-- [ ] **Nächste Schritte:** Manuelle Screenreader-Prüfung, sichere MCP-Isolation und größere Chatverläufe.
+Für die Browser-Entwicklung Node 24 verwenden. CI prüft Node 20/22/24, Chromium bei mobilen und Desktop-Breiten, Tastatur, axe-Regeln, Wiederherstellungsfehler und reproduzierbare Pakete. Externe Dienste werden simuliert; echte Modellinferenz, Live-Godot und eine vollständige manuelle Accessibility-Abnahme werden dadurch nicht belegt. [Accessibility-Prüfbericht](docs/accessibility-report.md)
 
-## 🤝 Mitmachen
+## Datenschutz und Grenzen
 
-Für Bugs, Ideen und Verbesserungsvorschläge: [Issues öffnen](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues). Bitte keine API-Schlüssel oder Chat-Backups in öffentlichen Issues teilen. Pull Requests sollten `npm test` bestehen.
+- Chats, Projektwissen, Rücksetzpunkt und JSON-Exporte sind **unverschlüsselt**. Favoriten, Bewegungseinstellungen und Hyperfocus-Historie liegen ebenfalls lokal; sie gehören nicht zum Chat-JSON-Backup.
+- Ein ausgewähltes Modell erhält Gesprächskontext. Gespeichertes Projektwissen wird nur nach chatbezogener Freigabe mitgegeben. OpenAI und externes Ollama können Daten vom Rechner übertragen.
+- Der Server bindet an `127.0.0.1`. Es gibt keine Anmeldung, Mehrbenutzerverwaltung oder Freigabe für öffentliches Hosting.
+- Shell-Ausführung, autonome Skill-Ausführung, verschlüsselter Speicher und Cloud-Sync sind nicht implementiert. Optionale Markdown-Ausgabe ist getrennt freizugeben.
+- JSON-Exporte regelmäßig sichern. Wer Daten endgültig entfernt, muss Rücksetzpunkt und externe Exportdateien berücksichtigen.
 
----
+[Bedrohungsmodell und geprüfte Sicherheitsgrenzen](docs/security/THREAT-MODEL.md)
+
+## Roadmap
+
+Die [Master-Roadmap](docs/roadmap/ROADMAP-100.md) ist die gemeinsame Quelle für Dokumentation und GUI. Sie enthält 100 Meilensteine von v0.1 bis v10.0, jeweils mit Lieferobjekt und Abnahmekriterium. [Recherche und Statusbelege](docs/roadmap/RESEARCH.md)
+
+| Entwicklungsmeilensteine | Status |
+| :--- | :--- |
+| v0.1–v0.6, v0.8, v0.9 | Im Code umgesetzt; historische Nummern sind keine Release-Tags |
+| v0.7 | Technische Accessibility-Prüfungen vorhanden; manuelle Abnahme offen |
+| v1.0 | Release Candidate vorhanden; stabile Freigabe wartet auf das manuelle Gate |
+| v6.1 | Designsystem und responsive Oberfläche teilweise umgesetzt |
+| Übrige Meilensteine | Geplant; keine Zusage fester Termine oder 100 veröffentlichter Releases |
+
+![Aktuelle Roadmap mit ausgeschriebenen Statusangaben](docs/screenshots/roadmap.png)
+
+[Roadmap auf Mobile](docs/screenshots/roadmap-mobile.png). Die Clean-, Neon- und Produkt-README verweisen auf diese gemeinsame Roadmap und führen keinen separaten Versionsplan.
+
+## Mitmachen
+
+[Issue öffnen](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues) oder einen Pull Request einreichen. Relevante Node- und Browser-Tests vor dem Einreichen ausführen. API-Schlüssel und private Chat-Backups gehören nicht in öffentliche Issues.
 
 <div align="center">
   <img src="assets/logo.svg" alt="CryoGPTCHAT Logo" width="58" />
