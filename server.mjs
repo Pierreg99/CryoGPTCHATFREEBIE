@@ -1,3 +1,9 @@
+import {
+  SECURITY_HEADERS,
+  MAX_REQUEST_BYTES,
+  requestBoundary,
+} from "./src/security.mjs";
+import { APP_VERSION } from "./src/version.mjs";
 import { parseRoadmap } from "./src/roadmap.mjs";
 import http from "node:http";
 import { createWriteService } from "./src/agent-workspace.mjs";
@@ -30,6 +36,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const pendingScenePlans = new Map();
 const pendingHyperfocusPlans = new Map();
 let activeHyperfocusRuns = 0;
+let activeChatRequests = 0;
 let activeGodotProcesses = 0;
 const MAX_GODOT_PROCESSES = 2;
 async function runGodotTool(...args) {
@@ -59,6 +66,10 @@ const mime = {
 const allow = new Set([
   "/index.html",
   "/src/app.js",
+  "/src/accessibility.js",
+  "/src/backup.js",
+  "/src/backup-ui.js",
+  "/src/recovery-storage.js",
   "/src/workspace.js",
   "/src/interface-polish.js",
   "/src/interface.css",
@@ -99,19 +110,17 @@ async function parseRequest(req) {
   let size = 0;
   for await (const chunk of req) {
     size += chunk.length;
-    if (size > 200000) throw new Error("Nachricht zu groß");
+    if (size > MAX_REQUEST_BYTES) throw new Error("Nachricht zu groß");
     chunks.push(chunk);
   }
   return JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}");
 }
 
 const server = http.createServer(async (req, res) => {
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("Referrer-Policy", "no-referrer");
-  res.setHeader(
-    "Content-Security-Policy",
-    "default-src 'self'; connect-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'",
-  );
+  for (const [name, value] of Object.entries(SECURITY_HEADERS))
+    res.setHeader(name, value);
+  const violation = requestBoundary(req, port);
+  if (violation) return json(res, violation.status, { error: violation.error });
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     if (url.pathname === "/api/roadmap" && req.method === "GET")
@@ -342,6 +351,7 @@ const server = http.createServer(async (req, res) => {
       return json(res, 200, {
         online,
         models,
+        version: APP_VERSION,
         providers: {
           ollama: { online, models },
           openai: { enabled: openai.length > 0, models: openai },
@@ -575,6 +585,8 @@ const server = http.createServer(async (req, res) => {
           error: "Ungültiges JSON oder zu große Eingabe.",
         });
       }
+      if (!body || typeof body !== "object" || Array.isArray(body))
+        return json(res, 400, { error: "Ungültige Anfrage." });
       const { model, messages } = body;
       if (
         typeof model !== "string" ||
@@ -593,6 +605,11 @@ const server = http.createServer(async (req, res) => {
       ) {
         return json(res, 400, { error: "Ungültige Anfrage." });
       }
+      if (activeChatRequests >= 2)
+        return json(res, 429, {
+          error: "Höchstens zwei gleichzeitige Modellanfragen sind erlaubt.",
+        });
+      activeChatRequests++;
       const streaming = url.pathname === "/api/chat/stream";
       const controller = new AbortController();
       const onDisconnect = () => controller.abort();
@@ -710,6 +727,7 @@ const server = http.createServer(async (req, res) => {
         }
       } finally {
         res.off("close", onDisconnect);
+        activeChatRequests--;
       }
     }
     if (req.method !== "GET" && req.method !== "HEAD")
@@ -734,6 +752,10 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
+server.requestTimeout = 15000;
+server.headersTimeout = 10000;
+server.keepAliveTimeout = 5000;
+server.maxHeadersCount = 64;
 server.listen(port, "127.0.0.1", () =>
   console.log(`CryoGPTCHATFREEBIE läuft auf http://127.0.0.1:${port}`),
 );

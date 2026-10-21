@@ -1,5 +1,9 @@
 # Rechercheprotokoll · CryoGPTCHATFREEBIE Roadmap (2026-10-21)
 
+## Aktueller Ausbau zum 1.0-Release-Candidate
+
+Die Roadmap wird schrittweise implementiert. v0.8 ergänzt geprüften Import/Undo mit echten IndexedDB-Fehlerfällen. v0.9 ergänzt Host-/Origin-/CSP-Grenzen, begrenzte Modellparallelität und negative HTTP-Tests. 1.0.0-rc.1 liefert Release-/Migrationspolitik und reproduzierbare Quellpakete. v0.7 und die stabile 1.0-Freigabe bleiben wegen der noch nicht erfolgten manuellen Accessibility-Abnahme offen. Aktuelle Belege stehen in [Backup-Recovery](../backup-recovery.md), [Security-Baseline](../security/THREAT-MODEL.md) und [Release-Gates](../RELEASE-CHECKLIST.md).
+
 ## Aktualisierung nach PR #13
 
 Der folgende Recherchebericht dokumentiert den historischen Stand vor dem Workspace-Umbau. Seit [PR #13](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/13) gibt es Browser-E2E und axe-Prüfungen, ein responsives Designsystem, Modellfavoriten, Hyperfocus-Historie, freizugebende Agentenfolgen und separat aktivierbare Markdown-Ausgabe. Node 20/22 und Chromium auf Node 24 wurden in CI erfolgreich geprüft. Externe Modell-/Godot-/GitHub-Schreibdienste bleiben in Tests simuliert.

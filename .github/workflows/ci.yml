@@ -1,6 +1,7 @@
 name: Node.js tests
 
 on:
+  workflow_call:
   push:
     branches: [main]
   pull_request:
@@ -13,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20, 22]
+        node-version: [20, 22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,3 +39,18 @@ jobs:
           name: browser-failure-evidence
           path: test-results/
           retention-days: 7
+
+  release-check:
+    needs: [test, browser]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm run release:verify
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-release-${{ github.sha }}
+          path: dist/
+          retention-days: 14

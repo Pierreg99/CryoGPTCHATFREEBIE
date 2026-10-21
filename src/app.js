@@ -1,3 +1,5 @@
+import { setupAccessibility } from "./accessibility.js";
+import { setupBackupRestore } from "./backup-ui.js";
 import { refineInterface } from "./interface-polish.js";
 import { confirmAction, requestText } from "./dialogs.js";
 import { setupWorkspace } from "./workspace.js";
@@ -14,7 +16,6 @@ import {
   deleteChat,
   appendMessage,
   searchChats,
-  parseBackup,
   toOllamaMessages,
   setProjectContext,
 } from "./core.js";
@@ -24,18 +25,37 @@ let store = emptyStore(),
   models = [],
   sending = false,
   busyChatId = null,
-  noticeTimer;
+  restoring = false,
+  modelRefreshSerial = 0;
 let streamController = null,
   streamedText = "",
   persistence = null;
 const storageWarnings = [];
 
 function notice(message) {
-  clearTimeout(noticeTimer);
-  el("notice").textContent = message;
-  noticeTimer = setTimeout(() => {
-    el("notice").textContent = "";
-  }, 8000);
+  const banner = el("notice");
+  banner.hidden = false;
+  let text = el("notice-message");
+  if (!text) {
+    banner.removeAttribute("role");
+    banner.removeAttribute("aria-live");
+    banner.setAttribute("aria-label", "Benachrichtigung");
+    text = document.createElement("span");
+    text.id = "notice-message";
+    text.setAttribute("role", "status");
+    text.setAttribute("aria-live", "polite");
+    text.setAttribute("aria-atomic", "true");
+    const dismiss = document.createElement("button");
+    dismiss.type = "button";
+    dismiss.id = "notice-dismiss";
+    dismiss.textContent = "Meldung schließen";
+    dismiss.addEventListener("click", () => {
+      banner.hidden = true;
+      document.querySelector("main").focus({ preventScroll: true });
+    });
+    banner.append(text, dismiss);
+  }
+  text.textContent = message;
 }
 try {
   persistence = await createPersistence({
@@ -60,6 +80,10 @@ function active() {
   return store.chats.find((c) => c.id === store.activeChatId) || null;
 }
 function mutate(fn) {
+  if (restoring) {
+    notice("Bitte die Wiederherstellung abwarten.");
+    return false;
+  }
   try {
     store = fn(store);
     persist();
@@ -109,6 +133,8 @@ function renderList() {
       persist();
       render();
       closeSidebar();
+      el("chat-heading").tabIndex = -1;
+      el("chat-heading").focus({ preventScroll: true });
     });
     list.append(button);
   }
@@ -130,6 +156,7 @@ function renderMessages() {
     row.className = "message " + msg.role;
     const avatar = document.createElement("div");
     avatar.className = "avatar";
+    avatar.setAttribute("aria-hidden", "true");
     avatar.textContent = msg.role === "user" ? "DU" : "AI";
     const body = document.createElement("div");
     const meta = document.createElement("small");
@@ -195,12 +222,21 @@ function render() {
 }
 
 async function refreshModels() {
-  if (sending) return;
+  if (sending || restoring) return;
+  const request = ++modelRefreshSerial;
   el("status").textContent = "○ Prüfe Modellanbieter …";
   try {
     const res = await fetch("/api/status");
     if (!res.ok) throw new Error("Server nicht erreichbar");
     const data = await res.json();
+    if (request !== modelRefreshSerial || restoring) return;
+    if (typeof data.version === "string")
+      el("app-version").textContent =
+        (data.version.includes("-rc.")
+          ? "RC "
+          : data.version.startsWith("0.")
+            ? "ALPHA "
+            : "VERSION ") + data.version;
     const local = data.online && Array.isArray(data.models) ? data.models : [];
     const cloud =
       data.providers?.openai?.enabled &&
@@ -212,6 +248,7 @@ async function refreshModels() {
       ? "● " + local.length + " lokal · " + cloud.length + " Cloud"
       : "○ Nur lokale Notizen";
   } catch {
+    if (request !== modelRefreshSerial || restoring) return;
     models = [];
     el("status").textContent = "○ Keine KI-Verbindung";
   }
@@ -496,10 +533,17 @@ el("prompt").addEventListener("keydown", (e) => {
 });
 
 function setGenerating(value) {
+  const focused = document.activeElement?.id;
+  el("messages").setAttribute("aria-busy", String(value));
+  if (value)
+    el("generation-status").textContent =
+      "Antwort wird erstellt. Du kannst die Generierung mit Stoppen abbrechen.";
   el("send").hidden = value;
   el("stop").hidden = !value;
   el("model").disabled = value;
   el("refresh").disabled = value;
+  if (value && focused === "send") el("stop").focus();
+  if (!value && focused === "stop") el("prompt").focus();
 }
 el("stop").addEventListener("click", () => {
   if (streamController && !streamController.signal.aborted)
@@ -507,7 +551,8 @@ el("stop").addEventListener("click", () => {
 });
 el("composer").addEventListener("submit", async (e) => {
   e.preventDefault();
-  if (sending) return;
+  if (sending || restoring || document.querySelector("#restore-dialog[open]"))
+    return;
   const content = el("prompt").value.trim();
   if (!content) return;
   const model = el("model").value;
@@ -558,10 +603,16 @@ el("composer").addEventListener("submit", async (e) => {
         }
       },
     });
+    el("generation-status").textContent = reply.trim()
+      ? "Antwort abgeschlossen. " + reply.slice(0, 250)
+      : "Das Modell hat eine leere Antwort gesendet.";
     if (reply.trim())
       mutate((s) => appendMessage(s, chatId, "assistant", reply));
     else notice("Das Modell hat eine leere Antwort gesendet.");
   } catch (error) {
+    el("generation-status").textContent = controller.signal.aborted
+      ? "Antwort gestoppt. Bereits empfangener Text bleibt erhalten."
+      : "Antwort konnte nicht abgeschlossen werden.";
     if (controller.signal.aborted) {
       if (streamedText.trim()) {
         mutate((s) =>
@@ -611,40 +662,6 @@ el("export").addEventListener("click", () => {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
-el("import").addEventListener("click", () => el("import-file").click());
-el("import-file").addEventListener("change", async (e) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
-  if (sending) {
-    e.target.value = "";
-    notice("Bitte die laufende Antwort zuerst stoppen.");
-    return;
-  }
-  try {
-    if (file.size > 3 * 1024 * 1024)
-      throw new Error("Backups dürfen maximal 3 MB groß sein.");
-    const backup = parseBackup(await file.text());
-    if (
-      !(await confirmAction(
-        "Import ersetzt " +
-          store.chats.length +
-          " Chat(s) durch " +
-          backup.chats.length +
-          " Chat(s). Fortfahren?",
-      ))
-    )
-      return;
-    store = backup;
-    persist();
-    render();
-    await refreshModels();
-    notice("Backup importiert.");
-  } catch (error) {
-    notice("Import fehlgeschlagen: " + error.message);
-  } finally {
-    e.target.value = "";
-  }
-});
 
 render();
 setupIntegrations({ el, active, mutate, notice });
@@ -653,6 +670,39 @@ setupHyperfocus({ el, active, notice });
 setupAgentFlow({ el, active, notice });
 setupWorkspace({ el, notice, refreshModels, active });
 refineInterface({ el, active });
+setupAccessibility({ el, notice });
+setupBackupRestore({
+  el,
+  getStore: () => store,
+  getPersistence: () => persistence,
+  isGenerating: () => sending,
+  closeSidebar,
+  notice,
+  apply: async (backup, undo) => {
+    if (sending || restoring)
+      throw new Error("Eine Antwort oder Wiederherstellung läuft bereits.");
+    if (!persistence) throw new Error("Lokales Speichern ist gesperrt.");
+    restoring = true;
+    ++modelRefreshSerial;
+    let committed = false;
+    try {
+      const previous = store;
+      const restored = await persistence.restoreBackup(backup, previous, undo);
+      store = restored;
+      committed = true;
+      document.dispatchEvent(
+        new CustomEvent("workspace:recovery", {
+          detail: undo ? [] : previous.chats.map((chat) => chat.id),
+        }),
+      );
+      document.dispatchEvent(new Event("workspace:restore"));
+      render();
+    } finally {
+      restoring = false;
+      if (committed) await refreshModels();
+    }
+  },
+});
 document.addEventListener("workspace:view", (e) => {
   if (e.detail === "godot") checkGodotStatus();
 });

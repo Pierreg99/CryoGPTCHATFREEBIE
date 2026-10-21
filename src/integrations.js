@@ -170,4 +170,5 @@ export function setupIntegrations({ el, active, mutate, notice }) {
   });
   resetPreview();
   initialize();
+  document.addEventListener("workspace:restore", resetPreview);
 }

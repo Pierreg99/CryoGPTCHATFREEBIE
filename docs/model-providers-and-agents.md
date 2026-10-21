@@ -35,9 +35,9 @@ export CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Ag
 npm start
 ~~~
 
-Im Chat **Projektwissen → Agenten-Workspace** öffnen. Freigegebenes Repository wählen, Aktion **README lesen** oder **Skills suchen** einstellen und zuerst **Schritt planen** anklicken. Danach kann mit **Prüfen und freigeben** genau ein schreibgeschützter GitHub-Schritt ausgeführt werden. Anschließend lässt sich das Ergebnis **als Nachrichtenentwurf** übernehmen; kein automatischer Modellaufruf.
+In der Navigation **Agenten** öffnen und für diesen Ablauf die aufklappbare **Einzelaktion planen** wählen. Freigegebenes Repository wählen, Aktion **README lesen** oder **Skills suchen** einstellen und zuerst **Schritt planen** anklicken. Danach kann mit **Prüfen und freigeben** genau ein schreibgeschützter GitHub-Schritt ausgeführt werden. Anschließend lässt sich das Ergebnis **als Nachrichtenentwurf** übernehmen; kein automatischer Modellaufruf.
 
-Dieses MVP ist bewusst ein **zustimmungsbasierter, einzelner Werkzeugschritt**, kein autonomer Agent. Keine Shell-Befehle, keine GitHub-Mutationen, kein automatisches Tool-Looping. Der Server lässt ausschließlich die zwei definierten Aktionen auf freigegebene öffentliche Repositories zu.
+Die aufklappbare Einzelaktion bleibt erhalten. Zusätzlich gibt es eine Folge von bis zu fünf separat bestätigten Leseaktionen mit README, Skills, Repository-Struktur und Textdateien. Optionale Markdown-Schreibaktionen sind standardmäßig aus und benötigen eigene Konfiguration sowie eine gebundene Vorschau. Keine Shell-Befehle oder freie KI-Tool-Schleifen. [Aktuelle Einrichtung und Grenzen](workspace.md).
 
 Fremde GitHub-Dateien können irreführende Anweisungen enthalten und werden deshalb als Daten, nicht als Systeminstruktionen behandelt.
 
@@ -47,4 +47,4 @@ Fremde GitHub-Dateien können irreführende Anweisungen enthalten und werden des
 npm test
 ~~~
 
-Tests verwenden lokale Mock-Daten; keine kostenpflichtigen Cloud-Abfragen. Noch nicht enthalten: OAuth, GitHub-Schreibzugriffe, KI-gesteuerte autonome Planung, Agenten-Sandbox, Cloud-Sync, verschlüsselte Chat-Backups, mobile Browser-E2E. Weitere Endpunkte dokumentiert in [integrations.md](integrations.md).
+Tests verwenden lokale Mock-Daten; keine kostenpflichtigen Cloud-Abfragen. Noch nicht enthalten: OAuth, freie KI-gesteuerte Tool-Auswahl, Agenten-Sandbox, Cloud-Sync und verschlüsselte Chat-Backups. Geprüfte Markdown-Ausgabe über neue GitHub-Branches/PRs ist separat aktivierbar; Browser-E2E prüft auch mobile Viewports. Weitere Endpunkte dokumentiert in [integrations.md](integrations.md).

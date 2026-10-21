@@ -59,4 +59,4 @@ npm test
 
 Mock-basierte Tests prüfen Planung, Repo-Allowlist, Cloud-Ausschluss, begrenzte Toolaufrufe, Abbruch, Ollama-Modellvalidierung, API-Origin und Ticketformat. **Nicht als E2E getestet:** Live-GitHub-Zugriff, Browser-Läufe oder echte lokale Ollama-Inferenz.
 
-**Roadmap:** persistent gespeicherte Fokus-Sitzungen, optionaler Pausentimer, Skill-Relevanzranking, separate Freigabe für kontrollierte Schreibwerkzeuge nach Sandbox-/Undo-Konzept, browserbasierte E2E-Tests. Alles mit eigenständigem Consent und Rechteprüfung; keine implizite Hochstufung des Read-only MVP.
+**Umgesetzt:** lokale Historie abgeschlossener Ergebnisse und Browser-E2E. **Weiterhin Roadmap:** wiederaufnehmbare Fokus-Sitzungen, optionaler Pausentimer, Skill-Relevanzranking, separate Freigabe für kontrollierte Schreibwerkzeuge nach Sandbox-/Undo-Konzept. Alles mit eigenständigem Consent und Rechteprüfung; keine implizite Hochstufung des Read-only MVP.

@@ -1,0 +1,32 @@
+name: Tagged release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  quality:
+    uses: ./.github/workflows/ci.yml
+  publish:
+    needs: quality
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Verify tag matches application version
+        run: node --input-type=module -e "import { APP_VERSION } from './src/version.mjs'; if (process.env.GITHUB_REF_NAME !== 'v' + APP_VERSION) process.exit(1)"
+      - run: npm run release:verify
+      - name: Publish reviewed tag artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          flags=()
+          case "$GITHUB_REF_NAME" in
+            *-*) flags+=(--prerelease) ;;
+          esac
+          gh release create "$GITHUB_REF_NAME" dist/* --verify-tag --title "CryoGPTCHATFREEBIE $GITHUB_REF_NAME" --generate-notes "${flags[@]}"

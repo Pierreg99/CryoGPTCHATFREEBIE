@@ -310,7 +310,8 @@ test("import remains confirmed, generation can stop, Godot keeps preview before 
   const filePath = await file.path();
   await page.locator("#import-file").setInputFiles(filePath);
   await expect(page.getByRole("dialog")).toBeVisible();
-  await page.locator("#cryo-dialog-confirm").click();
+  await page.locator("#restore-approve").check();
+  await page.locator("#restore-apply").click();
   await expect(page.locator("#notice")).toContainText("Backup importiert");
   await page.route("**/api/chat/stream", async (r) => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -384,7 +385,7 @@ test("all 100 roadmap versions are browsable with phase/status filters and full 
   );
   await page.locator("#roadmap-search").fill("");
   await page.locator("#roadmap-status").selectOption("implemented");
-  await expect(page.locator("#roadmap-list button")).toHaveCount(6);
+  await expect(page.locator("#roadmap-list button")).toHaveCount(8);
   await page.locator("#roadmap-status").selectOption("");
   await page.locator("#roadmap-phase").selectOption("10");
   await expect(page.locator("#roadmap-list button")).toHaveCount(10);

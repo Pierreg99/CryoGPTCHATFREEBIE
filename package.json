@@ -1,13 +1,15 @@
 {
   "name": "cryogptchatfreebie",
-  "version": "0.4.0",
+  "version": "1.0.0-rc.1",
   "private": true,
   "type": "module",
   "description": "Privacy-first local chat workspace with optional Ollama",
   "scripts": {
     "start": "node server.mjs",
-    "test": "node --test tests/*.test.js",
-    "test:e2e": "playwright test"
+    "test": "node scripts/test.mjs",
+    "test:e2e": "playwright test",
+    "release:build": "node scripts/release.mjs",
+    "release:verify": "node scripts/release.mjs --verify"
   },
   "engines": {
     "node": ">=20"

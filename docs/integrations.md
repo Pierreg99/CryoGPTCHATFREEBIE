@@ -1,6 +1,6 @@
 # Optionale GitHub- und Cryo-Omega-Skill-Integration
 
-**Status:** experimentelle, strikt schreibgeschützte Integration. Sie verbindet GitHub-Inhalte mit dem vorhandenen lokalen Projektwissen. Sie ist **kein** GitHub-Sync, Agentenbetrieb oder Skill-Executor.
+**Status:** Diese GitHub-/Skill-Lesebrücke bleibt schreibgeschützt. Die separat aktivierbare Markdown-Ausgabe des Agenten-Workspace ist in [workspace.md](workspace.md) dokumentiert. Sie verbindet GitHub-Inhalte mit dem vorhandenen lokalen Projektwissen. Sie ist **kein** GitHub-Sync, Agentenbetrieb oder Skill-Executor.
 
 ## Aktivierung
 

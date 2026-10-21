@@ -356,4 +356,5 @@ export function setupAgentFlow({ el, active, notice }) {
         "Konfiguration nicht erreichbar. Schreibfunktionen bleiben gesperrt.";
     });
   render();
+  document.addEventListener("workspace:restore", reset);
 }

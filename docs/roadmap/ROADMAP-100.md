@@ -9,7 +9,10 @@
 - **✅ Bereits im Code / PR-historisch belegt:** v0.1, v0.2, v0.3, v0.4. Das bedeutet **nicht**, dass jede Idee eines alten Alpha-Abschnitts vollständig end-to-end zertifiziert ist.
 - **✅ Als MVP in `main`:** v0.5 Hyperfocus wurde über PR #10 gemergt; der zugehörige Lokalisierungs-Test wurde über PR #12 repariert. Browser-E2E wurde mit PR #13 ergänzt; echte externe Dienste und vollständige Produktabnahme bleiben separat zu prüfen.
 - **✅ Browser-E2E umgesetzt:** v0.6 durch PR #13 mit Chromium und Desktop-/Mobile-Viewports.
-- **🟨 Teilweise umgesetzt:** v0.7 (automatische Accessibility-Prüfungen; manuelle WCAG-2.2-AA-Abnahme offen), v6.1 (Designsystem und responsive UI; umfassende Produktabnahme offen).
+- **✅ Security-Baseline umgesetzt:** v0.9 mit Host-/Origin-/CSP-Härtung, Limits, negativen HTTP-Tests und [Bedrohungsmodell](../security/THREAT-MODEL.md).
+- **🟨 1.0 vorbereitet:** Release-Candidate 1.0.0-rc.1 mit Plattform-/Migrationspolitik, reproduzierbarem Paket und blockierender [Release-Checkliste](../RELEASE-CHECKLIST.md); stabile Freigabe erst nach manueller Accessibility-Abnahme.
+- **✅ Backup-Wiederherstellung umgesetzt:** v0.8 mit Dry-run, redigiertem Fehlerbericht, geprüftem Import und lokalem Rücksetzpunkt. [Belege und Grenzen](../backup-recovery.md).
+- **🟨 Teilweise umgesetzt:** v0.7 (WCAG-2.2-Regeln, Keyboard-/Fokus-/Reflow-Tests und [Prüfbericht](../accessibility-report.md); unabhängige Screenreader-Abnahme offen), v6.1 (Designsystem und responsive UI; umfassende Produktabnahme offen).
 - **⬜ Zukunftsplanung:** Übrige Meilensteine bis v10.0 beschreiben noch offene Gates, keine zugesagten Liefertermine.
 - **Abnahmeprinzip:** Jede Version benennt ein konkretes Artefakt und einen **prüfbaren Exit-Gate**. Funktionen mit externem Netzwerk, privaten Daten oder Writes bleiben standardmäßig deaktiviert und erfordern Sicherheitsprüfung sowie ausdrückliche Freigabe.
 
@@ -66,17 +69,23 @@ Von lokalem Experiment zu klar dokumentiertem Einzelbenutzer-Workspace.
 
 **Lieferobjekt:** Tastaturreihenfolge, Dialoge, Fokusmanagement und Statusmeldungen prüfen. **Abnahme:** WCAG-2.2-AA-Prüfbericht für Kernflows.
 
-#### ⬜ Geplant v0.8 · Backup-Wiederherstellung
+#### ✅ Implementiert v0.8 · Backup-Wiederherstellung
 
 **Lieferobjekt:** Export-/Import-Protokoll mit Dry-run, Fehlerbericht und Restore-Wizard. **Abnahme:** Roundtrip mit v1/v2 und beschädigten Daten.
 
-#### ⬜ Geplant v0.9 · Security-Baseline
+**Belege:** [Backup-Prüfung](../../src/backup.js), [Importassistent](../../src/backup-ui.js), [atomare Speicherung](../../src/recovery-storage.js), [Recovery-Tests](../../tests/backup-recovery.test.js) und [Browser-Flows](../../e2e/recovery.spec.js).
+
+#### ✅ Implementiert v0.9 · Security-Baseline
 
 **Lieferobjekt:** Threat-Model, CSP-Härtung, Origin- und Request-Limits dokumentieren. **Abnahme:** Negative API-Tests und Review-Checkliste.
 
-#### ⬜ Geplant v1.0 · Stabiles 1.0
+**Belege:** [Grenzen und Review](../security/THREAT-MODEL.md), [Request-Policy](../../src/security.mjs) und [HTTP-Negativtests](../../tests/security.test.js).
+
+#### 🟨 Teilweise umgesetzt v1.0 · Stabiles 1.0
 
 **Lieferobjekt:** Unterstützte Plattformen, Migrationspolitik und reproduzierbare Releases definieren. **Abnahme:** Release-Checkliste und E2E grün.
+
+**Vorhanden:** [Release-Politik](../RELEASE.md), [Paketbau](../../scripts/release.mjs) und CI-Artefakt. **Offen:** Die REQUIRED-Abnahme in der [Checkliste](../RELEASE-CHECKLIST.md) ist noch nicht nachgewiesen; stabile Tags werden deshalb blockiert.
 
 ### Phase 2 · Qualität, Stabilität und lokale Erfahrung (v1.1–v2.0)
 
