@@ -27,6 +27,12 @@
 
 ---
 
+## ❄️ Cryo-Neon-Workspace
+
+![Echter Screenshot des neuen Cryo-Neon-Workspace](docs/screenshots/workspace-desktop.png)
+
+Sieben eigene Ansichten, mobile Navigation, einheitliche Freigabedialoge und reduzierte Bewegung auf Wunsch. Neu sind Modellfavoriten, kopierbare Nachrichten, Skill-Karten, lokale Hyperfocus-Historie und einzeln freigegebene Agenten-Schrittfolgen. Markdown-Ausgaben lokal oder über neue GitHub-Branches und PRs bleiben standardmäßig gesperrt und benötigen eigene serverseitige Opt-ins. [Bedienung, Konfiguration und Grenzen →](docs/workspace.md)
+
 ## ✨ Funktionen
 
 <img src="assets/readme/capabilities.svg" alt="Vier Module: lokaler Chat mit Ollama, optionaler OpenAI-Modellanbieter, GitHub-/Cryo-Omega-Skills nur lesend und manuell freigegebene Godot-MCP-Aktionen" width="100%" />
@@ -35,14 +41,14 @@
 | :--- | :--- |
 | **Chat & Daten** | Responsive Oberfläche, Volltextsuche, IndexedDB, JSON-Export/-Import und gespeichertes Projektwissen |
 | **KI-Modelle** | Ollama lokal; optional OpenAI API mit serverseitigem Schlüssel und Bestätigung **vor jeder** Cloud-Anfrage |
-| **Integrationen** | GitHub-README-Vorschau, Suche im Cryo-Omega-Skill-Katalog, Freigabe einzelner lesender Agentenschritte |
+| **Integrationen** | README-/Datei-/Strukturvorschau, Skill-Karten, Agenten-Schrittfolgen und optionale geprüfte Markdown-Ausgabe |
 | **Godot MCP** | Versions- und Projektinspektion; neue Szenen ausschließlich nach Opt-in, Vorschau und Bestätigung |
 
-> **Das Design zeigt Konzeptillustrationen, keine echten Screenshots.** Ohne ausgewähltes Modell arbeitet die App als lokales Chat-Notizbuch; sie simuliert keine KI-Antworten.
+> **Die SVG-Banner sind Konzeptillustrationen.** Echte Screenshots und Bedienhinweise zum neuen Workspace stehen in [docs/workspace.md](docs/workspace.md). Ohne ausgewähltes Modell arbeitet die App als lokales Chat-Notizbuch; sie simuliert keine KI-Antworten.
 
 ## 🚀 Schnellstart
 
-**Voraussetzung:** [Node.js](https://nodejs.org/) 20 oder neuer. Keine externen npm-Abhängigkeiten.
+**Voraussetzung:** [Node.js](https://nodejs.org/) 20 oder neuer. Keine npm-Laufzeitabhängigkeiten; Browser-Tests verwenden Entwicklungsabhängigkeiten.
 
 ```bash
 git clone https://github.com/Pierreg99/CryoGPTCHATFREEBIE.git
@@ -110,7 +116,7 @@ Die **drei ursprünglichen Designwelten** bleiben erhalten. Jede besitzt einen e
 npm test
 ```
 
-Automatisierte Tests decken Core, Streaming, Speicherung, GitHub-Adapter, optionale Modellanbieter und Godot-MCP-Mockabläufe ab. **Nicht vollständig abgedeckt:** Browser-End-to-End-Flows und echte Ollama-Inferenz auf unterschiedlichen Endgeräten.
+Automatisierte Node- und Browser-Tests decken Core, Streaming, Speicherung, GitHub-Adapter, optionale Modellanbieter, Agentenfreigaben und Godot-MCP-Mockabläufe ab. Browser- und Accessibility-Tests starten mit `npm ci`, `npx playwright install chromium` und `npm run test:e2e` (Node 24 empfohlen). Externe Dienste werden simuliert; echte Ollama-Inferenz bleibt separat zu prüfen.
 
 ## 🔐 Datenschutz & Grenzen
 
@@ -182,7 +188,7 @@ Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade o
 | Zeitraum im Versionsraster | Schwerpunkt | Status |
 | :--- | :--- | :--- |
 | **v0.1–v0.4** | Chat, Streaming, IndexedDB, OpenAI Opt-in, GitHub-/Skill-Read-only und Godot MCP | ✅ Im Code / historische Phasen |
-| **v0.5** | Hyperfocus: einmal bestätigte, begrenzte read-only Recherche mit optionaler Ollama-Planung | ✅ MVP in `main` (Browser-E2E offen) |
+| **v0.5** | Hyperfocus: einmal bestätigte, begrenzte read-only Recherche mit optionaler Ollama-Planung | ✅ MVP mit Browser-E2E |
 | **v0.6–v1.0** | Browser-Tests, Accessibility, Datenrettung und Security-Baseline | ⬜ Geplant |
 | **v1.1–v3.0** | Zuverlässigkeit, Projektwissen, Skill-Registry und zitierte Quellen | ⬜ Vision |
 | **v3.1–v5.0** | Geprüfte Agentenrechte, sichere GitHub-Workflows und Godot/3D | ⬜ Vision |
@@ -198,7 +204,8 @@ Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade o
 - [x] **Optionale Integration (experimentell):** GitHub-README-Vorschau, kontrollierte Skill-Katalogsuche und manuelle Übernahme ins Projektwissen.
 - [x] **Alpha 0.4 (MVP):** Optionale OpenAI-API, getrennte Modellauswahl und bestätigungspflichtige GitHub-Agentenschritte.
 - [x] **Godot MCP (optional):** Versions-/Projektprüfung und manuell bestätigte Erstellung neuer Szenen im festgelegten Testprojekt; ohne automatische KI-Tool-Ausführung.
-- [ ] **Nächste Schritte:** Browser-E2E, Barrierefreiheit, sichere MCP-Isolation, größere Chatverläufe und kontrollierte Agenten-Erweiterungen.
+- [x] **Cryo-Neon-Workspace:** Mobile Navigation, Modellfavoriten, Hyperfocus-Historie, kontrollierte Agenten-Erweiterungen, Browser-E2E und automatische Accessibility-Prüfungen.
+- [ ] **Nächste Schritte:** Manuelle Screenreader-Prüfung, sichere MCP-Isolation und größere Chatverläufe.
 
 ## 🤝 Mitmachen
 
