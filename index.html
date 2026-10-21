@@ -47,6 +47,22 @@
             </div>
             <p id="project-notes-status" role="status">Privat gespeichert – noch nicht an ein Modell freigegeben.</p>
             <small>Nur die Notizen dieses Chats werden nach deiner Freigabe als Kontext mitgesendet. Kein automatischer Zugriff auf Dateien oder GitHub.</small>
+            <section class="integration-panel" aria-label="Optionale GitHub-Integrationen">
+              <div class="eyebrow">OPTIONAL / READ ONLY</div>
+              <h3>GitHub &amp; Cryo-Omega Skills</h3>
+              <p id="integration-status" role="status">Prüfe erlaubte Repositories …</p>
+              <label for="integration-repo">Repository</label>
+              <select id="integration-repo" aria-label="Freigegebenes GitHub-Repository" disabled></select>
+              <label for="integration-query">Skill-Suche (optional)</label>
+              <input id="integration-query" type="search" maxlength="100" placeholder="z. B. design, agent, coding">
+              <div class="integration-actions">
+                <button type="button" id="integration-readme" disabled>README ansehen</button>
+                <button type="button" id="integration-skills" disabled>Skills suchen</button>
+              </div>
+              <pre id="integration-preview" aria-label="GitHub-Vorschau">Noch keine GitHub-Daten geladen.</pre>
+              <button type="button" id="integration-import" disabled>Als privates Projektwissen übernehmen</button>
+              <small>Nur freigegebene öffentliche Repositories. Kein automatischer Upload, keine Skill-Ausführung. Eingefügte Daten werden zunächst nicht an Ollama gesendet.</small>
+            </section>
           </section>
         </section>
         <section class="messages" id="messages" aria-label="Chatverlauf" aria-live="polite"></section>
