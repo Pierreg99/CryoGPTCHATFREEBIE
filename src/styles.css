@@ -100,6 +100,33 @@ select{color:#d6f1fa;background:#172c43;border:1px solid #38546c;border-radius:7
 .project-panel small{color:#839eb8;line-height:1.5}
 @media(max-width:540px){.project-actions{align-items:stretch;flex-direction:column}#save-project-notes{width:100%}}
 
+
+/* Optional GitHub / Cryo Omega integration panel */
+.integration-panel{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:12px;border:1px solid #315d74;background:#091a30}
+.integration-panel h3{margin:0;color:#d9fdf9;font-size:16px}
+.integration-panel p{margin:0;color:#a3cfdf;font-size:12px}
+.integration-panel label{color:#c7eaf6;font-size:12px;font-weight:650}
+.integration-panel select,.integration-panel input{border:1px solid #416982;border-radius:9px;background:#0c1b30;color:#e8f7fd;padding:10px;max-width:100%}
+.integration-actions{display:flex;flex-wrap:wrap;gap:8px}
+.integration-actions button,#integration-import{border-radius:9px;padding:10px 12px;border:1px solid #367e8b;background:#174452;color:#e3fdfa}
+.integration-panel button:disabled{opacity:.55;cursor:not-allowed}
+#integration-preview{margin:0;padding:12px;max-height:230px;overflow:auto;border:1px solid #29485b;border-radius:9px;white-space:pre-wrap;overflow-wrap:anywhere;background:#071526;color:#d2e6f7;font-size:12px;line-height:1.55}
+
+
+/* Alpha 0.4: human-approved single-step agent and optional cloud provider */
+.agent-panel{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:12px;border:1px solid #5a497b;background:#14172e}
+.agent-panel h3{font-size:16px;margin:0;color:#efe3ff}
+.agent-panel p,.agent-panel small{font-size:12px;margin:0;color:#c7b9e1;line-height:1.5}
+.agent-panel label{font-size:12px;font-weight:700;color:#e3d6fb}
+.agent-panel select,.agent-panel input{border:1px solid #5b527c;border-radius:9px;background:#141a31;color:#f6f1ff;padding:10px}
+.agent-actions{display:flex;gap:8px;flex-wrap:wrap}
+.agent-panel button{border:1px solid #8c68a9;background:#343050;color:#fff4ff;border-radius:9px;padding:10px 12px}
+.agent-panel button:disabled{opacity:.55;cursor:not-allowed}
+#agent-preview{margin:0;padding:12px;max-height:260px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid #5d4d76;border-radius:9px;background:#0e1529;color:#eadffc;font-size:12px;line-height:1.55}
+.cloud-warning{padding:9px 11px;background:#3d2c24;border:1px solid #9b7043;border-radius:8px;color:#ffe5bc;font-size:12px;line-height:1.5}
+.cloud-warning[hidden]{display:none}
+
+
 /* Optional Godot MCP panel – manual inspections only */
 .godot-panel strong{font-size:15px;color:#e5fcff}
 .godot-status{font-size:12px;color:#98dace;margin:0}

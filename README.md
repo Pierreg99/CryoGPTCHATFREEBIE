@@ -31,7 +31,7 @@
 | :--- | :--- | :--- |
 | Chats anlegen, umbenennen, löschen und durchsuchen | Ollama-Modelle auf dem eigenen Rechner auswählen und ansprechen | IndexedDB im Browser, JSON-Export und validierter Import |
 
-**Alpha 0.4 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung, echte tokenweise Streaming-Antworten und eine Stopp-Schaltfläche bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
+**Alpha 0.3 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung, echte tokenweise Streaming-Antworten und eine Stopp-Schaltfläche bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
 
 > 🎨 **Designhinweis:** Die Illustrationen dieser README zeigen die Gestaltungsidee – keine unbearbeiteten Screenshots der laufenden App.
 
@@ -113,6 +113,24 @@ Automatisierte Core-, Streaming- und IndexedDB-Migrationstests sowie Tests mit s
 - **Nicht unverändert öffentlich ins Internet stellen.** Dies ist ein lokales Experiment, keine produktionsreife SaaS-Lösung.
 - Vor einem JSON-Import ein Backup exportieren; bestätigter Import ersetzt den aktuellen Datenbestand.
 
+## 🤖 Alpha 0.4 · Optionale KI-Anbieter und kontrollierte Agentenschritte
+
+**Neu:** Ollama und eine optionale OpenAI-Chat-Completions-API können in derselben Modellauswahl genutzt werden. Die OpenAI-Anbindung benötigt serverseitig `OPENAI_API_KEY` **und** die explizite Modell-Allowlist `CRYO_OPENAI_MODELS`. Cloud-Nutzung bleibt standardmäßig aus; vor jeder Cloud-Anfrage wird der Nutzer gefragt. Die OpenAI API ist separat kostenpflichtig.
+
+Der **Agenten-Workspace** zeigt für erlaubte GitHub-Leseaktionen zunächst einen Plan. Erst nach expliziter Freigabe wird **genau ein** Schritt ausgeführt: README lesen oder den Cryo-Omega-Skill-Katalog durchsuchen. Ergebnisse werden nur auf Knopfdruck in einen Nachrichtenentwurf übertragen; sie starten keinen autonomen Agenten.
+
+**Einrichtung, Datenschutz und Grenzen:** [Modellanbieter & Agentenschritte](docs/model-providers-and-agents.md). Kein GitHub-Schreibzugriff, keine Shell-Kommandos und keine automatische Ausführung von Skills.
+
+## 🔌 Optionale Integrationen (experimentell)
+
+Die neue GitHub-Anbindung kann explizit freigegebene **öffentliche** Repositories und den Cryo-Omega-Skill-Katalog schreibgeschützt einlesen. Die App zeigt eine Vorschau und übernimmt Inhalte nur nach deiner Bestätigung als privates Projektwissen. **Keine automatischen KI-Aufrufe, keine GitHub-Schreibrechte und keine Skill-Ausführung.**
+
+```bash
+CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Agentic-Learn-Packages npm start
+```
+
+Öffne dann im Chat **Projektwissen → GitHub & Cryo-Omega Skills**. Ohne diese Umgebungsvariable bleibt die Integration ausgeschaltet. Weitere Hinweise und API-Details: [Integrationsanleitung](docs/integrations.md).
+
 ## 🧠 Projektwissen je Chat
 
 Über **„Projektwissen“** kannst du pro Unterhaltung wichtige Ziele, Architekturentscheidungen und Hintergrundinfos in einem eigenen Textfeld speichern (maximal **4.000 Zeichen**).
@@ -127,7 +145,7 @@ Automatisierte Core-, Streaming- und IndexedDB-Migrationstests sowie Tests mit s
 - **Fallback:** Wenn IndexedDB nicht verfügbar ist, wird `localStorage` genutzt und eine Warnung angezeigt.
 - **Kein Cloud-Sync und keine Verschlüsselung:** Browserdaten können beim Löschen des Profils verloren gehen; wichtige Chats regelmäßig als JSON exportieren.
 
-**Noch nicht enthalten:** automatische Wissenssuche (RAG), Dateizugriff, GitHub-Sync, Skill-Ausführung oder browserübergreifende Synchronisierung.
+**Noch nicht enthalten:** automatische Wissenssuche (RAG), beliebiger lokaler Dateizugriff, GitHub-Schreib-/Cloud-Sync, autonome Skill-Ausführung oder browserübergreifende Synchronisierung.
 
 ## 🎮 Godot MCP – optionale lokale Projektprüfung
 
@@ -155,10 +173,12 @@ Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade o
 - [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups und optionale Ollama-Integration.
 - [x] **Alpha 0.2:** Streaming-Ausgabe, Stopp-Schaltfläche, gekennzeichnete Teilantworten, manuelle Modellauswahl und neue Stream-Tests.
 - [x] **Alpha 0.3 (erster Schritt):** IndexedDB-Migration, versionierte Backups und manuell freigegebenes Projektwissen pro Chat.
-- [ ] **Weiter offen:** Browser-End-to-End-Tests, Barrierefreiheit und robuste größere Chatverläufe.
-- [x] **Alpha 0.4:** kontrollierte neue Godot-Szene mit serverseitigem Pfadschutz, Vorschau und Einmal-Freigabe (optional).
-- [ ] **Alpha 0.5:** stärkere Isolation für externe MCP-Server und Godot-End-to-End-Tests.
+- [x] **Optionale Integration (experimentell):** GitHub-README-Vorschau, kontrollierte Skill-Katalogsuche und manuelle Übernahme ins Projektwissen.
+- [x] **Alpha 0.4 (MVP):** Optionale OpenAI-API, getrennte Modellauswahl und bestätigungspflichtige GitHub-Agentenschritte.
+- [ ] **Alpha 0.3 (weitere Schritte):** Browser-E2E, Accessibility und robuste größere Chatverläufe.
 - [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
+
+- [x] **Godot MCP (optional):** Versions-/Projektprüfung und manuell bestätigte Erstellung neuer Szenen im festgelegten Testprojekt; ohne automatische KI-Tool-Ausführung.
 
 ## 🤝 Mitmachen
 

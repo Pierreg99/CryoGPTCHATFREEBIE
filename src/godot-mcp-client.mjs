@@ -67,6 +67,12 @@ export async function callGodotMcp(tool, {
       else resolve(output);
     };
     const timer = setTimeout(() => stop(new Error('Godot MCP hat das Zeitlimit überschritten.')), timeoutMs);
+    // Always drain stderr; excessive logging must not block the stdio protocol.
+    let stderrBytes = 0;
+    child.stderr.on('data', chunk => {
+      stderrBytes += chunk.byteLength;
+      if (stderrBytes > 128000) stop(new Error('Godot MCP hat zu viele Fehlermeldungen ausgegeben.'));
+    });
     const send = message => {
       if (settled) return;
       child.stdin.write(JSON.stringify({ jsonrpc: '2.0', ...message }) + '\n');

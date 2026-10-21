@@ -3,16 +3,30 @@ import { callGodotMcp, godotMcpConfigured } from './src/godot-mcp-client.mjs';
 import { prepareScene } from './src/godot-scene-plan.mjs';
 import { randomBytes } from 'node:crypto';
 import { existsSync } from 'node:fs';
+import { callOpenai, configuredOpenaiModels, normalizeOpenaiStream } from './src/providers.mjs';
+import { configuredRepositories, githubPreview, searchGithubSkills } from './src/github-integration.mjs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
+const pendingScenePlans = new Map();
+let activeGodotProcesses = 0;
+const MAX_GODOT_PROCESSES = 2;
+async function runGodotTool(...args) {
+  if (activeGodotProcesses >= MAX_GODOT_PROCESSES) {
+    const error = new Error('Godot MCP ist ausgelastet. Bitte abgeschlossene Abfragen abwarten.');
+    error.status = 429;
+    throw error;
+  }
+  activeGodotProcesses++;
+  try { return await callGodotMcp(...args); }
+  finally { activeGodotProcesses--; }
+}
 const port = Number(process.env.PORT || 4173);
 const ollama = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json; charset=utf-8' };
-const pendingScenePlans = new Map();
-const allow = new Set(['/index.html', '/src/app.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
+const allow = new Set(['/index.html', '/src/app.js', '/src/integrations.js', '/src/agent-ui.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
 
 function json(res, status, body) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
@@ -77,14 +91,14 @@ const server = http.createServer(async (req, res) => {
       try { plan = prepareScene(process.env.GODOT_PROJECT_PATH, pending.sceneName, pending.rootNodeType); }
       catch (error) { return json(res, 409, { error: String(error.message) }); }
       try {
-        const output = await callGodotMcp('create_scene', {
+        const output = await runGodotTool('create_scene', {
           scene: { sceneName: plan.sceneName, rootNodeType: plan.rootNodeType }
         });
         // External tool responses alone cannot prove a scene was actually created.
         if (!existsSync(plan.absolutePath)) return json(res, 502, { error: 'MCP meldet Erfolg, aber die Szenendatei fehlt. Bitte Projekt prüfen.' });
         return json(res, 200, { scenePath: plan.scenePath, rootNodeType: plan.rootNodeType, output });
       } catch (error) {
-        return json(res, 502, { error: String(error.message || 'Godot-Szenenerstellung fehlgeschlagen.').slice(0, 600) });
+        return json(res, error.status === 429 ? 429 : 502, { error: String(error.message || 'Godot-Szenenerstellung fehlgeschlagen.').slice(0, 600) });
       }
     }
     if (url.pathname === '/api/godot/status' && req.method === 'GET') {
@@ -106,14 +120,58 @@ const server = http.createServer(async (req, res) => {
         return json(res, 400, { error: 'Dieses Godot-Werkzeug ist nicht freigegeben.' });
       }
       try {
-        return json(res, 200, { tool: request.tool, output: await callGodotMcp(request.tool) });
+        return json(res, 200, { tool: request.tool, output: await runGodotTool(request.tool) });
       } catch (error) {
-        return json(res, 502, { error: String(error.message || 'Godot-Abfrage fehlgeschlagen.').slice(0, 600) });
+        return json(res, error.status === 429 ? 429 : 502, { error: String(error.message || 'Godot-Abfrage fehlgeschlagen.').slice(0, 600) });
       }
     }
     if (url.pathname === '/api/status' && req.method === 'GET') {
-      try { return json(res, 200, { online: true, models: await getModels() }); }
-      catch { return json(res, 200, { online: false, models: [] }); }
+      let models = [], online = false;
+      try { models = await getModels(); online = true; } catch { /* Ollama is optional */ }
+      const openai = configuredOpenaiModels();
+      return json(res, 200, {
+        online, models,
+        providers: { ollama: { online, models }, openai: { enabled: openai.length > 0, models: openai } }
+      });
+    }
+    if (url.pathname === '/api/integrations' && req.method === 'GET') {
+      return json(res, 200, { github: { readonly: true, repositories: configuredRepositories() }, skills: { readonly: true, executable: false } });
+    }
+    if (url.pathname === '/api/integrations/github' && req.method === 'GET') {
+      try {
+        const result = await githubPreview({ repo: url.searchParams.get('repo') || '', path: url.searchParams.get('path') || '' });
+        return json(res, 200, result);
+      } catch (error) {
+        return json(res, Number.isInteger(error.status) ? error.status : 500, { error: error.message || 'GitHub-Integration fehlgeschlagen.' });
+      }
+    }
+    if (url.pathname === '/api/integrations/skills' && req.method === 'GET') {
+      try {
+        const result = await searchGithubSkills({ repo: url.searchParams.get('repo') || '', query: url.searchParams.get('q') || '' });
+        return json(res, 200, result);
+      } catch (error) {
+        return json(res, Number.isInteger(error.status) ? error.status : 500, { error: error.message || 'Skill-Suche fehlgeschlagen.' });
+      }
+    }
+    if (url.pathname === '/api/agent/execute' && req.method === 'POST') {
+      if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'JSON erwartet.' });
+      const origin = req.headers.origin;
+      if (origin && origin !== `http://127.0.0.1:${port}`) return json(res, 403, { error: 'Fremder Ursprung nicht erlaubt.' });
+      let body;
+      try { body = await parseRequest(req); } catch { return json(res, 400, { error: 'Ungültige Agentenanfrage.' }); }
+      const { operation, repo, query = '' } = body;
+      if (typeof repo !== 'string' || typeof operation !== 'string' || typeof query !== 'string' || query.length > 100) return json(res, 400, { error: 'Ungültige Agentenparameter.' });
+      try {
+        if (operation === 'read-readme') {
+          return json(res, 200, { operation, result: await githubPreview({ repo, path: 'README.md' }), readonly: true });
+        }
+        if (operation === 'search-skills') {
+          return json(res, 200, { operation, result: await searchGithubSkills({ repo, query }), readonly: true });
+        }
+        return json(res, 400, { error: 'Aktion nicht freigegeben.' });
+      } catch (error) {
+        return json(res, Number.isInteger(error.status) ? error.status : 500, { error: error.message || 'Agentenschritt fehlgeschlagen.' });
+      }
     }
     if ((url.pathname === '/api/chat' || url.pathname === '/api/chat/stream') && req.method === 'POST') {
       if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'JSON erwartet.' });
@@ -127,11 +185,35 @@ const server = http.createServer(async (req, res) => {
         return json(res, 400, { error: 'Ungültige Anfrage.' });
       }
       const streaming = url.pathname === '/api/chat/stream';
-      // Abort in-flight Ollama generation when the browser stops or disconnects.
       const controller = new AbortController();
       const onDisconnect = () => controller.abort();
       res.once('close', onDisconnect);
       try {
+        if (model.startsWith('openai:')) {
+          // This cloud path is reachable only for explicitly configured models.
+          const upstream = await callOpenai({
+            choice: model, messages, stream: streaming,
+            signal: AbortSignal.any([controller.signal, AbortSignal.timeout(120000)])
+          });
+          if (controller.signal.aborted) return;
+          if (!streaming) return json(res, 200, { message: upstream });
+          res.writeHead(200, {
+            'Content-Type': 'application/x-ndjson; charset=utf-8',
+            'Cache-Control': 'no-store', 'X-Accel-Buffering': 'no'
+          });
+          try {
+            for await (const event of normalizeOpenaiStream(upstream)) {
+              if (controller.signal.aborted) break;
+              res.write(event);
+            }
+          } catch {
+            if (!res.destroyed && !controller.signal.aborted) {
+              res.write(JSON.stringify({ error: 'Cloud-Stream unterbrochen oder ungültig.' }) + '\n');
+            }
+          }
+          if (!res.destroyed) res.end();
+          return;
+        }
         const available = await getModels();
         if (controller.signal.aborted) return;
         if (!available.includes(model)) return json(res, 400, { error: 'Das Modell ist nicht lokal installiert.' });
@@ -173,8 +255,11 @@ const server = http.createServer(async (req, res) => {
         const response = await r.json();
         if (typeof response.message?.content !== 'string') return json(res, 502, { error: 'Ungültige Ollama-Antwort.' });
         return json(res, 200, { message: response.message.content });
-      } catch {
-        if (!res.destroyed && !res.headersSent) return json(res, 503, { error: 'Ollama ist nicht erreichbar oder antwortet nicht rechtzeitig.' });
+      } catch (error) {
+        if (!res.destroyed && !res.headersSent) {
+          const code = model.startsWith('openai:') && Number.isInteger(error.status) ? error.status : 503;
+          return json(res, code, { error: model.startsWith('openai:') ? (error.message || 'Cloud-Anfrage fehlgeschlagen.') : 'Ollama ist nicht erreichbar oder antwortet nicht rechtzeitig.' });
+        }
       } finally {
         res.off('close', onDisconnect);
       }
