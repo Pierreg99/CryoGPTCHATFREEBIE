@@ -43,6 +43,7 @@
         <div class="sidebar-bottom">
           <div class="privacy">
             ◈ &nbsp; <strong>LOCAL FIRST</strong
+            ><span id="app-version" class="release-badge">ENTWICKLUNG</span
             ><small>Chats bleiben in deinem Browser.</small>
           </div>
           <div class="button-row">
@@ -255,7 +256,7 @@ Noch kein Agentenschritt geplant.</pre>
               <pre class="godot-output" id="godot-output" aria-live="polite">
 Keine Abfrage gestartet.</pre>
               <div class="scene-builder">
-                <div class="eyebrow">ALPHA 0.4 / SZENEN-VORSCHAU</div>
+                <div class="eyebrow">GODOT / SZENEN-VORSCHAU</div>
                 <label for="scene-name">Neuer Szenenname</label>
                 <input
                   id="scene-name"
@@ -388,7 +389,7 @@ Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
             class="messages"
             id="messages"
             aria-label="Chatverlauf"
-            aria-live="polite"
+            aria-live="off"
           ></section>
           <section class="welcome" id="welcome">
             <div class="hero-orb">
@@ -437,11 +438,22 @@ Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
               <label class="sr-only" for="prompt">Nachricht eingeben</label>
               <textarea
                 id="prompt"
+                aria-describedby="composer-help"
                 rows="3"
                 maxlength="12000"
                 required
                 placeholder="Frage stellen oder eine Idee notieren …"
               ></textarea>
+              <p id="composer-help" class="composer-help">
+                Enter sendet · Shift + Enter fügt eine neue Zeile ein.
+              </p>
+              <div
+                id="generation-status"
+                class="sr-only"
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+              ></div>
               <div class="composer-footer">
                 <label
                   >MODELL
@@ -470,7 +482,7 @@ Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
               </p>
             </form>
             <p class="disclaimer">
-              Alpha-Software: Nachrichten und Projektwissen werden
+              Vorabversion: Nachrichten und Projektwissen werden
               unverschlüsselt im Browser gespeichert. Cloud-Modelle sind
               standardmäßig deaktiviert. Cloud-Anfragen können Kosten auslösen.
             </p>

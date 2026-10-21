@@ -79,15 +79,27 @@ export function setupHyperfocus({ el, active, notice }) {
       historyPanel.append(details);
     }
   }
+  let protectedChatIds = null,
+    currentChatIds = null;
+  function pruneHistory() {
+    if (!protectedChatIds || !currentChatIds) return;
+    const allowed = new Set([...protectedChatIds, ...currentChatIds]);
+    const next = history.filter((entry) => allowed.has(entry.chatId));
+    if (next.length !== history.length) {
+      history = next;
+      saveHistory();
+      renderHistory();
+    }
+  }
   document.addEventListener("workspace:chat", (event) => {
     if (Array.isArray(event.detail)) {
-      const next = history.filter((x) => event.detail.includes(x.chatId));
-      if (next.length !== history.length) {
-        history = next;
-        saveHistory();
-        renderHistory();
-      }
+      currentChatIds = event.detail;
+      pruneHistory();
     }
+  });
+  document.addEventListener("workspace:recovery", (event) => {
+    protectedChatIds = Array.isArray(event.detail) ? event.detail : [];
+    queueMicrotask(pruneHistory);
   });
   let context = active()?.id;
   document.addEventListener("workspace:context", (event) => {
@@ -416,4 +428,5 @@ export function setupHyperfocus({ el, active, notice }) {
   invalidate();
   renderHistory();
   init();
+  document.addEventListener("workspace:restore", invalidate);
 }

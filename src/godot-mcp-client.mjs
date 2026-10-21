@@ -1,3 +1,4 @@
+import { APP_VERSION } from './version.mjs';
 import { spawn } from 'node:child_process';
 import { existsSync, realpathSync } from 'node:fs';
 import path from 'node:path';
@@ -114,7 +115,7 @@ export async function callGodotMcp(tool, {
     });
     send({
       id: 1, method: 'initialize',
-      params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'CryoGPTCHATFREEBIE', version: '0.4.0' } }
+      params: { protocolVersion: '2024-11-05', capabilities: {}, clientInfo: { name: 'CryoGPTCHATFREEBIE', version: APP_VERSION } }
     });
   });
 }

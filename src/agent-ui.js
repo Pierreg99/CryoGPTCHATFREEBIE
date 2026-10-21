@@ -186,4 +186,5 @@ export function setupAgent({ el, active, notice }) {
     }
   });
   invalidate();
+  document.addEventListener("workspace:restore", invalidate);
 }
