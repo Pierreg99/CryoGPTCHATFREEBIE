@@ -8,7 +8,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 const port = Number(process.env.PORT || 4173);
 const ollama = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json; charset=utf-8' };
-const allow = new Set(['/index.html', '/src/app.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
+const allow = new Set(['/index.html', '/src/app.js', '/src/integrations.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
 
 function json(res, status, body) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
