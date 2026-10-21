@@ -29,7 +29,7 @@ for (const width of [360, 768, 1440])
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto("/");
-    await expect(page.locator(".workspace-nav a")).toHaveCount(7);
+    await expect(page.locator(".workspace-nav a")).toHaveCount(8);
     for (const view of [
       "chat",
       "knowledge",
@@ -38,6 +38,7 @@ for (const width of [360, 768, 1440])
       "skills",
       "godot",
       "models",
+      "roadmap",
     ]) {
       await page.goto("/#" + view);
       await expect(
@@ -328,6 +329,7 @@ test("import remains confirmed, generation can stop, Godot keeps preview before 
   await page.locator("#cryo-dialog-confirm").click();
   await expect(page.locator("#godot-output")).toContainText("Godot 4.4");
   await expect(page.locator("#scene-create")).toBeDisabled();
+  await page.locator(".godot-scene-disclosure > summary").click();
   await page.locator("#scene-name").fill("Demo");
   await page.locator("#scene-preview").click();
   await expect(page.locator("#scene-create")).toBeEnabled();
@@ -351,4 +353,104 @@ test("skip link preserves selected view and browser history restores views", asy
   await expect(
     page.locator('.workspace-nav a[aria-current="page"]'),
   ).toHaveAttribute("href", "#models");
+});
+
+test("all 100 roadmap versions are browsable with phase/status filters and full details", async ({
+  page,
+}) => {
+  await mock(page);
+  await page.goto("/#roadmap");
+  await expect(page.locator("#roadmap-list button")).toHaveCount(10);
+  const versions = [];
+  for (let i = 0; i < 10; i++) {
+    versions.push(
+      ...(await page
+        .locator("#roadmap-list button")
+        .evaluateAll((buttons) => buttons.map((b) => b.dataset.version))),
+    );
+    if (i < 9) await page.locator("#roadmap-next").click();
+  }
+  expect(versions).toHaveLength(100);
+  expect(new Set(versions).size).toBe(100);
+  await page.locator('button[data-version="10.0"]').click();
+  await expect(page.locator("#roadmap-detail-title")).toContainText("v10.0");
+  await expect(page.locator("#roadmap-detail-content")).toContainText(
+    "Abnahmekriterium",
+  );
+  await page.locator("#roadmap-search").fill("v0.6");
+  await expect(page.locator("#roadmap-list button")).toHaveCount(1);
+  await expect(page.locator("#roadmap-detail-title")).toContainText(
+    "Browser-End-to-End",
+  );
+  await page.locator("#roadmap-search").fill("");
+  await page.locator("#roadmap-status").selectOption("implemented");
+  await expect(page.locator("#roadmap-list button")).toHaveCount(6);
+  await page.locator("#roadmap-status").selectOption("");
+  await page.locator("#roadmap-phase").selectOption("10");
+  await expect(page.locator("#roadmap-list button")).toHaveCount(10);
+  await expect(page.locator("#roadmap-list")).toContainText("Vision 10.0");
+  await page.locator("#roadmap-search").fill("no-such-feature");
+  await expect(page.locator("#roadmap-result-count")).toHaveText(
+    "0 passende Meilensteine",
+  );
+  await expect(page.locator(".roadmap-detail")).toBeHidden();
+});
+test("knowledge empty state creates a chat without losing the selected tool", async ({
+  page,
+}) => {
+  await mock(page);
+  await page.goto("/#knowledge");
+  await expect(
+    page.getByRole("button", { name: "Chat erstellen", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "Chat erstellen", exact: true })
+    .click();
+  await expect(page).toHaveURL(/#knowledge$/);
+  await expect(page.locator("#project-context")).toBeEnabled();
+  await page.locator("#project-context").fill("Ein präziser Kontext");
+  await expect(page.locator("#context-dirty")).toHaveText(
+    "Ungespeicherte Änderungen",
+  );
+  await page.locator("#save-project-notes").click();
+  await expect(page.locator("#context-dirty")).toHaveText("Lokal gespeichert");
+});
+test("mobile welcome makes the composer reachable without a long introductory scroll", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 360, height: 850 });
+  await mock(page);
+  await page.goto("/");
+  await expect(page.locator(".workspace-nav a")).toHaveCount(8);
+  const top = await page
+    .locator("#composer")
+    .evaluate((n) => n.getBoundingClientRect().top);
+  expect(top).toBeLessThan(760);
+  await page.goto("/#models");
+  await page.locator("#model-search").fill("no-such-model");
+  await expect(
+    page.getByRole("button", { name: "Suche zurücksetzen" }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Suche zurücksetzen" }).click();
+  await expect(page.locator("#model-search")).toHaveValue("");
+  await expect(page.locator(".model-card")).toHaveCount(2);
+});
+
+test("roadmap loading failure offers recovery without duplicate summary data", async ({
+  page,
+}) => {
+  let requests = 0;
+  await mock(page);
+  await page.route("**/api/roadmap", (r) =>
+    ++requests === 1
+      ? r.fulfill({ status: 503, json: { error: "temporary" } })
+      : r.continue(),
+  );
+  await page.goto("/#roadmap");
+  await expect(page.locator("#roadmap-result-count")).toHaveText(
+    "Roadmap nicht erreichbar.",
+  );
+  await page.getByRole("button", { name: "Erneut laden", exact: true }).click();
+  await expect(page.locator("#roadmap-list button")).toHaveCount(10);
+  await expect(page.locator(".roadmap-counts > div")).toHaveCount(3);
 });

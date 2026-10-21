@@ -31,7 +31,13 @@
 
 ![Echter Screenshot des neuen Cryo-Neon-Workspace](docs/screenshots/workspace-desktop.png)
 
-Sieben eigene Ansichten, mobile Navigation, einheitliche Freigabedialoge und reduzierte Bewegung auf Wunsch. Neu sind Modellfavoriten, kopierbare Nachrichten, Skill-Karten, lokale Hyperfocus-Historie und einzeln freigegebene Agenten-Schrittfolgen. Markdown-Ausgaben lokal oder über neue GitHub-Branches und PRs bleiben standardmäßig gesperrt und benötigen eigene serverseitige Opt-ins. [Bedienung, Konfiguration und Grenzen →](docs/workspace.md)
+Acht eigene Ansichten einschließlich einer durchsuchbaren Roadmap mit allen 100 Versions-Meilensteinen, mobile Navigation, einheitliche Freigabedialoge und reduzierte Bewegung auf Wunsch. Neu sind Modellfavoriten, kopierbare Nachrichten, Skill-Karten, lokale Hyperfocus-Historie und einzeln freigegebene Agenten-Schrittfolgen. Markdown-Ausgaben lokal oder über neue GitHub-Branches und PRs bleiben standardmäßig gesperrt und benötigen eigene serverseitige Opt-ins. [Bedienung, Konfiguration und Grenzen →](docs/workspace.md)
+
+### Alle Versionen im Blick
+
+![Interaktive Roadmap mit Versionsdetails und belegtem Status](docs/screenshots/roadmap.png)
+
+Suche nach Themen oder Versionsnummern, filtere nach Phase und Status und prüfe Lieferobjekt und Abnahmekriterium jeder Version. Die Ansicht liest die bestehende Markdown-Roadmap; geplante Funktionen bleiben als geplant gekennzeichnet.
 
 ## ✨ Funktionen
 

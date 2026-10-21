@@ -1,3 +1,4 @@
+import { refineInterface } from "./interface-polish.js";
 import { confirmAction, requestText } from "./dialogs.js";
 import { setupWorkspace } from "./workspace.js";
 import { setupAgentFlow } from "./agent-flow.js";
@@ -651,6 +652,7 @@ setupAgent({ el, active, notice });
 setupHyperfocus({ el, active, notice });
 setupAgentFlow({ el, active, notice });
 setupWorkspace({ el, notice, refreshModels, active });
+refineInterface({ el, active });
 document.addEventListener("workspace:view", (e) => {
   if (e.detail === "godot") checkGodotStatus();
 });
