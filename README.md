@@ -20,7 +20,8 @@
     <a href="#-funktionen">Funktionen</a> ·
     <a href="#-drei-designwelten">Designwelten</a> ·
     <a href="#-systemarchitektur">Architektur</a> ·
-    <a href="#-datenschutz--grenzen">Sicherheit</a>
+    <a href="#-datenschutz--grenzen">Sicherheit</a> ·
+    <a href="docs/roadmap/ROADMAP-100.md">100-Versionen-Roadmap</a>
   </p>
 </div>
 
@@ -173,6 +174,21 @@ Im Godot-Panel steht nun ein optionaler Szenenassistent bereit. Er erlaubt **Nod
 Der Ablauf ist zweistufig: **Vorschau ohne Dateischreibzugriff**, dann **einmalige Ausführung** nach zusätzlicher Bestätigung durch Eingabe von `ERSTELLEN`. Die Freigabe verfällt nach zwei Minuten und darf nur einmal verwendet werden. Ohne `GODOT_SCENE_WRITES=true` bleibt die Schreibfunktion gesperrt.
 
 Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade oder Godot-Klassen aus einer KI-Antwort ausgeführt. **Ein fremdes Godot-Projekt kann dennoch Skript-Seiteneffekte verursachen:** Ausschließlich in einer überprüften lokalen Testumgebung verwenden.
+
+## 🗺️ Masterplan: 100 Versionen (v0.1 bis v10.0)
+
+**Von der lokalen Chat-Alpha zum modularen KI-Workspace:** Die [Master Roadmap mit 100 Versions-Meilensteinen](docs/roadmap/ROADMAP-100.md) ist in zehn Phasen gegliedert. Jeder Schritt benennt ein konkretes Lieferobjekt und ein prüfbares Abnahmekriterium.
+
+| Zeitraum im Versionsraster | Schwerpunkt | Status |
+| :--- | :--- | :--- |
+| **v0.1–v0.4** | Chat, Streaming, IndexedDB, OpenAI Opt-in, GitHub-/Skill-Read-only und Godot MCP | ✅ Im Code / historische Phasen |
+| **v0.5** | Hyperfocus: einmal bestätigte, begrenzte read-only Recherche mit optionaler Ollama-Planung | ✅ MVP in `main` (Browser-E2E offen) |
+| **v0.6–v1.0** | Browser-Tests, Accessibility, Datenrettung und Security-Baseline | ⬜ Geplant |
+| **v1.1–v3.0** | Zuverlässigkeit, Projektwissen, Skill-Registry und zitierte Quellen | ⬜ Vision |
+| **v3.1–v5.0** | Geprüfte Agentenrechte, sichere GitHub-Workflows und Godot/3D | ⬜ Vision |
+| **v5.1–v10.0** | Multimodalität, optionaler Sync, Plugin-SDK und Plattformreife | ⬜ Vision |
+
+**Wichtig:** Die Versionsreihe ist ein Planungsraster, **keine Zusage von 100 Releases** oder festen Terminen. Änderungen mit Schreibrechten bleiben bis zur eigenen Sicherheitsfreigabe deaktiviert. [Quellencheck und Ist-/Soll-Abgleich](docs/roadmap/RESEARCH.md).
 
 ## 🛣️ Roadmap
 
