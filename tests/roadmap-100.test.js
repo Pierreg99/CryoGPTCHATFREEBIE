@@ -10,14 +10,14 @@ const research = readFileSync(path.join(root, 'docs/roadmap/RESEARCH.md'), 'utf8
 const readme = readFileSync(path.join(root, 'README.md'), 'utf8');
 
 test('Exactly 100 unique consecutive milestones from v0.1 through v10.0', () => {
-  const labels = [...roadmap.matchAll(/^#### (?:✅|🟡|⬜) v([0-9]+\.[0-9]) · /gm)].map(x => x[1]);
+  const labels = [...roadmap.matchAll(/^#### [^\n]*? v([0-9]+\.[0-9]) · /gm)].map(x => x[1]);
   const expected = Array.from({ length: 100 }, (_, i) => ((i + 1) / 10).toFixed(1));
   assert.equal(labels.length, 100);
   assert.deepEqual(labels, expected);
 });
 
 test('Each milestone specifies an artifact and acceptance gate', () => {
-  const entries = roadmap.split(/^#### (?:✅|🟡|⬜) v[0-9]+\.[0-9] · .*$/gm).slice(1);
+  const entries = roadmap.split(/^#### [^\n]*? v[0-9]+\.[0-9] · .*$/gm).slice(1);
   assert.equal(entries.length, 100);
   for (const entry of entries) {
     assert.match(entry, /^\n\n\*\*Lieferobjekt:\*\*/);
