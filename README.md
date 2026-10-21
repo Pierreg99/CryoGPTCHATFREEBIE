@@ -47,6 +47,8 @@ npm start
 
 ## Funktionen
 
+Die [vollständige Feature-Checkliste im Changelog](CHANGELOG.md) hakt abgeschlossene Funktionen ab und führt noch offene Release-Abnahmen getrennt auf.
+
 <img src="assets/readme/capabilities.svg" alt="Vier Bereiche: lokaler Chat, optionale Modellanbieter, geprüfte GitHub-/Skill-Referenzen und manuell freigegebene Godot-Werkzeuge" width="100%" />
 
 | Bereich | Aktuelles Verhalten |
@@ -133,7 +135,7 @@ Für die Browser-Entwicklung Node 24 verwenden. CI prüft Node 20/22/24, Chromiu
 
 ## Roadmap
 
-Die [Master-Roadmap](docs/roadmap/ROADMAP-100.md) ist die gemeinsame Quelle für Dokumentation und GUI. Sie enthält 100 Meilensteine von v0.1 bis v10.0, jeweils mit Lieferobjekt und Abnahmekriterium. [Recherche und Statusbelege](docs/roadmap/RESEARCH.md)
+Die [Master-Roadmap mit Checkboxen pro Meilenstein](docs/roadmap/ROADMAP-100.md) ist die gemeinsame Quelle für Dokumentation und GUI. Sie enthält 100 Meilensteine von v0.1 bis v10.0, jeweils mit Lieferobjekt und Abnahmekriterium. [Recherche und Statusbelege](docs/roadmap/RESEARCH.md)
 
 | Entwicklungsmeilensteine | Status |
 | :--- | :--- |
