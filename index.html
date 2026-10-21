@@ -1,166 +1,482 @@
 <!doctype html>
 <html lang="de">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#090e1b">
-  <meta name="description" content="CryoGPTCHATFREEBIE – privater Chat-Arbeitsbereich mit optionaler lokaler Ollama-KI.">
-  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
-  <link rel="stylesheet" href="/src/styles.css">
-  <title>CryoGPTCHATFREEBIE · Local AI Workspace</title>
-  <script type="module" src="/src/app.js"></script>
-</head>
-<body>
-  <div class="app-shell">
-    <aside class="sidebar" id="sidebar" aria-label="Chat-Navigation">
-      <div class="brand"><img src="/assets/logo.svg" alt="" width="46" height="46"><div><strong>CRYO<span>GPT</span>CHAT</strong><small>FREEBIE / PERSONAL AI WORKSPACE</small></div></div>
-      <button class="new-chat" id="new-chat" type="button">＋ Neue Unterhaltung <kbd>Alt + N</kbd></button>
-      <label class="sr-only" for="search">Gespräche durchsuchen</label>
-      <input id="search" type="search" placeholder="⌕  Gespräche durchsuchen …" autocomplete="off">
-      <div class="side-label">GESPRÄCHE <span id="chat-count">0</span></div>
-      <nav id="chat-list" class="chat-list" aria-label="Gespeicherte Gespräche"></nav>
-      <div class="sidebar-bottom">
-        <div class="privacy">◈ &nbsp; <strong>LOCAL FIRST</strong><small>Chats bleiben in deinem Browser.</small></div>
-        <div class="button-row"><button id="export" type="button">↓ Export</button><button id="import" type="button">↑ Import</button></div>
-        <input id="import-file" type="file" accept=".json,application/json" hidden>
-      </div>
-    </aside>
-    <main class="main">
-      <header class="topbar">
-        <button id="nav-toggle" class="mobile-menu" type="button" aria-label="Navigation öffnen">☰</button>
-        <div class="breadcrumb">CRYO OS <span>/</span> <strong id="top-title">Neuer Chat</strong></div>
-        <div class="top-actions"><span id="status" role="status">○ Verbindung wird geprüft</span><button id="refresh" type="button" aria-label="Lokale Modelle aktualisieren" title="Modelle aktualisieren">↻</button></div>
-      </header>
-      <div class="chat-area">
-        <section class="intro">
-          <div class="eyebrow">ALPHA 0.4 &nbsp;•&nbsp; PRIVATE AI WORKSPACE</div>
-          <h1 id="chat-heading">CryoGPT<span>Chat.</span></h1>
-          <p id="chat-subtitle">Dein Arbeitsbereich für Ideen, Code und Gespräche – ohne Cloud-Zwang.</p>
-          <div class="chat-tools"><button id="rename-chat" type="button">✎ Umbenennen</button><button id="delete-chat" type="button">⌫ Löschen</button><button id="notes-toggle" type="button" aria-expanded="false" aria-controls="project-panel">◈ Projektwissen</button><button id="godot-toggle" type="button" aria-expanded="false" aria-controls="godot-panel">🎮 Godot MCP</button><button id="focus-toggle" type="button" aria-expanded="false" aria-controls="focus-panel">⚡ Hyperfocus</button></div>
-          <section class="project-panel" id="project-panel" aria-label="Projektwissen dieser Unterhaltung" hidden>
-            <div class="eyebrow">PROJECT KNOWLEDGE / NUR FÜR DIESEN CHAT</div>
-            <label for="project-context">Notizen, Entscheidungen und Hintergrundwissen</label>
-            <textarea id="project-context" rows="5" maxlength="4000" placeholder="Zum Beispiel: Ziele, Technologien, Entscheidungen, wichtige Begriffe …"></textarea>
-            <div class="project-actions">
-              <label class="project-opt-in"><input id="project-share" type="checkbox"> Bei KI-Antworten berücksichtigen</label>
-              <button id="save-project-notes" type="button">Projektwissen speichern</button>
-            </div>
-            <p id="project-notes-status" role="status">Privat gespeichert – noch nicht an ein Modell freigegeben.</p>
-            <small>Nur die Notizen dieses Chats werden nach deiner Freigabe als Kontext mitgesendet. Kein automatischer Zugriff auf Dateien oder GitHub.</small>
-            <section class="integration-panel" aria-label="Optionale GitHub-Integrationen">
-              <div class="eyebrow">OPTIONAL / READ ONLY</div>
-              <h3>GitHub &amp; Cryo-Omega Skills</h3>
-              <p id="integration-status" role="status">Prüfe erlaubte Repositories …</p>
-              <label for="integration-repo">Repository</label>
-              <select id="integration-repo" aria-label="Freigegebenes GitHub-Repository" disabled></select>
-              <label for="integration-query">Skill-Suche (optional)</label>
-              <input id="integration-query" type="search" maxlength="100" placeholder="z. B. design, agent, coding">
-              <div class="integration-actions">
-                <button type="button" id="integration-readme" disabled>README ansehen</button>
-                <button type="button" id="integration-skills" disabled>Skills suchen</button>
-              </div>
-              <pre id="integration-preview" aria-label="GitHub-Vorschau">Noch keine GitHub-Daten geladen.</pre>
-              <button type="button" id="integration-import" disabled>Als privates Projektwissen übernehmen</button>
-              <small>Nur freigegebene öffentliche Repositories. Kein automatischer Upload, keine Skill-Ausführung. Eingefügte Daten werden zunächst nicht an Ollama gesendet.</small>
-            </section>
-            <section class="agent-panel" aria-label="Freizugebende Agentenschritte">
-              <div class="eyebrow">HUMAN IN THE LOOP / READ ONLY</div>
-              <h3>Agenten-Workspace</h3>
-              <p>Erst planen, dann jeden GitHub-Schritt einzeln bestätigen. Keine autonome Ausführung.</p>
-              <label for="agent-operation">Erlaubte Aktion</label>
-              <select id="agent-operation" aria-label="Agentenaktion">
-                <option value="read-readme">Repository README lesen</option>
-                <option value="search-skills">Cryo-Omega Skills suchen</option>
-              </select>
-              <label for="agent-query">Suchtext für Skills</label>
-              <input id="agent-query" type="search" maxlength="100" placeholder="z. B. agent, UI, Kubernetes">
-              <div class="agent-actions">
-                <button id="agent-plan" type="button">Schritt planen</button>
-                <button id="agent-approve" type="button" disabled>Prüfen und freigeben</button>
-              </div>
-              <pre id="agent-preview" aria-label="Geplanter Agentenschritt">Noch kein Agentenschritt geplant.</pre>
-              <button id="agent-use" type="button" disabled>Ergebnis als Nachricht vorbereiten</button>
-              <small>Das Ergebnis wird nie automatisch an ein Modell gesendet; die Übernahme füllt lediglich das Eingabefeld.</small>
-            </section>
-          </section>
-          <section class="project-panel godot-panel" id="godot-panel" aria-label="Godot MCP – manuelle Projektprüfung" hidden>
-            <div class="eyebrow">GODOT MCP / MANUAL INSPECTION</div>
-            <strong>Godot lokal untersuchen</strong>
-            <p class="godot-status" id="godot-status" role="status">Verbindungsstatus noch nicht geprüft.</p>
-            <div class="godot-actions">
-              <button id="godot-version" type="button" disabled>Godot-Version anzeigen</button>
-              <button id="godot-project" type="button" disabled>Projektinformationen auslesen</button>
-            </div>
-            <pre class="godot-output" id="godot-output" aria-live="polite">Keine Abfrage gestartet.</pre>
-            <div class="scene-builder">
-              <div class="eyebrow">ALPHA 0.4 / SZENEN-VORSCHAU</div>
-              <label for="scene-name">Neuer Szenenname</label>
-              <input id="scene-name" maxlength="40" pattern="[A-Za-z][A-Za-z0-9_-]{0,39}" placeholder="MeinLevel" autocomplete="off">
-              <label for="scene-root">Wurzelknoten</label>
-              <select id="scene-root"><option value="Node2D">Node2D – 2D</option><option value="Node3D">Node3D – 3D</option><option value="Control">Control – UI</option></select>
-              <button id="scene-preview" type="button" disabled>Szene prüfen (ohne Schreiben)</button>
-              <pre id="scene-summary" class="godot-output" aria-live="polite">Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
-              <button id="scene-create" type="button" disabled>Geprüfte Szene erstellen</button>
-              <small>Szenenerstellung ist standardmäßig gesperrt und erfordert GODOT_SCENE_WRITES=true sowie deine ausdrückliche Bestätigung. Keine bestehenden Szenen überschreiben.</small>
-            </div>
-            <small>Jede Abfrage erfordert deine Bestätigung. Nur zwei Informationswerkzeuge sind freigegeben. Godot MCP wird niemals automatisch installiert oder gestartet. Einrichtung: docs/integrations/godot-mcp.md</small>
-          </section>
-          <section class="project-panel focus-panel" id="focus-panel" aria-label="Hyperfocus Autopilot" hidden>
-            <div class="eyebrow">CRYO OMEGA / BOUNDED AUTOPILOT</div>
-            <h3>⚡ Hyperfocus Workflow</h3>
-            <p>Ein Ziel. Ein prüfbarer Plan. Ein ausdrücklich genehmigter Lauf. Kein autonomer Schreibzugriff.</p>
-            <label for="focus-goal">Konkretes Arbeitsziel</label>
-            <textarea id="focus-goal" rows="3" maxlength="600" placeholder="Beispiel: Erstelle einen 15-Minuten-Plan, um eine sichere Skill-Auswahl für mein Chat-Projekt zu integrieren."></textarea>
-            <div class="focus-grid">
-              <label>Projekt-Repository<select id="focus-repo" aria-label="Projekt-Repository für Hyperfocus" disabled></select></label>
-              <label>Skill-Katalog (optional)<select id="focus-skills-repo" aria-label="Skill-Repository für Hyperfocus" disabled></select></label>
-              <label>Suchwort<input id="focus-query" type="search" maxlength="100" placeholder="z. B. agent, workflow"></label>
-              <label>Zeitbudget<select id="focus-minutes" aria-label="Fokuszeit"><option value="15">15 Minuten</option><option value="25">25 Minuten</option><option value="45">45 Minuten</option></select></label>
-              <label>Planer-Modell<select id="focus-model" aria-label="Optionales lokales Ollama-Modell"><option value="">Ohne Modell / Offline-Fokusplan</option></select></label>
-            </div>
-            <p id="focus-status" class="focus-status" role="status">Initialisiere Hyperfocus …</p>
-            <div class="focus-actions">
-              <button id="focus-plan" type="button" disabled>1 · Plan erstellen</button>
-              <button id="focus-run" type="button" disabled>2 · Prüfen &amp; Autopilot starten</button>
-              <button id="focus-stop" type="button" hidden disabled>■ Stoppen</button>
-            </div>
-            <div class="focus-columns">
-              <div><strong>Vorschau / Berechtigungen</strong><pre id="focus-preview">Noch kein Arbeitsplan erstellt.</pre></div>
-              <div><strong>Ergebnis / Fortschritt</strong><pre id="focus-result">Noch keine Ergebnisse.</pre></div>
-            </div>
-            <button id="focus-draft" type="button" disabled>Ergebnis als Chat-Entwurf übernehmen</button>
-            <small>Je Lauf höchstens zwei schreibgeschützte GitHub-Abfragen und optional eine Ollama-Auswertung. Keine API-Kosten durch OpenAI, keine Shell, keine GitHub-Schreibaktionen, keine Skill-Ausführung und keine Godot-Aktionen. Kein Hintergrundbetrieb.</small>
-          </section>
-        </section>
-        <section class="messages" id="messages" aria-label="Chatverlauf" aria-live="polite"></section>
-        <section class="welcome" id="welcome">
-          <div class="hero-orb"><img src="/assets/logo.svg" alt="" width="84" height="84"></div>
-          <div class="eyebrow">NEW SESSION / OPEN POSSIBILITIES</div>
-          <h2>Was bauen wir <em>heute?</em></h2>
-          <p>Erstelle Notizen oder nutze ein lokal installiertes Ollama-Modell. Die Vorschläge füllen dein Eingabefeld.</p>
-          <div class="prompt-grid">
-            <button type="button" data-prompt="Entwirf eine modulare Architektur für einen sicheren KI-Agenten.">⌘ &nbsp;<strong>Agenten-Architektur</strong><small>Systeme und Schnittstellen</small></button>
-            <button type="button" data-prompt="Prüfe folgenden Code auf Fehler und Verbesserungen:\n\n">⌗ &nbsp;<strong>Code verbessern</strong><small>Tests und Refactoring</small></button>
-            <button type="button" data-prompt="Plane den nächsten kleinen Meilenstein für mein Spielprojekt.">◈ &nbsp;<strong>Spiele entwickeln</strong><small>Idee bis Prototyp</small></button>
-            <button type="button" data-prompt="Erstelle einen klaren Projektplan mit Aufgaben und Risiken.">✧ &nbsp;<strong>Projekt planen</strong><small>Schritt für Schritt</small></button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#090e1b" />
+    <meta
+      name="description"
+      content="CryoGPTCHATFREEBIE – privater Chat-Arbeitsbereich mit optionaler lokaler Ollama-KI."
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <title>Cryo · AI Workspace</title>
+    <script type="module" src="/src/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Chat-Navigation">
+        <div class="brand">
+          <img src="/assets/logo.svg" alt="" width="46" height="46" />
+          <div>
+            <strong>CRYO<span>GPT</span>CHAT</strong
+            ><small>FREEBIE / PERSONAL AI WORKSPACE</small>
           </div>
-        </section>
-        <div class="bottom-area">
-          <div id="notice" role="status" aria-live="polite"></div>
-          <form id="composer" class="composer">
-            <label class="sr-only" for="prompt">Nachricht eingeben</label>
-            <textarea id="prompt" rows="3" maxlength="12000" required placeholder="Frage stellen oder eine Idee notieren …"></textarea>
-            <div class="composer-footer">
-              <label>MODELL <select id="model" aria-label="KI-Modell auswählen"><option value="">Nur lokal speichern</option></select></label>
-              <div class="generation-controls"><button id="stop" type="button" hidden aria-label="Laufende KI-Antwort stoppen">■ Stoppen</button><button id="send" type="submit">Senden ↗</button></div>
-            </div>
-            <p class="model-state" id="model-state">Notizmodus · Modell manuell auswählen</p><p id="cloud-warning" class="cloud-warning" hidden>☁ Cloud-Modell: Chatnachrichten und freigegebenes Projektwissen werden an einen externen API-Anbieter gesendet. API-Kosten möglich. Jede Anfrage benötigt eine Bestätigung.</p>
-          </form>
-          <p class="disclaimer">Alpha-Software: Nachrichten und Projektwissen werden unverschlüsselt im Browser gespeichert. Cloud-Modelle sind standardmäßig deaktiviert. Cloud-Anfragen können Kosten auslösen.</p>
         </div>
-      </div>
-    </main>
-  </div>
-  <div class="mobile-cover" id="mobile-cover" hidden></div>
-</body>
+        <button class="new-chat" id="new-chat" type="button">
+          ＋ Neue Unterhaltung <kbd>Alt + N</kbd>
+        </button>
+        <label class="sr-only" for="search">Gespräche durchsuchen</label>
+        <input
+          id="search"
+          type="search"
+          placeholder="⌕  Gespräche durchsuchen …"
+          autocomplete="off"
+        />
+        <div class="side-label">GESPRÄCHE <span id="chat-count">0</span></div>
+        <nav
+          id="chat-list"
+          class="chat-list"
+          aria-label="Gespeicherte Gespräche"
+        ></nav>
+        <div class="sidebar-bottom">
+          <div class="privacy">
+            ◈ &nbsp; <strong>LOCAL FIRST</strong
+            ><small>Chats bleiben in deinem Browser.</small>
+          </div>
+          <div class="button-row">
+            <button id="export" type="button">↓ Export</button
+            ><button id="import" type="button">↑ Import</button>
+          </div>
+          <input
+            id="import-file"
+            type="file"
+            accept=".json,application/json"
+            hidden
+          />
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <button
+            id="nav-toggle"
+            class="mobile-menu"
+            type="button"
+            aria-label="Navigation öffnen"
+            aria-controls="sidebar"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+          <div class="breadcrumb">
+            CRYO OS <span>/</span> <strong id="top-title">Neuer Chat</strong>
+          </div>
+          <div class="top-actions">
+            <span id="status" role="status">○ Verbindung wird geprüft</span
+            ><button
+              id="refresh"
+              type="button"
+              aria-label="Lokale Modelle aktualisieren"
+              title="Modelle aktualisieren"
+            >
+              ↻
+            </button>
+          </div>
+        </header>
+        <div class="chat-area">
+          <section class="intro">
+            <div class="eyebrow">CRYO WORKSPACE &nbsp;•&nbsp; LOCAL FIRST</div>
+            <h1 id="chat-heading">CryoGPT<span>Chat.</span></h1>
+            <p id="chat-subtitle">
+              Dein Arbeitsbereich für Ideen, Code und Gespräche – ohne
+              Cloud-Zwang.
+            </p>
+            <div class="chat-tools">
+              <button id="rename-chat" type="button">✎ Umbenennen</button
+              ><button id="delete-chat" type="button">⌫ Löschen</button
+              ><button
+                id="notes-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="project-panel"
+              >
+                ◈ Projektwissen</button
+              ><button
+                id="godot-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="godot-panel"
+              >
+                🎮 Godot MCP</button
+              ><button
+                id="focus-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="focus-panel"
+              >
+                ⚡ Hyperfocus
+              </button>
+            </div>
+            <section
+              class="project-panel"
+              id="project-panel"
+              aria-label="Projektwissen dieser Unterhaltung"
+              hidden
+            >
+              <div class="eyebrow">PROJECT KNOWLEDGE / NUR FÜR DIESEN CHAT</div>
+              <label for="project-context"
+                >Notizen, Entscheidungen und Hintergrundwissen</label
+              >
+              <textarea
+                id="project-context"
+                rows="5"
+                maxlength="4000"
+                placeholder="Zum Beispiel: Ziele, Technologien, Entscheidungen, wichtige Begriffe …"
+              ></textarea>
+              <div class="project-actions">
+                <label class="project-opt-in"
+                  ><input id="project-share" type="checkbox" /> Bei KI-Antworten
+                  berücksichtigen</label
+                >
+                <button id="save-project-notes" type="button">
+                  Projektwissen speichern
+                </button>
+              </div>
+              <p id="project-notes-status" role="status">
+                Privat gespeichert – noch nicht an ein Modell freigegeben.
+              </p>
+              <small
+                >Nur die Notizen dieses Chats werden nach deiner Freigabe als
+                Kontext mitgesendet. Kein automatischer Zugriff auf Dateien oder
+                GitHub.</small
+              >
+              <section
+                class="integration-panel"
+                aria-label="Optionale GitHub-Integrationen"
+              >
+                <div class="eyebrow">OPTIONAL / READ ONLY</div>
+                <h3>GitHub &amp; Cryo-Omega Skills</h3>
+                <p id="integration-status" role="status">
+                  Prüfe erlaubte Repositories …
+                </p>
+                <label for="integration-repo">Repository</label>
+                <select
+                  id="integration-repo"
+                  aria-label="Freigegebenes GitHub-Repository"
+                  disabled
+                ></select>
+                <label for="integration-query">Skill-Suche (optional)</label>
+                <input
+                  id="integration-query"
+                  type="search"
+                  maxlength="100"
+                  placeholder="z. B. design, agent, coding"
+                />
+                <div class="integration-actions">
+                  <button type="button" id="integration-readme" disabled>
+                    README ansehen
+                  </button>
+                  <button type="button" id="integration-skills" disabled>
+                    Skills suchen
+                  </button>
+                </div>
+                <pre id="integration-preview" aria-label="GitHub-Vorschau">
+Noch keine GitHub-Daten geladen.</pre>
+                <button type="button" id="integration-import" disabled>
+                  Als privates Projektwissen übernehmen
+                </button>
+                <small
+                  >Nur freigegebene öffentliche Repositories. Kein automatischer
+                  Upload, keine Skill-Ausführung. Eingefügte Daten werden
+                  zunächst nicht an Ollama gesendet.</small
+                >
+              </section>
+              <section
+                class="agent-panel"
+                aria-label="Freizugebende Agentenschritte"
+              >
+                <div class="eyebrow">HUMAN IN THE LOOP / READ ONLY</div>
+                <h3>Agenten-Workspace</h3>
+                <p>
+                  Erst planen, dann jeden GitHub-Schritt einzeln bestätigen.
+                  Keine autonome Ausführung.
+                </p>
+                <label for="agent-operation">Erlaubte Aktion</label>
+                <select id="agent-operation" aria-label="Agentenaktion">
+                  <option value="read-readme">Repository README lesen</option>
+                  <option value="search-skills">
+                    Cryo-Omega Skills suchen
+                  </option>
+                </select>
+                <label for="agent-query">Suchtext für Skills</label>
+                <input
+                  id="agent-query"
+                  type="search"
+                  maxlength="100"
+                  placeholder="z. B. agent, UI, Kubernetes"
+                />
+                <div class="agent-actions">
+                  <button id="agent-plan" type="button">Schritt planen</button>
+                  <button id="agent-approve" type="button" disabled>
+                    Prüfen und freigeben
+                  </button>
+                </div>
+                <pre id="agent-preview" aria-label="Geplanter Agentenschritt">
+Noch kein Agentenschritt geplant.</pre>
+                <button id="agent-use" type="button" disabled>
+                  Ergebnis als Nachricht vorbereiten
+                </button>
+                <small
+                  >Das Ergebnis wird nie automatisch an ein Modell gesendet; die
+                  Übernahme füllt lediglich das Eingabefeld.</small
+                >
+              </section>
+            </section>
+            <section
+              class="project-panel godot-panel"
+              id="godot-panel"
+              aria-label="Godot MCP – manuelle Projektprüfung"
+              hidden
+            >
+              <div class="eyebrow">GODOT MCP / MANUAL INSPECTION</div>
+              <strong>Godot lokal untersuchen</strong>
+              <p class="godot-status" id="godot-status" role="status">
+                Verbindungsstatus noch nicht geprüft.
+              </p>
+              <div class="godot-actions">
+                <button id="godot-version" type="button" disabled>
+                  Godot-Version anzeigen
+                </button>
+                <button id="godot-project" type="button" disabled>
+                  Projektinformationen auslesen
+                </button>
+              </div>
+              <pre class="godot-output" id="godot-output" aria-live="polite">
+Keine Abfrage gestartet.</pre>
+              <div class="scene-builder">
+                <div class="eyebrow">ALPHA 0.4 / SZENEN-VORSCHAU</div>
+                <label for="scene-name">Neuer Szenenname</label>
+                <input
+                  id="scene-name"
+                  maxlength="40"
+                  pattern="[A-Za-z][A-Za-z0-9_-]{0,39}"
+                  placeholder="MeinLevel"
+                  autocomplete="off"
+                />
+                <label for="scene-root">Wurzelknoten</label>
+                <select id="scene-root">
+                  <option value="Node2D">Node2D – 2D</option>
+                  <option value="Node3D">Node3D – 3D</option>
+                  <option value="Control">Control – UI</option>
+                </select>
+                <button id="scene-preview" type="button" disabled>
+                  Szene prüfen (ohne Schreiben)
+                </button>
+                <pre id="scene-summary" class="godot-output" aria-live="polite">
+Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
+                <button id="scene-create" type="button" disabled>
+                  Geprüfte Szene erstellen
+                </button>
+                <small
+                  >Szenenerstellung ist standardmäßig gesperrt und erfordert
+                  GODOT_SCENE_WRITES=true sowie deine ausdrückliche Bestätigung.
+                  Keine bestehenden Szenen überschreiben.</small
+                >
+              </div>
+              <small
+                >Jede Abfrage erfordert deine Bestätigung. Nur zwei
+                Informationswerkzeuge sind freigegeben. Godot MCP wird niemals
+                automatisch installiert oder gestartet. Einrichtung:
+                docs/integrations/godot-mcp.md</small
+              >
+            </section>
+            <section
+              class="project-panel focus-panel"
+              id="focus-panel"
+              aria-label="Hyperfocus Autopilot"
+              hidden
+            >
+              <div class="eyebrow">CRYO OMEGA / BOUNDED AUTOPILOT</div>
+              <h3>⚡ Hyperfocus Workflow</h3>
+              <p>
+                Ein Ziel. Ein prüfbarer Plan. Ein ausdrücklich genehmigter Lauf.
+                Kein autonomer Schreibzugriff.
+              </p>
+              <label for="focus-goal">Konkretes Arbeitsziel</label>
+              <textarea
+                id="focus-goal"
+                rows="3"
+                maxlength="600"
+                placeholder="Beispiel: Erstelle einen 15-Minuten-Plan, um eine sichere Skill-Auswahl für mein Chat-Projekt zu integrieren."
+              ></textarea>
+              <div class="focus-grid">
+                <label
+                  >Projekt-Repository<select
+                    id="focus-repo"
+                    aria-label="Projekt-Repository für Hyperfocus"
+                    disabled
+                  ></select
+                ></label>
+                <label
+                  >Skill-Katalog (optional)<select
+                    id="focus-skills-repo"
+                    aria-label="Skill-Repository für Hyperfocus"
+                    disabled
+                  ></select
+                ></label>
+                <label
+                  >Suchwort<input
+                    id="focus-query"
+                    type="search"
+                    maxlength="100"
+                    placeholder="z. B. agent, workflow"
+                /></label>
+                <label
+                  >Zeitbudget<select id="focus-minutes" aria-label="Fokuszeit">
+                    <option value="15">15 Minuten</option>
+                    <option value="25">25 Minuten</option>
+                    <option value="45">45 Minuten</option>
+                  </select></label
+                >
+                <label
+                  >Planer-Modell<select
+                    id="focus-model"
+                    aria-label="Optionales lokales Ollama-Modell"
+                  >
+                    <option value="">Ohne Modell / Offline-Fokusplan</option>
+                  </select></label
+                >
+              </div>
+              <p id="focus-status" class="focus-status" role="status">
+                Initialisiere Hyperfocus …
+              </p>
+              <div class="focus-actions">
+                <button id="focus-plan" type="button" disabled>
+                  1 · Plan erstellen
+                </button>
+                <button id="focus-run" type="button" disabled>
+                  2 · Prüfen &amp; Autopilot starten
+                </button>
+                <button id="focus-stop" type="button" hidden disabled>
+                  ■ Stoppen
+                </button>
+              </div>
+              <div class="focus-columns">
+                <div>
+                  <strong>Vorschau / Berechtigungen</strong>
+                  <pre id="focus-preview">Noch kein Arbeitsplan erstellt.</pre>
+                </div>
+                <div>
+                  <strong>Ergebnis / Fortschritt</strong>
+                  <pre id="focus-result">Noch keine Ergebnisse.</pre>
+                </div>
+              </div>
+              <button id="focus-draft" type="button" disabled>
+                Ergebnis als Chat-Entwurf übernehmen
+              </button>
+              <small
+                >Je Lauf höchstens zwei schreibgeschützte GitHub-Abfragen und
+                optional eine Ollama-Auswertung. Keine API-Kosten durch OpenAI,
+                keine Shell, keine GitHub-Schreibaktionen, keine
+                Skill-Ausführung und keine Godot-Aktionen. Kein
+                Hintergrundbetrieb.</small
+              >
+            </section>
+          </section>
+          <section
+            class="messages"
+            id="messages"
+            aria-label="Chatverlauf"
+            aria-live="polite"
+          ></section>
+          <section class="welcome" id="welcome">
+            <div class="hero-orb">
+              <img src="/assets/logo.svg" alt="" width="84" height="84" />
+            </div>
+            <div class="eyebrow">NEW SESSION / OPEN POSSIBILITIES</div>
+            <h2>Was bauen wir <em>heute?</em></h2>
+            <p>
+              Erstelle Notizen oder nutze ein lokal installiertes Ollama-Modell.
+              Die Vorschläge füllen dein Eingabefeld.
+            </p>
+            <div class="prompt-grid">
+              <button
+                type="button"
+                data-prompt="Entwirf eine modulare Architektur für einen sicheren KI-Agenten."
+              >
+                ⌘ &nbsp;<strong>Agenten-Architektur</strong
+                ><small>Systeme und Schnittstellen</small>
+              </button>
+              <button
+                type="button"
+                data-prompt="Prüfe folgenden Code auf Fehler und Verbesserungen:\n\n"
+              >
+                ⌗ &nbsp;<strong>Code verbessern</strong
+                ><small>Tests und Refactoring</small>
+              </button>
+              <button
+                type="button"
+                data-prompt="Plane den nächsten kleinen Meilenstein für mein Spielprojekt."
+              >
+                ◈ &nbsp;<strong>Spiele entwickeln</strong
+                ><small>Idee bis Prototyp</small>
+              </button>
+              <button
+                type="button"
+                data-prompt="Erstelle einen klaren Projektplan mit Aufgaben und Risiken."
+              >
+                ✧ &nbsp;<strong>Projekt planen</strong
+                ><small>Schritt für Schritt</small>
+              </button>
+            </div>
+          </section>
+          <div class="bottom-area">
+            <div id="notice" role="status" aria-live="polite"></div>
+            <form id="composer" class="composer">
+              <label class="sr-only" for="prompt">Nachricht eingeben</label>
+              <textarea
+                id="prompt"
+                rows="3"
+                maxlength="12000"
+                required
+                placeholder="Frage stellen oder eine Idee notieren …"
+              ></textarea>
+              <div class="composer-footer">
+                <label
+                  >MODELL
+                  <select id="model" aria-label="KI-Modell auswählen">
+                    <option value="">Nur lokal speichern</option>
+                  </select></label
+                >
+                <div class="generation-controls">
+                  <button
+                    id="stop"
+                    type="button"
+                    hidden
+                    aria-label="Laufende KI-Antwort stoppen"
+                  >
+                    ■ Stoppen</button
+                  ><button id="send" type="submit">Senden ↗</button>
+                </div>
+              </div>
+              <p class="model-state" id="model-state">
+                Notizmodus · Modell manuell auswählen
+              </p>
+              <p id="cloud-warning" class="cloud-warning" hidden>
+                ☁ Cloud-Modell: Chatnachrichten und freigegebenes Projektwissen
+                werden an einen externen API-Anbieter gesendet. API-Kosten
+                möglich. Jede Anfrage benötigt eine Bestätigung.
+              </p>
+            </form>
+            <p class="disclaimer">
+              Alpha-Software: Nachrichten und Projektwissen werden
+              unverschlüsselt im Browser gespeichert. Cloud-Modelle sind
+              standardmäßig deaktiviert. Cloud-Anfragen können Kosten auslösen.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+    <div class="mobile-cover" id="mobile-cover" hidden></div>
+  </body>
 </html>
