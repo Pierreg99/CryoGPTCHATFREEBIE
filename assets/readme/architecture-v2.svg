@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1324 476" role="img" aria-labelledby="title desc"><title id="title">CryoGPTCHATFREEBIE – Architektur Alpha 0.4</title><desc id="desc">Architekturdiagramm: Browser speichert in IndexedDB und kommuniziert mit lokalem Node-Server. Dieser spricht nach Konfiguration mit Ollama, OpenAI, GitHub oder manuell Godot MCP.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1324 476" role="img" aria-labelledby="title desc"><title id="title">CryoGPTCHATFREEBIE – Architektur 1.0.0-rc.1</title><desc id="desc">Architekturdiagramm: Browser speichert in IndexedDB und kommuniziert mit lokalem Node-Server. Dieser spricht nach Konfiguration mit Ollama, OpenAI, GitHub oder manuell Godot MCP.</desc>
 <defs><linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080f20"/><stop offset="1" stop-color="#11172c"/></linearGradient>
 <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#55e6db"/><stop offset="1" stop-color="#8cafff"/></linearGradient>
 <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#395e82" stroke-opacity=".12"/></pattern></defs>
 <rect x="0" y="0" width="1324" height="476" rx="22" fill="url(#base)" stroke="none" stroke-width="1"/>
 <rect x="0" y="0" width="1324" height="476" rx="22" fill="url(#grid)" stroke="none" stroke-width="1"/>
 <text x="35" y="39" font-size="14" fill="#a6f8eb" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="850" letter-spacing="2">SYSTEM MAP</text>
-<text x="212" y="39" font-size="12" fill="#8fa6c6" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="1.5">ALPHA 0.4 · LOKALER SERVER · OPT-IN CONNECTORS</text>
+<text x="212" y="39" font-size="12" fill="#8fa6c6" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="1.5">1.0.0-rc.1 · LOKALER SERVER · OPT-IN CONNECTORS</text>
 <rect x="36" y="90" width="300" height="273" rx="17" fill="#11273c" stroke="#3d999b" stroke-width="1.6"/>
 <rect x="55" y="111" width="67" height="29" rx="9" fill="#1a4550" stroke="#4e9ca3" stroke-width="1"/>
 <text x="72" y="131" font-size="13" fill="#9effec" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="800">01</text>

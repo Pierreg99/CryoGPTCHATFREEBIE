@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const files = ['hero-v2.svg', 'capabilities.svg', 'architecture-v2.svg'];
+const allAssets = [...files, 'architecture.svg', 'banner-clean.svg', 'banner-neon.svg', 'banner-product.svg'];
 const read = file => readFileSync(path.join(root, file), 'utf8');
 
 function validateSimpleSvg(source) {
@@ -31,7 +32,7 @@ function validateSimpleSvg(source) {
 }
 
 test('new README assets are self-contained, accessible and structurally valid SVG', () => {
-  for (const name of files) validateSimpleSvg(read('assets/readme/' + name));
+  for (const name of allAssets) validateSimpleSvg(read('assets/readme/' + name));
 });
 
 test('README references checked-in visuals and keeps design alternatives', () => {

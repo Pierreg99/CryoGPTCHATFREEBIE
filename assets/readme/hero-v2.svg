@@ -18,7 +18,7 @@
 <path d="M1116 30l9 -9 9 9 -9 9z" fill="#82dbee" opacity=".7"/>
 <rect x="58" y="53" width="218" height="33" rx="16" fill="#123a4b" stroke="#3e9ea8" stroke-width="1"/>
 <circle cx="75" cy="69" r="5" fill="#71fbe0"/>
-<text x="90" y="75" font-size="12" fill="#abfdf1" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="1.5" font-weight="800">LOCAL-FIRST · ALPHA 0.4</text>
+<text x="90" y="75" font-size="12" fill="#abfdf1" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="1.5" font-weight="800">LOCAL-FIRST · 1.0.0-rc.1</text>
 <text x="55" y="177" font-size="86" fill="url(#cryo)" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="900" letter-spacing="-3">CRYO</text>
 <text x="56" y="256" font-size="77" fill="#f2f9ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="850" letter-spacing="-2">GPTCHAT</text>
 <text x="61" y="306" font-size="21" fill="#a4b9dc" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="3.2" font-weight="700">FREEBIE  /  AI WORKSPACE</text>
@@ -43,9 +43,9 @@
 <text x="717" y="228" font-size="12" fill="#f1f9ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="650">Projektideen</text>
 <text x="716" y="266" font-size="11" fill="#89a6c8" font-family="Inter,Segoe UI,Arial,sans-serif" >Agenten-Setup</text>
 <text x="716" y="298" font-size="11" fill="#89a6c8" font-family="Inter,Segoe UI,Arial,sans-serif" >Godot MCP</text>
-<text x="716" y="332" font-size="11" fill="#89a6c8" font-family="Inter,Segoe UI,Arial,sans-serif" >Skill-Registry</text>
+<text x="716" y="332" font-size="11" fill="#89a6c8" font-family="Inter,Segoe UI,Arial,sans-serif" >GitHub &amp; Skills</text>
 <rect x="708" y="366" width="109" height="25" rx="12" fill="#173b43" stroke="#327c81" stroke-width="1"/>
-<text x="722" y="382" font-size="10" fill="#8af4df" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="700">◉ LOCAL FIRST</text>
+<text x="722" y="382" font-size="10" fill="#8af4df" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="700">LOCAL FIRST</text>
 <rect x="848" y="119" width="354" height="34" rx="10" fill="#182b46" stroke="none" stroke-width="1"/>
 <text x="867" y="141" font-size="13" fill="#e1f2ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="750">Cryo Omega / Integration</text>
 <circle cx="1176" cy="136" r="6" fill="#76f7ce"/>
@@ -54,9 +54,9 @@
 <text x="918" y="207" font-size="11" fill="#bbcee8" font-family="Inter,Segoe UI,Arial,sans-serif" >mit passenden Skills.</text>
 <rect x="856" y="233" width="308" height="81" rx="12" fill="#133f4b" stroke="#2e7786" stroke-width="1"/>
 <circle cx="879" cy="254" r="11" fill="#56dec9" fill-opacity=".19" stroke="#64e8d3"/>
-<text x="874" y="259" font-size="12" fill="#94fff0" font-family="Inter,Segoe UI,Arial,sans-serif" >✦</text>
+<text x="874" y="259" font-size="12" fill="#94fff0" font-family="Inter,Segoe UI,Arial,sans-serif" >AI</text>
 <text x="900" y="255" font-size="12" fill="#88e7d9" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="800">Cryo Assistant</text>
-<text x="874" y="277" font-size="13" fill="#e4f8fa" font-family="Inter,Segoe UI,Arial,sans-serif" >Katalog gefunden · 114 Skills</text>
+<text x="874" y="277" font-size="13" fill="#e4f8fa" font-family="Inter,Segoe UI,Arial,sans-serif" >Skill-Referenzen prüfen</text>
 <text x="874" y="296" font-size="11" fill="#abdae2" font-family="Inter,Segoe UI,Arial,sans-serif" >Vorschau vor jeder Freigabe.</text>
 <rect x="857" y="332" width="344" height="46" rx="10" fill="#15263f" stroke="#38577a" stroke-width="1"/>
 <text x="873" y="361" font-size="12" fill="#8caac6" font-family="Inter,Segoe UI,Arial,sans-serif" >Frage stellen oder Projekt planen …</text>

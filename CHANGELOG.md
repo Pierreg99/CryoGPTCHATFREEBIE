@@ -2,6 +2,9 @@
 
 ## 1.0.0-rc.1
 
+- README-Hauptseite und Clean-/Neon-/Produktvarianten auf den aktuellen Stand gebracht; gemeinsame Roadmap mit ausgeschriebenen Statusangaben.
+- Emoji-freie Bedienelemente mit lokalen SVG-Icons und verständlichen Texten; Unicode-Inhalte in Chats bleiben erhalten.
+
 Prüfbarer Kandidat für das 1.0-Ziel. Die stabile Freigabe bleibt durch die noch offene manuelle Accessibility-Abnahme blockiert.
 
 - Backup-Dry-run, redigierte Fehlerberichte und expliziter Restore-Assistent für Schema 1/2.

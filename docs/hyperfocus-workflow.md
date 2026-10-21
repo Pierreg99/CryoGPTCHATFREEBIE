@@ -1,4 +1,4 @@
-# ⚡ Hyperfocus Autopilot – Alpha 0.5 (read-only MVP)
+# Hyperfocus Workflow
 
 Der Hyperfocus-Workspace bündelt **Ziel → Planvorschau → Freigabe → begrenzten Lauf → Ergebnisprüfung**. Er erweitert den bisherigen Einzelaktions-Agenten; dieser bleibt unverändert verfügbar.
 
@@ -13,7 +13,7 @@ export CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Ag
 npm start
 ~~~
 
-Öffne http://127.0.0.1:4173, erstelle einen Chat und klicke oben auf **⚡ Hyperfocus**.
+Öffne http://127.0.0.1:4173, erstelle einen Chat und öffne **Hyperfocus** in der Navigation.
 
 **OpenAI API wird vom Hyperfocus-Autopiloten niemals genutzt.** Selbst wenn OpenAI für normale Chats eingerichtet ist, bietet die Hyperfocus-Modellliste ausschließlich Ollama-Modelle an. Standardmäßig wird ein Offline-Plan **ohne** Modell generiert. Ein anderer (über OLLAMA_URL konfigurierter) Ollama-Server könnte extern sein; die Standardkonfiguration ist lokal.
 
@@ -57,6 +57,6 @@ Beide POST-Endpunkte akzeptieren ausschließlich Origin http://127.0.0.1:<PORT> 
 npm test
 ~~~
 
-Mock-basierte Tests prüfen Planung, Repo-Allowlist, Cloud-Ausschluss, begrenzte Toolaufrufe, Abbruch, Ollama-Modellvalidierung, API-Origin und Ticketformat. **Nicht als E2E getestet:** Live-GitHub-Zugriff, Browser-Läufe oder echte lokale Ollama-Inferenz.
+Mock-basierte Tests prüfen Planung, Repo-Allowlist, Cloud-Ausschluss, begrenzte Toolaufrufe, Abbruch, Ollama-Modellvalidierung, API-Origin und Ticketformat. **Browser-E2E sind vorhanden.** Live-GitHub-Zugriff und echte lokale Ollama-Inferenz werden separat geprüft.
 
 **Umgesetzt:** lokale Historie abgeschlossener Ergebnisse und Browser-E2E. **Weiterhin Roadmap:** wiederaufnehmbare Fokus-Sitzungen, optionaler Pausentimer, Skill-Relevanzranking, separate Freigabe für kontrollierte Schreibwerkzeuge nach Sandbox-/Undo-Konzept. Alles mit eigenständigem Consent und Rechteprüfung; keine implizite Hochstufung des Read-only MVP.

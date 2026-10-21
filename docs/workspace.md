@@ -6,6 +6,8 @@ Die ursprüngliche Oberfläche verschachtelte GitHub und Agenten im Projektwisse
 
 ## Bedienung und Gestaltung
 
+Die gesamte Bedienoberfläche verwendet Text und lokale SVG-Icons statt Emoji-Zeichen. Favoriten heißen „Merken“ beziehungsweise „Favorit“; Provider und Statusmeldungen nennen ihren Zustand im Text. Nutzereigene Nachrichten und Projektnotizen dürfen weiterhin beliebige Unicode-Inhalte enthalten.
+
 Die neue Navigation trennt Chat, Projektwissen, Hyperfocus, Agenten, GitHub/Skills, Godot, Roadmap und Modelle. Jede Ansicht hat einen Hash-Link (`#chat`, `#knowledge`, `#focus`, `#agents`, `#skills`, `#godot`, `#roadmap`, `#models`); Browser-Zurück/Vorwärts bleibt verfügbar. Ergebnisse aus Agenten und Hyperfocus gelangen ausschließlich auf ausdrücklichen Wunsch als Entwurf in den Chat.
 
 Das Design verwendet dunkles Navy, Eis-Cyan und violette Akzente. Gemeinsame CSS-Tokens definieren Grundfarben, Oberflächen, Radius und Bewegung. Neon-Ringe, dezente Einblendungen, transparente Flächen und Statusanzeigen strukturieren die Oberfläche. Systemschriften und lokale Assets benötigen keine externen CDNs. `prefers-reduced-motion` schaltet dekorative Animationen aus. Die mobile Navigation unterstützt Escape, Fokusbegrenzung, Rückgabe des Fokus und ausgeblendeten Hintergrund; native HTML-Dialoge übernehmen die modale Tastaturbedienung.

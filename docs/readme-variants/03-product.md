@@ -1,28 +1,20 @@
 <div align="center">
-  <img src="../../assets/readme/banner-product.svg" alt="CryoGPTCHATFREEBIE Produkt-Landingpage mit illustrierter Chat-App" width="100%" />
-
-  # Dein AI-Workspace. Auf deinem Rechner.
-  **CryoGPTCHATFREEBIE · Alpha 0.1**
-
-  Ein Chat-Workspace für Ideen, Fragen und Code — mit optionaler lokaler KI über Ollama.  
-  **Ohne verpflichtenden Cloud-Account oder API-Schlüssel.**
-
-  <p><a href="#-jetzt-starten"><strong>▶ Jetzt starten</strong></a> · <a href="#-was-drin-steckt">Features entdecken</a> · <a href="#-fragen-und-antworten">FAQ</a></p>
+  <img src="../../assets/readme/banner-product.svg" alt="CryoGPTCHATFREEBIE – App / Landing Page, editierbare Produktillustration" width="100%" />
+  <h1>Dein AI-Workspace. Auf deinem Rechner.</h1>
+  <p><strong>Sammle Ideen. Verbinde Wissen. Behalte die Kontrolle.</strong></p>
+  <p><code>1.0.0-rc.1</code> · <code>LOCAL FIRST</code> · <code>PROVIDER: OPT-IN</code></p>
+  <p><a href="#schnellstart">Schnellstart</a> · <a href="#funktionen">Funktionen</a> · <a href="#roadmap">Roadmap</a> · <a href="../../README.md">Haupt-README</a></p>
 </div>
 
----
+## Überblick
 
-## ✨ Was drin steckt
+Für Chats, Code, Spielprojekte und fokussiertes Arbeiten: lokale Notizen sofort nutzen und Modellanbieter bewusst zuschalten. Ohne ausgewähltes Modell bleibt die App ein lokales Chat-Notizbuch; sie simuliert keine KI-Antworten. Die Banner sind Illustrationen. [Echte Desktop-Ansicht](../screenshots/workspace-desktop.png) · [Mobile Ansicht](../screenshots/workspace-mobile.png)
 
-| 💬 Gespräche | 🧠 Lokale KI | 📦 Deine Daten |
-| :--- | :--- | :--- |
-| Unterhaltungen anlegen, verwalten und durchsuchen | Optional Ollama-Modell auswählen und echte Antworten abrufen | Chats im Browserprofil sichern und als JSON exportieren/importieren |
+**Release Candidate, noch keine stabile 1.0:** Die manuelle WCAG-2.2-AA-Abnahme mit echter assistiver Technik ist offen. [Release-Politik](../RELEASE.md) und [Release-Checkliste](../RELEASE-CHECKLIST.md) benennen das blockierende Gate.
 
-**Für Kreative, Entwickler und Experimentierende:** Ideen sammeln, Chatverläufe organisieren und die KI-Schicht nach Bedarf zuschalten. Die Oberfläche ist für Desktop und Mobilgeräte ausgelegt.
+## Schnellstart
 
-## 🚀 Jetzt starten
-
-**Node.js 20+** benötigt. Keine externen npm-Abhängigkeiten.
+Empfohlen sind Node.js 22.12+ oder Node 24, Linux x64 und aktuelles Chromium. Node 20 bleibt in den Kompatibilitätstests; andere Plattformen/Browser sind experimentell.
 
 ```bash
 git clone https://github.com/Pierreg99/CryoGPTCHATFREEBIE.git
@@ -30,47 +22,65 @@ cd CryoGPTCHATFREEBIE
 npm start
 ```
 
-Danach lokal besuchen: **[http://127.0.0.1:4173](http://127.0.0.1:4173)**
+Öffne [http://127.0.0.1:4173](http://127.0.0.1:4173) auf demselben Rechner. Der Start benötigt keine npm-Laufzeitabhängigkeiten; Browser-Tests verwenden Entwicklungsabhängigkeiten.
 
-### In drei Schritten zum lokalen Modell
+Optional [Ollama](https://ollama.com/) lokal starten, beispielsweise `ollama pull qwen2.5:3b` ausführen und in der Modellzentrale die Liste aktualisieren. Das Modell muss ausdrücklich ausgewählt werden. Standardziel ist `127.0.0.1:11434`; `OLLAMA_URL` kann einen anderen Server festlegen.
 
-1. [Ollama](https://ollama.com/) installieren.
-2. Ein Modell herunterladen, z. B. `ollama pull qwen2.5:3b`.
-3. In CryoGPTCHATFREEBIE die Modellliste aktualisieren und das Modell wählen.
+## Funktionen
 
-*Ohne Ollama bleibt die Chat-App als lokaler Notiz-Workspace verwendbar.*
+| Bereich | Aktueller Stand |
+| :--- | :--- |
+| Chat | Responsive Oberfläche, Gesprächsverwaltung, Volltextsuche, Streaming, Antwort-Stopp und Kopieren |
+| Daten und Backup | IndexedDB mit localStorage-Fallback; Schema-1/2-Import mit Dry-run, Fehlerbericht und Rücksetzpunkt |
+| Projektwissen | Lokale Notizen je Chat; Modellkontext erst nach gespeicherter Freigabe |
+| Modelle | Ollama lokal, OpenAI optional; manuelle Auswahl, Suche und Favoriten |
+| Hyperfocus | Bestätigter, begrenzter Rechercheablauf; optional Ollama-Zusammenfassung und lokale Historie |
+| Agenten und GitHub | Bis zu fünf einzeln bestätigte Leseaktionen; Markdown-Ausgabe nur mit getrenntem serverseitigem Opt-in und Vorschau |
+| Skills | Öffentliche freigegebene Referenzen suchen und prüfen; keine automatische Skill-Ausführung |
+| Godot MCP | Manuelle Projektinspektion; neue Szenen nach Opt-in, Vorschau und Bestätigung |
+| Roadmap | 100 Meilensteine mit Suche, Phasen-/Statusfilter und Abnahmekriterien |
 
-## 🖥️ So funktioniert es
+OpenAI benötigt einen serverseitigen Schlüssel und eine Modellfreigabeliste. Jede Cloud-Anfrage verlangt eine Bestätigung und kann Kosten verursachen. GitHub-Lesezugriffe benötigen `CRYO_GITHUB_REPOS`; die gesondert aktivierte GitHub-Ausgabe erstellt Branches und PRs, ohne direkte Änderungen oder Merges auf `main`. [Provider und Agenten](../model-providers-and-agents.md) · [Vollständige Workspace-Konfiguration](../workspace.md) · [Godot-Einrichtung](../integrations/godot-mcp.md)
 
-<img src="../../assets/readme/architecture.svg" alt="Architekturillustration: Browser-Workspace, Node.js-Bridge, optionales Ollama" width="100%" />
+## Architektur und Daten
 
-Die Chat-Daten liegen im Browser (`localStorage`). Der Node.js-Server stellt die lokale Verbindung zum optionalen Ollama-Modell her.
+<img src="../../assets/readme/architecture-v2.svg" alt="Browser mit IndexedDB, lokaler Node.js-Server und ausdrücklich konfigurierte Provider-, GitHub- und Godot-Verbindungen" width="100%" />
 
-Die Grafik im Header ist eine **Produktillustration, kein echter Screenshot**.
+Der Browser speichert Chats und Projektwissen in IndexedDB; localStorage ist der Fallback. Der lokale Node.js-Server validiert Anfragen und verbindet konfigurierte Dienste. Alle Daten und JSON-Exporte bleiben unverschlüsselt. Vor dem Import bietet der Assistent Vorschau, Export des aktuellen Stands und ausdrückliche Freigabe. IndexedDB speichert Import und Rücksetzpunkt atomar. [Backup-Wiederherstellung und Grenzen](../backup-recovery.md)
 
-## ❓ Fragen und Antworten
+Favoriten, Bewegungseinstellungen und Hyperfocus-Historie gehören nicht zum Chat-JSON-Backup. Externe Exporte bleiben für eine geräteunabhängige Sicherung notwendig.
 
-<details><summary><strong>Brauche ich ein bezahltes KI-Abo?</strong></summary><p>Nein. Der Chat benötigt keine verpflichtende Cloud-API. Für KI-Antworten kann ein kostenlos lokal betriebenes Ollama-Modell genutzt werden.</p></details>
+## Tests und Qualität
 
-<details><summary><strong>Funktioniert der Chat ohne Modell?</strong></summary><p>Ja, als lokales Notizbuch für Nachrichten und Gesprächsverläufe. Er erzeugt dann ausdrücklich keine KI-Antworten.</p></details>
+```bash
+npm test
+npm ci
+npx playwright install chromium
+npm run test:e2e
+# Nur aus einem sauberen, committed Checkout:
+npm run release:verify
+```
 
-<details><summary><strong>Werden meine Chats verschlüsselt?</strong></summary><p>Noch nicht. Der Browser speichert sie unverschlüsselt; das gilt auch für JSON-Exporte. Verwende daher keine besonders sensiblen Inhalte.</p></details>
+Für Browser-Entwicklung Node 24 verwenden. CI prüft Node 20/22/24, Chromium, mobile Layouts, Tastatur, axe-Regeln, Recovery-Fehler und reproduzierbare Quellpakete. Externe Dienste werden simuliert; echte Modellinferenz und Live-Godot sind nicht dadurch belegt. [Accessibility-Bericht](../accessibility-report.md)
 
-<details><summary><strong>Kann ich die App öffentlich hosten?</strong></summary><p>Nicht in dieser Alpha. Der Entwicklungsserver ist an localhost gebunden und hat weder Login noch Multiuser-Zugriffskontrolle.</p></details>
+## Sicherheit
 
-<details><summary><strong>Was kommt als Nächstes?</strong></summary><p>Streaming, Antwort-Stopp, verbesserte Datenpersistenz, Browser-E2E-Tests und später optional die Cryo-Omega-Skill-Registry.</p></details>
+Der Server bindet an `127.0.0.1` und besitzt keine Anmeldung oder Mehrbenutzerverwaltung. Er ist für den lokalen Einzelbenutzerbetrieb vorgesehen. Chats, Projektnotizen, Rücksetzpunkte und JSON-Backups sind unverschlüsselt. Modelle erhalten den ausdrücklich freigegebenen Kontext; OpenAI und extern konfiguriertes Ollama können Daten vom Rechner übertragen.
 
-## 🛣️ Roadmap
+Shell-Ausführung, autonome Skill-Ausführung, verschlüsselter Speicher und Cloud-Sync sind nicht implementiert. Lokale Markdown-Ausgabe benötigt Linux und eine eigene Freigabe. Godot MCP bleibt ausführbarer Fremdcode in einem geprüften lokalen Testprojekt. [Bedrohungsmodell](../security/THREAT-MODEL.md)
 
-- [x] **0.1** Local chat, Volltextsuche, Backups, Ollama-Integration
-- [ ] **0.2** Streaming und Antwortsteuerung
-- [ ] **0.3** Persistenz und Testabdeckung verbessern
-- [ ] **Später** Erweiterbare Skill- und Agentenfunktionen
+## Roadmap
 
-## 🤝 Unterstützen und mitbauen
+Alle Designvarianten verwenden die [Master-Roadmap mit 100 Meilensteinen](../roadmap/ROADMAP-100.md) und deren [Statusbelege](../roadmap/RESEARCH.md). Es gibt keinen separaten Neon-, Clean- oder Produkt-Versionsplan.
 
-Bug gefunden oder eine gute Idee? Eröffne ein [Issue](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues) oder reiche einen Pull Request ein. Vor Änderungen am Core: `npm test`. Keine privaten Chat-Backups in Issues veröffentlichen.
+v0.1–v0.6, v0.8 und v0.9 sind im Code umgesetzt. v0.7, v1.0 und v6.1 sind teilweise umgesetzt; die übrigen Meilensteine sind geplant. Diese Nummern beschreiben Entwicklungsziele und sind keine Release-Tags oder Lieferzusagen. Der nächste Schritt zur stabilen 1.0 ist die dokumentierte manuelle Accessibility-Abnahme.
 
-<div align="center"><sub>CRYO GPT CHAT FREEBIE · LOCAL FIRST · MADE TO EXPERIMENT</sub></div>
+[Interaktive Roadmap auf Desktop](../screenshots/roadmap.png) · [auf Mobile](../screenshots/roadmap-mobile.png)
 
-<sub>**Designvariante 03 / Produkt-Landingpage** · Nutzenversprechen, CTAs, FAQ und Produktstory · [Zur Haupt-README](../../README.md)</sub>
+## Mitmachen
+
+[Issue öffnen](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues) oder einen Pull Request einreichen. Relevante Tests ausführen; API-Schlüssel und private Chat-Backups nicht veröffentlichen.
+
+---
+
+**Designvariante: App / Landing Page** · [Zur Haupt-README](../../README.md) · [Changelog](../../CHANGELOG.md)
