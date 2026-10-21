@@ -9,7 +9,7 @@
   **Ollama lokal**, **OpenAI optional**, **GitHub-/Cryo-Omega-Skills als geprüfte Referenz** und **Godot MCP nur mit manueller Freigabe**.
 
   <p>
-    <code>ALPHA 0.4</code> ·
+    <code>1.0.0-rc.1</code> ·
     <code>LOCAL FIRST</code> ·
     <code>NODE.JS 20+</code> ·
     <code>MODEL PROVIDERS: OPT-IN</code>
@@ -26,6 +26,12 @@
 </div>
 
 ---
+
+## Auf dem Weg zu 1.0 · Release-Candidate
+
+**Stabile 1.0 ist noch nicht freigegeben:** Die manuelle Accessibility-Abnahme bleibt offen. Paketbau, Plattform-/Migrationspolitik und blockierende Release-Gates stehen in [docs/RELEASE.md](docs/RELEASE.md).
+
+Backups vor dem Import prüfen, einen lesbaren Fehlerbericht herunterladen und den letzten Import bei Bedarf zurücksetzen. Die neue Wiederherstellung speichert Chats und Rücksetzpunkt in IndexedDB atomar. Dazu kommen pausierbare Animationen, dauerhaft lesbare Meldungen und verbesserte Tastatur-/Live-Statusführung. Das Backupformat bleibt mit Version 1 und 2 kompatibel. [Wiederherstellung und Grenzen](docs/backup-recovery.md) · [Accessibility-Prüfbericht](docs/accessibility-report.md)
 
 ## ❄️ Cryo-Neon-Workspace
 
@@ -132,13 +138,13 @@ Automatisierte Node- und Browser-Tests decken Core, Streaming, Speicherung, GitH
 - **Nicht unverändert öffentlich ins Internet stellen.** Dies ist ein lokales Experiment, keine produktionsreife SaaS-Lösung.
 - Vor einem JSON-Import ein Backup exportieren; bestätigter Import ersetzt den aktuellen Datenbestand.
 
-## 🤖 Alpha 0.4 · Optionale KI-Anbieter und kontrollierte Agentenschritte
+## 🤖 Optionale KI-Anbieter und kontrollierte Agentenschritte
 
 **Neu:** Ollama und eine optionale OpenAI-Chat-Completions-API können in derselben Modellauswahl genutzt werden. Die OpenAI-Anbindung benötigt serverseitig `OPENAI_API_KEY` **und** die explizite Modell-Allowlist `CRYO_OPENAI_MODELS`. Cloud-Nutzung bleibt standardmäßig aus; vor jeder Cloud-Anfrage wird der Nutzer gefragt. Die OpenAI API ist separat kostenpflichtig.
 
-Der **Agenten-Workspace** zeigt für erlaubte GitHub-Leseaktionen zunächst einen Plan. Erst nach expliziter Freigabe wird **genau ein** Schritt ausgeführt: README lesen oder den Cryo-Omega-Skill-Katalog durchsuchen. Ergebnisse werden nur auf Knopfdruck in einen Nachrichtenentwurf übertragen; sie starten keinen autonomen Agenten.
+Der **Agenten-Workspace** bietet bis zu fünf einzeln freigegebene Leseaktionen: README, Skills, Repository-Struktur und begrenzte Textdateien. Ergebnisse werden nur auf Wunsch in einen Nachrichtenentwurf übertragen. Optionale Markdown-Ausgabe benötigt getrennte serverseitige Opt-ins und eine vollständige Vorschau; GitHub-Ausgabe erzeugt neue Branches und PRs, keine direkten Änderungen auf `main`.
 
-**Einrichtung, Datenschutz und Grenzen:** [Modellanbieter & Agentenschritte](docs/model-providers-and-agents.md). Kein GitHub-Schreibzugriff, keine Shell-Kommandos und keine automatische Ausführung von Skills.
+**Einrichtung, Datenschutz und Grenzen:** [Modellanbieter & Agentenschritte](docs/model-providers-and-agents.md) und [Workspace-Konfiguration](docs/workspace.md). Keine Shell-Kommandos und keine automatische Ausführung von Skills.
 
 ## 🔌 Optionale Integrationen (experimentell)
 
@@ -148,7 +154,7 @@ Die neue GitHub-Anbindung kann explizit freigegebene **öffentliche** Repositori
 CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Agentic-Learn-Packages npm start
 ```
 
-Öffne dann im Chat **Projektwissen → GitHub & Cryo-Omega Skills**. Ohne diese Umgebungsvariable bleibt die Integration ausgeschaltet. Weitere Hinweise und API-Details: [Integrationsanleitung](docs/integrations.md).
+Öffne dann in der Navigation **GitHub & Skills**. Ohne diese Umgebungsvariable bleibt die Integration ausgeschaltet. Weitere Hinweise und API-Details: [Integrationsanleitung](docs/integrations.md).
 
 ## 🧠 Projektwissen je Chat
 
@@ -195,7 +201,7 @@ Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade o
 | :--- | :--- | :--- |
 | **v0.1–v0.4** | Chat, Streaming, IndexedDB, OpenAI Opt-in, GitHub-/Skill-Read-only und Godot MCP | ✅ Im Code / historische Phasen |
 | **v0.5** | Hyperfocus: einmal bestätigte, begrenzte read-only Recherche mit optionaler Ollama-Planung | ✅ MVP mit Browser-E2E |
-| **v0.6–v1.0** | Browser-Tests, Accessibility, Datenrettung und Security-Baseline | ⬜ Geplant |
+| **v0.6–v1.0** | Browser-Tests, Accessibility, Datenrettung und Security-Baseline | v0.6/v0.8/v0.9 umgesetzt; v0.7 und v1.0 teilweise |
 | **v1.1–v3.0** | Zuverlässigkeit, Projektwissen, Skill-Registry und zitierte Quellen | ⬜ Vision |
 | **v3.1–v5.0** | Geprüfte Agentenrechte, sichere GitHub-Workflows und Godot/3D | ⬜ Vision |
 | **v5.1–v10.0** | Multimodalität, optionaler Sync, Plugin-SDK und Plattformreife | ⬜ Vision |

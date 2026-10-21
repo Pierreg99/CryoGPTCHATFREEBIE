@@ -75,7 +75,7 @@ npm run test:e2e
 
 Der Server benötigt Node 20+. Browser-Tests verwenden Node 24 in CI; aktuelle axe-Entwicklungsabhängigkeiten benötigen mindestens Node 22.12. Die Laufzeit hat weiterhin keine npm-Abhängigkeiten.
 
-Node-Tests prüfen bestehende Funktionen sowie Markdown-Validierung, exklusive lokale Ausgabe, Symlink-Schutz, Ablauf/Wiederverwendung, geänderten Basisbranch und GitHub-Teilfehler. Playwright prüft acht Ansichten bei 360/768/1440 Pixeln mit axe, Tastatur-/Dialogbedienung, Chats, Streaming/Abbruch, Projektwissen, Backup-Import/Export, Modelle, Skills, Hyperfocus, Agenten und Godot. CI behält Node 20/22 bei und ergänzt einen Chromium-Job mit Fehler-Screenshots und Traces.
+Node-Tests prüfen bestehende Funktionen sowie Markdown-Validierung, exklusive lokale Ausgabe, Symlink-Schutz, Ablauf/Wiederverwendung, geänderten Basisbranch und GitHub-Teilfehler. Playwright prüft acht Ansichten bei 360/768/1440 Pixeln mit axe, Tastatur-/Dialogbedienung, Chats, Streaming/Abbruch, Projektwissen, Backup-Import/Export, Modelle, Skills, Hyperfocus, Agenten und Godot. CI prüft Node 20/22/24 und ergänzt einen Chromium-Job mit Fehler-Screenshots und Traces.
 
 Externe Dienste werden in Tests simuliert. Echte kostenpflichtige Cloud-Anfragen, reale Godot-Installationen und Schreibaktionen in fremden GitHub-Repositories werden nicht durch die Tests ausgeführt. Automatische axe-Prüfungen ersetzen keinen vollständigen Screenreader-Test.
 
@@ -87,8 +87,12 @@ Echte Screenshots der lokal laufenden Oberfläche: [Desktop](screenshots/workspa
 
 `GET /api/roadmap` liest die bestehende Markdown-Roadmap serverseitig über `src/roadmap.mjs`. Die Dokumentation bleibt die einzige Datenquelle; es gibt keine separat zu pflegende JSON-Kopie. Der Parser prüft alle 100 aufeinanderfolgenden Versionsnummern, zehn Phasen und vollständige Abnahmekriterien. Ungültige Quelldaten erzeugen einen Fehler mit Wiederholungsaktion in der Oberfläche. Es werden keine Releases oder Implementierungen aus Versionsnummern abgeleitet.
 
-Statusabgleich nach PR #13: v0.1–v0.6 sind Entwicklungsmeilensteine im Code; v0.7 und v6.1 sind teilweise umgesetzt. Eine vollständige manuelle WCAG-2.2-AA-Abnahme bleibt offen. Weitere Ziele behalten ihren Planungsstatus, bis ihre Gates belegt sind.
+Statusabgleich zum 1.0-Release-Candidate: v0.1–v0.6, v0.8 und v0.9 sind Entwicklungsmeilensteine im Code; v0.7, v1.0 und v6.1 sind teilweise umgesetzt. Eine vollständige manuelle WCAG-2.2-AA-Abnahme bleibt offen. Weitere Ziele behalten ihren Planungsstatus, bis ihre Gates belegt sind.
 
 Der Interface-Feinschliff ergänzt einheitliche SVG-Symbole, kompakte mobile Vorschläge, eine Kontextleiste, zweispaltige Agentenformulare, einen Notizeditor mit Zeichen-/Änderungsanzeige und erklärten Freigaben, Hyperfocus-Phasen und aufklappbare Godot-Szenenoptionen. Leere Modelllisten unterscheiden fehlende Verbindung und erfolglose Suche mit passenden Aktionen. Der Notiz-Leerzustand erstellt einen Chat und kehrt direkt zum Werkzeug zurück. Bestehende Freigaben und Backups bleiben erhalten.
 
-Aktuelle Abdeckung: 69 Node-Tests und 14 Browser-Tests, einschließlich sämtlicher 100 Roadmap-Versionen, Filter, Mobile-Composer und Kontext-Leerzustand. [Roadmap auf Desktop](screenshots/roadmap.png) · [Roadmap auf Mobile](screenshots/roadmap-mobile.png).
+Die aktuelle Testabdeckung umfasst Node- und Browser-Suiten, einschließlich sämtlicher 100 Roadmap-Versionen, Filter, Mobile-Composer und Kontext-Leerzustand. [Roadmap auf Desktop](screenshots/roadmap.png) · [Roadmap auf Mobile](screenshots/roadmap-mobile.png).
+
+## 1.0-Release-Candidate
+
+Der aktuelle Roadmap-Ausbau implementiert Backup-Dry-run und Restore-Wizard mit Rücksetzpunkt sowie die dokumentierte Security-Baseline. [Backup-Bedienung](backup-recovery.md), [Accessibility-Bericht](accessibility-report.md), [Threat Model](security/THREAT-MODEL.md) und [Release-Politik](RELEASE.md) enthalten die prüfbaren Grenzen. Die stabile 1.0-Freigabe bleibt bis zum manuellen Accessibility-Nachweis blockiert. Aktuelle Aufnahmen: [Backup-Vorschau auf Desktop](screenshots/backup-restore.png) und [auf Mobile](screenshots/backup-restore-mobile.png).
