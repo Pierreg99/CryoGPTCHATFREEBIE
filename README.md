@@ -147,6 +147,27 @@ CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Agentic-L
 
 **Noch nicht enthalten:** automatische Wissenssuche (RAG), beliebiger lokaler Dateizugriff, GitHub-Schreib-/Cloud-Sync, autonome Skill-Ausführung oder browserübergreifende Synchronisierung.
 
+## 🎮 Godot MCP – optionale lokale Projektprüfung
+
+CryoGPTCHATFREEBIE kann über eine **manuell konfigurierte** Verbindung zu [Coding-Solo/godot-mcp](https://github.com/Coding-Solo/godot-mcp) zwei Godot-Abfragen ausführen:
+
+- **Installierte Godot-Version** anzeigen (`get_godot_version`)
+- **Projektmetadaten** für einen fest konfigurierten lokalen Godot-Projektordner auslesen (`get_project_info`)
+
+Über den Button **🎮 Godot MCP** öffnet sich ein eigenes Panel. Jede Abfrage erfordert einen weiteren Bestätigungsdialog. Ohne lokale Installation bleibt das Panel deaktiviert; KI-Modelle können nicht automatisch auf Godot-Werkzeuge zugreifen.
+
+**Keine bestehende Szene bearbeiten, kein Spiel automatisch starten.** Ab Alpha 0.4 kann optional eine *neue* Szene nach Vorschau, aktivierter Schreibfreigabe und manueller Bestätigung angelegt werden. Das externe MCP-Programm kann trotzdem ausführbaren Godot-Code starten. Der externe Godot-MCP-Prozess selbst ist ausführbarer Fremdcode und muss vor der Verwendung geprüft werden. Die Integration ersetzt weder eine Sicherheitsprüfung noch eine echte Godot-End-to-End-Testumgebung.
+
+**[Godot MCP installieren, Szenenerstellung aktivieren und Grenzen prüfen →](docs/integrations/godot-mcp.md)**
+
+## 🧱 Alpha 0.4 – neue Godot-Szene mit Vorschau
+
+Im Godot-Panel steht nun ein optionaler Szenenassistent bereit. Er erlaubt **Node2D**, **Node3D** oder **Control** als neuen Wurzelknoten und schreibt ausschließlich **neue Dateien** in `scenes/cryogptchat/` eines vorher fest konfigurierten lokalen Godot-Projekts.
+
+Der Ablauf ist zweistufig: **Vorschau ohne Dateischreibzugriff**, dann **einmalige Ausführung** nach zusätzlicher Bestätigung durch Eingabe von `ERSTELLEN`. Die Freigabe verfällt nach zwei Minuten und darf nur einmal verwendet werden. Ohne `GODOT_SCENE_WRITES=true` bleibt die Schreibfunktion gesperrt.
+
+Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade oder Godot-Klassen aus einer KI-Antwort ausgeführt. **Ein fremdes Godot-Projekt kann dennoch Skript-Seiteneffekte verursachen:** Ausschließlich in einer überprüften lokalen Testumgebung verwenden.
+
 ## 🛣️ Roadmap
 
 - [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups und optionale Ollama-Integration.
@@ -156,6 +177,8 @@ CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Agentic-L
 - [x] **Alpha 0.4 (MVP):** Optionale OpenAI-API, getrennte Modellauswahl und bestätigungspflichtige GitHub-Agentenschritte.
 - [ ] **Alpha 0.3 (weitere Schritte):** Browser-E2E, Accessibility und robuste größere Chatverläufe.
 - [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
+
+- [x] **Godot MCP (optional):** Versions-/Projektprüfung und manuell bestätigte Erstellung neuer Szenen im festgelegten Testprojekt; ohne automatische KI-Tool-Ausführung.
 
 ## 🤝 Mitmachen
 

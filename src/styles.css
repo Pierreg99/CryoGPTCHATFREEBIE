@@ -125,3 +125,21 @@ select{color:#d6f1fa;background:#172c43;border:1px solid #38546c;border-radius:7
 #agent-preview{margin:0;padding:12px;max-height:260px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid #5d4d76;border-radius:9px;background:#0e1529;color:#eadffc;font-size:12px;line-height:1.55}
 .cloud-warning{padding:9px 11px;background:#3d2c24;border:1px solid #9b7043;border-radius:8px;color:#ffe5bc;font-size:12px;line-height:1.5}
 .cloud-warning[hidden]{display:none}
+
+
+/* Optional Godot MCP panel – manual inspections only */
+.godot-panel strong{font-size:15px;color:#e5fcff}
+.godot-status{font-size:12px;color:#98dace;margin:0}
+.godot-actions{display:flex;gap:10px;flex-wrap:wrap}
+.godot-actions button{padding:11px 13px;border-radius:9px;background:#163950;border:1px solid #3b849e;color:#d5f6fc;font-size:12px;font-weight:700}
+.godot-actions button:disabled{opacity:.43;cursor:not-allowed}
+.godot-output{border:1px solid #31536c;border-radius:10px;background:#081729;color:#d5e7f6;white-space:pre-wrap;overflow-wrap:anywhere;max-height:260px;overflow:auto;padding:12px;font:12px/1.7 ui-monospace,monospace;margin:0}
+@media(max-width:540px){.godot-actions{flex-direction:column}.godot-actions button{width:100%}}
+
+/* Alpha 0.4 – two-stage Godot scene builder */
+.scene-builder{display:flex;flex-direction:column;gap:10px;border-top:1px solid #31546b;padding-top:15px}
+.scene-builder label{font-size:12px;font-weight:700;color:#b8d5e7}
+.scene-builder input,.scene-builder select{color:#e8f8ff;background:#0e2136;border:1px solid #436681;border-radius:9px;padding:11px;width:100%;max-width:none;margin:0}
+.scene-builder button{padding:12px;border-radius:10px;color:#e8fbfd;background:#154052;border:1px solid #36819b;font-weight:700}
+.scene-builder #scene-create:not(:disabled){background:#225a53;border-color:#79d6c3}
+.scene-builder button:disabled{opacity:.42;cursor:not-allowed}
