@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { validateHyperfocusPlan, previewHyperfocusPlan, runHyperfocus } from './src/hyperfocus.mjs';
 import { callGodotMcp, godotMcpConfigured } from './src/godot-mcp-client.mjs';
 import { prepareScene } from './src/godot-scene-plan.mjs';
 import { randomBytes } from 'node:crypto';
@@ -11,6 +12,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const pendingScenePlans = new Map();
+const pendingHyperfocusPlans = new Map();
+let activeHyperfocusRuns = 0;
 let activeGodotProcesses = 0;
 const MAX_GODOT_PROCESSES = 2;
 async function runGodotTool(...args) {
@@ -26,7 +29,7 @@ async function runGodotTool(...args) {
 const port = Number(process.env.PORT || 4173);
 const ollama = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json; charset=utf-8' };
-const allow = new Set(['/index.html', '/src/app.js', '/src/integrations.js', '/src/agent-ui.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
+const allow = new Set(['/index.html', '/src/app.js', '/src/integrations.js', '/src/agent-ui.js', '/src/hyperfocus-ui.js', '/src/core.js', '/src/stream.js', '/src/storage.js', '/src/styles.css', '/assets/logo.svg']);
 
 function json(res, status, body) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
@@ -152,6 +155,73 @@ const server = http.createServer(async (req, res) => {
       } catch (error) {
         return json(res, Number.isInteger(error.status) ? error.status : 500, { error: error.message || 'Skill-Suche fehlgeschlagen.' });
       }
+    }
+    if ((url.pathname === '/api/hyperfocus/plan' || url.pathname === '/api/hyperfocus/run') && req.method === 'POST') {
+      // A preview ticket is mandatory. A model cannot nominate arbitrary tools or repositories.
+      if (req.headers.origin !== 'http://127.0.0.1:' + port) {
+        return json(res, 403, { error: 'Nur die lokale Bedienoberfläche darf Hyperfocus starten.' });
+      }
+      if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) {
+        return json(res, 415, { error: 'JSON erwartet.' });
+      }
+      let body;
+      try { body = await parseRequest(req); }
+      catch { return json(res, 400, { error: 'Ungültige Hyperfocus-Anfrage.' }); }
+      if (!body || typeof body !== 'object' || Array.isArray(body)) {
+        return json(res, 400, { error: 'Ungültige Hyperfocus-Anfrage.' });
+      }
+      if (url.pathname.endsWith('/plan')) {
+        try {
+          const plan = validateHyperfocusPlan(body);
+          const now = Date.now();
+          for (const [key, value] of pendingHyperfocusPlans) {
+            if (value.expiresAt <= now) pendingHyperfocusPlans.delete(key);
+          }
+          if (pendingHyperfocusPlans.size >= 16) {
+            return json(res, 429, { error: 'Zu viele offene Hyperfocus-Pläne.' });
+          }
+          const ticket = randomBytes(24).toString('hex');
+          const expiresAt = now + 120000;
+          pendingHyperfocusPlans.set(ticket, { plan, expiresAt });
+          return json(res, 200, { ticket, expiresAt, preview: previewHyperfocusPlan(plan) });
+        } catch (error) {
+          return json(res, Number.isInteger(error.status) ? error.status : 400, { error: error.message });
+        }
+      }
+      if (typeof body.ticket !== 'string' || !/^[0-9a-f]{48}$/.test(body.ticket)) {
+        return json(res, 400, { error: 'Vorschau-Ticket erforderlich.' });
+      }
+      // Tickets are one-shot, even on failed or aborted executions.
+      const planned = pendingHyperfocusPlans.get(body.ticket);
+      pendingHyperfocusPlans.delete(body.ticket);
+      if (!planned || planned.expiresAt <= Date.now()) {
+        return json(res, 409, { error: 'Fokusfreigabe abgelaufen oder bereits verwendet.' });
+      }
+      if (activeHyperfocusRuns >= 1) {
+        return json(res, 429, { error: 'Es läuft bereits eine Hyperfocus-Sitzung.' });
+      }
+      activeHyperfocusRuns++;
+      const controller = new AbortController();
+      const onDisconnect = () => controller.abort();
+      res.once('close', onDisconnect);
+      try {
+        const result = await runHyperfocus(planned.plan, {
+          modelsFn: getModels,
+          ollamaUrl: ollama,
+          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(90000)])
+        });
+        if (!res.destroyed && !controller.signal.aborted) return json(res, 200, result);
+      } catch (error) {
+        if (!res.destroyed && !controller.signal.aborted) {
+          return json(res, [400, 403, 429, 502, 503].includes(error.status) ? error.status : 502, {
+            error: typeof error.message === 'string' ? error.message.slice(0, 240) : 'Hyperfocus ist fehlgeschlagen.'
+          });
+        }
+      } finally {
+        res.off('close', onDisconnect);
+        activeHyperfocusRuns--;
+      }
+      return;
     }
     if (url.pathname === '/api/agent/execute' && req.method === 'POST') {
       if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'JSON erwartet.' });
