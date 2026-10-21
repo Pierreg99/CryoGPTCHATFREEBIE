@@ -2,18 +2,20 @@
 
 > **Interpretation:** 100 Versionen **v0.1 bis v10.0 in 0.1er-Schritten**. Dies ist eine priorisierbare Produktvision, **kein Versprechen**, 100 Releases zu liefern. Das Versionsraster dient als Navigationshilfe; Release-Tagging folgt echter SemVer- und Qualitätsprüfung, nicht automatisch jeder Zeile.
 
-**Stand der Recherche:** 21. Oktober 2026 · Grundlage: [README](../../README.md), [Node-Server](../../server.mjs), [Chat-Core](../../src/core.js), [GitHub/Skills](../../src/github-integration.mjs), [Modellanbieter](../../src/providers.mjs), [Godot](../../src/godot-mcp-client.mjs), [CI](../../.github/workflows/ci.yml), [Integration](../integrations.md), [Godot-Doku](../integrations/godot-mcp.md), [Modelle und Agenten](../model-providers-and-agents.md) und bereits gemergte PRs #1–#9.
+**Stand der Recherche:** 21. Oktober 2026 · Grundlage: [README](../../README.md), [Node-Server](../../server.mjs), [Chat-Core](../../src/core.js), [GitHub/Skills](../../src/github-integration.mjs), [Modellanbieter](../../src/providers.mjs), [Godot](../../src/godot-mcp-client.mjs), [CI](../../.github/workflows/ci.yml), [Integration](../integrations.md), [Godot-Doku](../integrations/godot-mcp.md), [Modelle und Agenten](../model-providers-and-agents.md) und bereits gemergte PRs #1–#13. Die Statusangaben sind Entwicklungsstände und keine Release-Tags.
 
 ## Status und Leseregeln
 
 - **✅ Bereits im Code / PR-historisch belegt:** v0.1, v0.2, v0.3, v0.4. Das bedeutet **nicht**, dass jede Idee eines alten Alpha-Abschnitts vollständig end-to-end zertifiziert ist.
-- **✅ Als MVP in `main`:** v0.5 Hyperfocus wurde über PR #10 gemergt; der zugehörige Lokalisierungs-Test wurde über PR #12 repariert. Live-Browser-E2E und vollständige Produktabnahme bleiben offen.
-- **⬜ Zukunftsplanung:** v0.6 bis v10.0. Keine Implementierung, kein zugesagtes Lieferdatum.
+- **✅ Als MVP in `main`:** v0.5 Hyperfocus wurde über PR #10 gemergt; der zugehörige Lokalisierungs-Test wurde über PR #12 repariert. Browser-E2E wurde mit PR #13 ergänzt; echte externe Dienste und vollständige Produktabnahme bleiben separat zu prüfen.
+- **✅ Browser-E2E umgesetzt:** v0.6 durch PR #13 mit Chromium und Desktop-/Mobile-Viewports.
+- **🟨 Teilweise umgesetzt:** v0.7 (automatische Accessibility-Prüfungen; manuelle WCAG-2.2-AA-Abnahme offen), v6.1 (Designsystem und responsive UI; umfassende Produktabnahme offen).
+- **⬜ Zukunftsplanung:** Übrige Meilensteine bis v10.0 beschreiben noch offene Gates, keine zugesagten Liefertermine.
 - **Abnahmeprinzip:** Jede Version benennt ein konkretes Artefakt und einen **prüfbaren Exit-Gate**. Funktionen mit externem Netzwerk, privaten Daten oder Writes bleiben standardmäßig deaktiviert und erfordern Sicherheitsprüfung sowie ausdrückliche Freigabe.
 
 ## Forschungsbefund in Kürze
 
-Der aktuelle lokale Node.js-Workspace startet auf `127.0.0.1`; Chats liegen in IndexedDB mit `localStorage`-Fallback und JSON-Backups. Ollama funktioniert optional; OpenAI ist nur nach serverseitiger Konfiguration und pro Anfrage bestätigter Cloud-Freigabe vorgesehen. Die GitHub-Integration liest nur erlaubte öffentliche Repositories und Skill-Metadaten; Godot-MCP-Projekte werden über festgelegte lokale Pfade mit manueller Tool-Freigabe angesprochen. CI testet Node.js 20 und 22. **Aktuell fehlen unter anderem Browser-E2E, robuste Authentifizierung, verschlüsselter Speicher, autonomes sicheres Schreiben, Multi-User-Betrieb, Sandbox und Live-Godot-E2E.** Sie sind explizit zukünftige Gates.
+Der aktuelle lokale Node.js-Workspace startet auf `127.0.0.1`; Chats liegen in IndexedDB mit `localStorage`-Fallback und JSON-Backups. Ollama funktioniert optional; OpenAI ist nur nach serverseitiger Konfiguration und pro Anfrage bestätigter Cloud-Freigabe vorgesehen. Die GitHub-Integration liest nur erlaubte öffentliche Repositories und Skill-Metadaten; Godot-MCP-Projekte werden über festgelegte lokale Pfade mit manueller Tool-Freigabe angesprochen. CI testet Node.js 20 und 22 sowie Chromium/Accessibility auf Node 24. **Aktuell fehlen unter anderem robuste Authentifizierung, verschlüsselter Speicher, autonomes sicheres Schreiben, Multi-User-Betrieb, Sandbox und Live-Godot-E2E.** Sie sind explizit zukünftige Gates.
 
 ## Phasenübersicht
 
@@ -56,11 +58,11 @@ Von lokalem Experiment zu klar dokumentiertem Einzelbenutzer-Workspace.
 
 **Lieferobjekt:** Begrenzte, bestätigte README-/Skill-Recherche mit lokalem Planer. **Abnahme:** Einmal-Ticket, read-only, Abbruch testen.
 
-#### ⬜ Geplant v0.6 · Browser-End-to-End
+#### ✅ Implementiert v0.6 · Browser-End-to-End
 
 **Lieferobjekt:** Playwright-Smoke-Flows für Chat, Import, Planfreigabe. **Abnahme:** CI testet Desktop und Mobile-Viewport.
 
-#### ⬜ Geplant v0.7 · Barrierefreiheit
+#### 🟨 Teilweise umgesetzt v0.7 · Barrierefreiheit
 
 **Lieferobjekt:** Tastaturreihenfolge, Dialoge, Fokusmanagement und Statusmeldungen prüfen. **Abnahme:** WCAG-2.2-AA-Prüfbericht für Kernflows.
 
@@ -300,7 +302,7 @@ Sichere Creator-Flows vom Szenenentwurf bis zur exportierbaren Testszene.
 
 Bessere Interaktion bei optionaler, expliziter Medienverarbeitung.
 
-#### ⬜ Geplant v6.1 · Design-System
+#### 🟨 Teilweise umgesetzt v6.1 · Design-System
 
 **Lieferobjekt:** Cryo-Neon-Tokens, Komponenten und Kontraststandards kodifizieren. **Abnahme:** UI-Snapshots und Designregeln in CI.
 

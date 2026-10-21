@@ -1,3 +1,4 @@
+import { createRoadmapPanel } from "./roadmap-ui.js";
 const titles = {
   chat: [
     "DEIN DENKRAUM",
@@ -29,6 +30,11 @@ const titles = {
     "Godot MCP",
     "Lokale Projekte untersuchen und Szenen bewusst erstellen.",
   ],
+  roadmap: [
+    "100 MEILENSTEINE. EIN KLARER KURS.",
+    "Roadmap",
+    "Von der lokalen Alpha zur langfristigen Produktvision.",
+  ],
   models: [
     "DEINE MODELLE. DEINE WAHL.",
     "Modellzentrale",
@@ -39,7 +45,7 @@ export function setupWorkspace({ el, notice, refreshModels, active }) {
   const nav = document.createElement("nav");
   nav.className = "workspace-nav";
   nav.setAttribute("aria-label", "Workspace");
-  const icons = ["◈", "▤", "ϟ", "⌘", "⌗", "◇", "◉"];
+  const icons = ["◈", "▤", "ϟ", "⌘", "⌗", "◇", "⌑", "◉"];
   Object.entries(titles).forEach(([key, [, title]], i) => {
     const link = document.createElement("a");
     link.href = "#" + key;
@@ -107,6 +113,8 @@ export function setupWorkspace({ el, notice, refreshModels, active }) {
   modelPanel.setAttribute("aria-label", "Modelle");
   modelPanel.innerHTML =
     '<div class="section-heading"><h2>Verfügbare Modelle</h2><button type="button" id="models-refresh">↻ Aktualisieren</button></div><label for="model-search">Modell suchen</label><input id="model-search" type="search" placeholder="Name oder Anbieter …"><button id="models-offline" type="button">Nur lokal speichern / Notizmodus</button><p>Favoriten bleiben auf diesem Gerät. Die Auswahl startet keine Anfrage.</p><div class="model-grid" id="model-cards"></div>';
+  panels.roadmap = createRoadmapPanel();
+  tools.append(panels.roadmap);
   panels.models = modelPanel;
   tools.append(modelPanel);
   const noticeEl = el("notice");

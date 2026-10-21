@@ -1,3 +1,4 @@
+import { parseRoadmap } from "./src/roadmap.mjs";
 import http from "node:http";
 import { createWriteService } from "./src/agent-workspace.mjs";
 import { inspectGithub } from "./src/github-integration.mjs";
@@ -59,6 +60,9 @@ const allow = new Set([
   "/index.html",
   "/src/app.js",
   "/src/workspace.js",
+  "/src/interface-polish.js",
+  "/src/interface.css",
+  "/src/roadmap-ui.js",
   "/src/dialogs.js",
   "/src/agent-flow.js",
   "/src/integrations.js",
@@ -110,6 +114,17 @@ const server = http.createServer(async (req, res) => {
   );
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
+    if (url.pathname === "/api/roadmap" && req.method === "GET")
+      return json(
+        res,
+        200,
+        parseRoadmap(
+          await readFile(
+            path.join(root, "docs/roadmap/ROADMAP-100.md"),
+            "utf8",
+          ),
+        ),
+      );
     if (url.pathname === "/api/agent/capabilities" && req.method === "GET") {
       return json(res, 200, {
         localWrites:
