@@ -33,7 +33,7 @@
       </header>
       <div class="chat-area">
         <section class="intro">
-          <div class="eyebrow">ALPHA 0.3 &nbsp;•&nbsp; PRIVATE AI WORKSPACE</div>
+          <div class="eyebrow">ALPHA 0.4 &nbsp;•&nbsp; PRIVATE AI WORKSPACE</div>
           <h1 id="chat-heading">CryoGPT<span>Chat.</span></h1>
           <p id="chat-subtitle">Dein Arbeitsbereich für Ideen, Code und Gespräche – ohne Cloud-Zwang.</p>
           <div class="chat-tools"><button id="rename-chat" type="button">✎ Umbenennen</button><button id="delete-chat" type="button">⌫ Löschen</button><button id="notes-toggle" type="button" aria-expanded="false" aria-controls="project-panel">◈ Projektwissen</button><button id="godot-toggle" type="button" aria-expanded="false" aria-controls="godot-panel">🎮 Godot MCP</button></div>
@@ -57,6 +57,17 @@
               <button id="godot-project" type="button" disabled>Projektinformationen auslesen</button>
             </div>
             <pre class="godot-output" id="godot-output" aria-live="polite">Keine Abfrage gestartet.</pre>
+            <div class="scene-builder">
+              <div class="eyebrow">ALPHA 0.4 / SZENEN-VORSCHAU</div>
+              <label for="scene-name">Neuer Szenenname</label>
+              <input id="scene-name" maxlength="40" pattern="[A-Za-z][A-Za-z0-9_-]{0,39}" placeholder="MeinLevel" autocomplete="off">
+              <label for="scene-root">Wurzelknoten</label>
+              <select id="scene-root"><option value="Node2D">Node2D – 2D</option><option value="Node3D">Node3D – 3D</option><option value="Control">Control – UI</option></select>
+              <button id="scene-preview" type="button" disabled>Szene prüfen (ohne Schreiben)</button>
+              <pre id="scene-summary" class="godot-output" aria-live="polite">Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
+              <button id="scene-create" type="button" disabled>Geprüfte Szene erstellen</button>
+              <small>Szenenerstellung ist standardmäßig gesperrt und erfordert GODOT_SCENE_WRITES=true sowie deine ausdrückliche Bestätigung. Keine bestehenden Szenen überschreiben.</small>
+            </div>
             <small>Jede Abfrage erfordert deine Bestätigung. Nur zwei Informationswerkzeuge sind freigegeben. Godot MCP wird niemals automatisch installiert oder gestartet. Einrichtung: docs/integrations/godot-mcp.md</small>
           </section>
         </section>

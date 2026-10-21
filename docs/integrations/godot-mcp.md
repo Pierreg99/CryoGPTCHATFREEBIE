@@ -11,7 +11,7 @@ Die Godot-Schaltfläche im Chat öffnet ein optionales Inspektionspanel. Es werd
 | `get_godot_version` | Installierte Godot-Version auslesen | Nur Klick **und** Bestätigungsdialog |
 | `get_project_info` | Metadaten zum fest konfigurierten Projekt auslesen | Nur Klick **und** Bestätigungsdialog |
 
-**Keine automatische KI-Toolauswahl. Keine Mutationen über die CryoGPTCHAT-Oberfläche.** Szenen erstellen, Knoten ändern, Projekte starten, stoppen oder Dateien manipulieren sind **nicht** über diese Bridge verfügbar.
+**Keine automatische KI-Toolauswahl.** Einzige optionale Schreibfunktion ab Alpha 0.4: eine neu erstellte, manuell bestätigte Szene unter festem Projektpfad. Bestehende Szenen ändern, Knoten hinzufügen, Projekte starten oder stoppen sind **nicht** über diese Bridge verfügbar.
 
 Auch reine Inspektion startet ausführbaren Fremdcode als separaten Node.js-Prozess und kann im Godot-Kontext Änderungen auslösen. Nur mit einem **vertrauenswürdigen und überprüften Checkout** und an einem **gesicherten Testprojekt** verwenden.
 
@@ -52,6 +52,31 @@ npm start
 
 Die Integration funktioniert auch dann, wenn Ollama nicht installiert ist.
 
+## Alpha 0.4: kontrollierte neue Szene erstellen
+
+**Standard: deaktiviert.** Der Chat stellt optional einen Szenenassistenten bereit, der nur **neue** Szenen im Unterordner `scenes/cryogptchat/` anlegen darf. Vor der ersten Verwendung einen gesicherten Godot-Testordner nutzen und den Zielordner erstellen:
+
+```bash
+mkdir -p "$HOME/GodotProjects/MeinSpiel/scenes/cryogptchat"
+```
+
+Dann CryoGPTCHAT starten (zusätzlich zu den oben genannten drei Umgebungsvariablen):
+
+```bash
+GODOT_SCENE_WRITES=true npm start
+```
+
+Setze die Umgebungsvariablen `GODOT_MCP_ENTRY`, `GODOT_PROJECT_PATH` und optional `GODOT_PATH` im gleichen Terminal, bevor du den Server startest.
+
+1. In **🎮 Godot MCP** einen Szenennamen eingeben (z. B. `MeinLevel`) und einen Knoten-Typ wählen: `Node2D`, `Node3D` oder `Control`.
+2. Auf **„Szene prüfen (ohne Schreiben)“** klicken. Die Vorschau zeigt Projekt, Dateipfad und Wurzelknoten. Dabei wird **keine Szene angelegt**.
+3. Erst über **„Geprüfte Szene erstellen“** und Eingabe von **`ERSTELLEN`** im Bestätigungsdialog wird eine einmalige, maximal zwei Minuten gültige Freigabe verwendet.
+4. Die neue `.tscn`-Datei im Godot-Editor kontrollieren, bevor du unbekannte Skripte im Projekt startest.
+
+Die Dateinamen sind begrenzt und dürfen keine Verzeichnis-Traversal-Zeichen enthalten. Vorhandene Dateien werden nicht überschrieben. Symbolische Links innerhalb des festgelegten Szenenordners sind nicht erlaubt. **Wichtig:** Der externe Godot-MCP-Prozess läuft dennoch unter deinem Benutzerkonto; diese Maßnahmen ersetzen **keine Sandbox oder vollständige Sicherheit für fremde Projekte**.
+
+**Nicht enthalten:** Bestehende Szenen verändern, GDScript generieren, KI-gesteuerte Toolaufrufe, automatisches Projektstarten. Reale Godot-End-to-End-Prüfungen müssen auf einem Testprojekt erfolgen.
+
 ## Sicherheitsmodell
 
 - Server bindet ausschließlich an `127.0.0.1`. Die Inspektions-API verlangt JSON und einen **genau passenden Origin-Header**.
@@ -72,4 +97,4 @@ Die Integration funktioniert auch dann, wenn Ollama nicht installiert ist.
 
 ## Weiterentwicklung
 
-Eine spätere MCP-Tool-Integration mit Schreibzugriff benötigt zusätzlich: explizite Berechtigungen pro Werkzeug, überprüfte Projektverzeichnisse, gesicherte Preview/Diffs, Tests auf echten Godot-Versionen und eine Freigabe pro Dateiveränderung. Das ist **noch nicht implementiert**.
+Alpha 0.4 erlaubt **nur** die ausdrücklich bestätigte Erstellung einfacher neuer Szenen. Erweiterte Bearbeitung, komplexe Diffs, echte Godot-End-to-End-Tests und eine stärkere Sandbox bleiben zukünftige Aufgaben.

@@ -9,7 +9,7 @@
   Für Ideen, Code und Gespräche – ohne verpflichtenden Cloud-Dienst.
 
   <p>
-    <code>ALPHA 0.3</code> ·
+    <code>ALPHA 0.4</code> ·
     <code>LOCAL-FIRST</code> ·
     <code>NODE.JS 20+</code> ·
     <code>OLLAMA OPTIONAL</code>
@@ -31,7 +31,7 @@
 | :--- | :--- | :--- |
 | Chats anlegen, umbenennen, löschen und durchsuchen | Ollama-Modelle auf dem eigenen Rechner auswählen und ansprechen | IndexedDB im Browser, JSON-Export und validierter Import |
 
-**Alpha 0.3 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung, echte tokenweise Streaming-Antworten und eine Stopp-Schaltfläche bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
+**Alpha 0.4 kann bereits:** responsive Neon-UI, Volltextsuche, lokale Chat-Verwaltung, Backups, Ollama-Erkennung, echte tokenweise Streaming-Antworten und eine Stopp-Schaltfläche bei angeschlossenem Modell. **Ohne Modell** wird die App zum lokalen Chat-Notizbuch; sie erfindet keine Antworten.
 
 > 🎨 **Designhinweis:** Die Illustrationen dieser README zeigen die Gestaltungsidee – keine unbearbeiteten Screenshots der laufenden App.
 
@@ -138,16 +138,26 @@ CryoGPTCHATFREEBIE kann über eine **manuell konfigurierte** Verbindung zu [Codi
 
 Über den Button **🎮 Godot MCP** öffnet sich ein eigenes Panel. Jede Abfrage erfordert einen weiteren Bestätigungsdialog. Ohne lokale Installation bleibt das Panel deaktiviert; KI-Modelle können nicht automatisch auf Godot-Werkzeuge zugreifen.
 
-**Keine Szene bearbeiten, kein Spiel starten, keine automatische Skriptausführung durch den Chat.** Der externe Godot-MCP-Prozess selbst ist ausführbarer Fremdcode und muss vor der Verwendung geprüft werden. Die Integration ersetzt weder eine Sicherheitsprüfung noch eine echte Godot-End-to-End-Testumgebung.
+**Keine bestehende Szene bearbeiten, kein Spiel automatisch starten.** Ab Alpha 0.4 kann optional eine *neue* Szene nach Vorschau, aktivierter Schreibfreigabe und manueller Bestätigung angelegt werden. Das externe MCP-Programm kann trotzdem ausführbaren Godot-Code starten. Der externe Godot-MCP-Prozess selbst ist ausführbarer Fremdcode und muss vor der Verwendung geprüft werden. Die Integration ersetzt weder eine Sicherheitsprüfung noch eine echte Godot-End-to-End-Testumgebung.
 
-**[Godot MCP installieren und sicher konfigurieren →](docs/integrations/godot-mcp.md)**
+**[Godot MCP installieren, Szenenerstellung aktivieren und Grenzen prüfen →](docs/integrations/godot-mcp.md)**
+
+## 🧱 Alpha 0.4 – neue Godot-Szene mit Vorschau
+
+Im Godot-Panel steht nun ein optionaler Szenenassistent bereit. Er erlaubt **Node2D**, **Node3D** oder **Control** als neuen Wurzelknoten und schreibt ausschließlich **neue Dateien** in `scenes/cryogptchat/` eines vorher fest konfigurierten lokalen Godot-Projekts.
+
+Der Ablauf ist zweistufig: **Vorschau ohne Dateischreibzugriff**, dann **einmalige Ausführung** nach zusätzlicher Bestätigung durch Eingabe von `ERSTELLEN`. Die Freigabe verfällt nach zwei Minuten und darf nur einmal verwendet werden. Ohne `GODOT_SCENE_WRITES=true` bleibt die Schreibfunktion gesperrt.
+
+Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade oder Godot-Klassen aus einer KI-Antwort ausgeführt. **Ein fremdes Godot-Projekt kann dennoch Skript-Seiteneffekte verursachen:** Ausschließlich in einer überprüften lokalen Testumgebung verwenden.
 
 ## 🛣️ Roadmap
 
 - [x] **Alpha 0.1:** Chat-UI, Gesprächsverwaltung, Suche, JSON-Backups und optionale Ollama-Integration.
 - [x] **Alpha 0.2:** Streaming-Ausgabe, Stopp-Schaltfläche, gekennzeichnete Teilantworten, manuelle Modellauswahl und neue Stream-Tests.
 - [x] **Alpha 0.3 (erster Schritt):** IndexedDB-Migration, versionierte Backups und manuell freigegebenes Projektwissen pro Chat.
-- [ ] **Alpha 0.3 (weitere Schritte):** Browser-E2E, Accessibility und robuste größere Chatverläufe.
+- [ ] **Weiter offen:** Browser-End-to-End-Tests, Barrierefreiheit und robuste größere Chatverläufe.
+- [x] **Alpha 0.4:** kontrollierte neue Godot-Szene mit serverseitigem Pfadschutz, Vorschau und Einmal-Freigabe (optional).
+- [ ] **Alpha 0.5:** stärkere Isolation für externe MCP-Server und Godot-End-to-End-Tests.
 - [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
 
 ## 🤝 Mitmachen
