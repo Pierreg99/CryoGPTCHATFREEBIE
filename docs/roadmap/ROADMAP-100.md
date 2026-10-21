@@ -7,7 +7,7 @@
 ## Status und Leseregeln
 
 - **✅ Bereits im Code / PR-historisch belegt:** v0.1, v0.2, v0.3, v0.4. Das bedeutet **nicht**, dass jede Idee eines alten Alpha-Abschnitts vollständig end-to-end zertifiziert ist.
-- **🟡 In Entwicklung:** v0.5, Hyperfocus-MVP auf Feature-Branch `feat/hyperfocus-autopilot`; Aufnahme in `main` erst nach erfolgreicher Prüfung.
+- **✅ Als MVP in `main`:** v0.5 Hyperfocus wurde über PR #10 gemergt; der zugehörige Lokalisierungs-Test wurde über PR #12 repariert. Live-Browser-E2E und vollständige Produktabnahme bleiben offen.
 - **⬜ Zukunftsplanung:** v0.6 bis v10.0. Keine Implementierung, kein zugesagtes Lieferdatum.
 - **Abnahmeprinzip:** Jede Version benennt ein konkretes Artefakt und einen **prüfbaren Exit-Gate**. Funktionen mit externem Netzwerk, privaten Daten oder Writes bleiben standardmäßig deaktiviert und erfordern Sicherheitsprüfung sowie ausdrückliche Freigabe.
 
@@ -52,7 +52,7 @@ Von lokalem Experiment zu klar dokumentiertem Einzelbenutzer-Workspace.
 
 **Lieferobjekt:** OpenAI optional, GitHub-Skills lesend, Godot MCP manuell freigeben. **Abnahme:** Allowlist-, MCP- und Provider-Tests.
 
-#### 🟡 In Entwicklung v0.5 · Hyperfocus-MVP
+#### ✅ MVP im Code v0.5 · Hyperfocus-MVP
 
 **Lieferobjekt:** Begrenzte, bestätigte README-/Skill-Recherche mit lokalem Planer. **Abnahme:** Einmal-Ticket, read-only, Abbruch testen.
 
@@ -484,7 +484,7 @@ Technisch belastbare und überprüfbare Plattform-Reife – ohne Cloud-Zwang.
 
 | Reihenfolge | Vorhaben | Warum jetzt | Minimaler Akzeptanztest |
 | :--- | :--- | :--- | :--- |
-| 1 | v0.5 Hyperfocus fertigstellen | Bewusst eingeschränkte, zustimmungsbasierte 1-Lauf-Automation | Tests mit Mock-Quellen, Cancel, One-Time-Ticket, keine Writes |
+| 1 | v0.5 Hyperfocus manuell abnehmen | Das MVP ist gemergt, benötigt aber Browser-/Live-Test | Mock-Tests grün; UI-E2E und Abbruch bei echten Quellen prüfen |
 | 2 | v0.6 Browser-E2E | Node-Tests allein erkennen keine defekten UI-Flows | Chat, Agent, Godot und Hyperfocus im echten Browser |
 | 3 | v0.7 Zugänglichkeit | Mobile und Tastatur-Fokus vor weiteren Panels stabilisieren | Keyboard-/Screenreader-Review der Kernflows |
 | 4 | v0.8 Backup & Restore | Erst Datensicherung, dann künftige Agenten-Funktionalität | v1/v2/defekter Import mit Rücksetztest |
