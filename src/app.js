@@ -1,5 +1,6 @@
 import { consumeOllamaStream } from './stream.js';
 import { setupIntegrations } from './integrations.js';
+import { setupAgent } from './agent-ui.js';
 import { createPersistence } from './storage.js';
 import { emptyStore, createChat, renameChat, deleteChat, appendMessage, searchChats, parseBackup, toOllamaMessages, setProjectContext } from './core.js';
 
@@ -71,7 +72,7 @@ function renderMessages() {
     avatar.className = 'avatar'; avatar.textContent = msg.role === 'user' ? 'DU' : 'AI';
     const body = document.createElement('div');
     const meta = document.createElement('small');
-    meta.textContent = (msg.role === 'user' ? 'DU' : 'LOKALES MODELL') + ' · ' + new Date(msg.createdAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    meta.textContent = (msg.role === 'user' ? 'DU' : 'KI-MODELL') + ' · ' + new Date(msg.createdAt).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
     const pre = document.createElement('pre');
     pre.textContent = msg.content; // Never treat user/model content as HTML.
     body.append(meta, pre); row.append(avatar, body); list.append(row);
@@ -80,7 +81,7 @@ function renderMessages() {
     const typing = document.createElement('p');
     typing.className = 'typing'; typing.id = 'streaming-reply';
     typing.setAttribute('aria-live', 'off');
-    typing.textContent = streamedText || '◌ Lokales Modell antwortet …';
+    typing.textContent = streamedText || '◌ KI-Modell antwortet …';
     list.append(typing);
   }
   list.scrollTop = list.scrollHeight;
@@ -102,13 +103,18 @@ function render() { renderList(); renderMessages(); renderProjectPanel(); }
 
 async function refreshModels() {
   if (sending) return;
-  el('status').textContent = '○ Prüfe Ollama …';
+  el('status').textContent = '○ Prüfe Modellanbieter …';
   try {
     const res = await fetch('/api/status');
     if (!res.ok) throw new Error('Server nicht erreichbar');
     const data = await res.json();
-    models = data.online && Array.isArray(data.models) ? data.models : [];
-    el('status').textContent = models.length ? '● ' + models.length + ' Modell(e) bereit' : '○ Nur lokale Notizen';
+    const local = data.online && Array.isArray(data.models) ? data.models : [];
+    const cloud = data.providers?.openai?.enabled && Array.isArray(data.providers?.openai?.models)
+      ? data.providers.openai.models : [];
+    models = [...local, ...cloud.map(name => 'openai:' + name)];
+    el('status').textContent = models.length
+      ? '● ' + local.length + ' lokal · ' + cloud.length + ' Cloud'
+      : '○ Nur lokale Notizen';
   } catch { models = []; el('status').textContent = '○ Keine KI-Verbindung'; }
   const picker = el('model');
   picker.replaceChildren();
@@ -116,13 +122,25 @@ async function refreshModels() {
   offline.value = ''; offline.textContent = 'Nur lokal speichern'; picker.append(offline);
   for (const name of models) {
     const option = document.createElement('option');
-    option.value = name; option.textContent = name; picker.append(option);
+    option.value = name;
+    option.textContent = name.startsWith('openai:')
+      ? '☁ OpenAI / ' + name.slice(7) + ' (API-Kosten möglich)'
+      : '◉ Ollama / ' + name;
+    picker.append(option);
   }
   // Never switch automatically from explicit note-only mode to a paid or local model.
   picker.value = models.includes(store.settings.model) ? store.settings.model : '';
-  el('model-state').textContent = picker.value ? 'Aktiv: ' + picker.value : 'Notizmodus · Modell manuell auswählen';
+  updateModelNotice(picker.value);
   store.settings.model = picker.value;
   persist();
+}
+
+function updateModelNotice(model) {
+  const cloud = model.startsWith('openai:');
+  el('cloud-warning').hidden = !cloud;
+  el('model-state').textContent = !model ? 'Notizmodus · Modell manuell auswählen'
+    : cloud ? 'Cloud: ' + model.slice(7) + ' · Bestätigung vor jeder Anfrage'
+    : 'Lokal: ' + model;
 }
 
 el('notes-toggle').addEventListener('click', () => {
@@ -135,14 +153,14 @@ el('save-project-notes').addEventListener('click', () => {
   const chat = active();
   if (!chat) return;
   const saved = mutate(state => setProjectContext(state, chat.id, el('project-context').value, el('project-share').checked));
-  if (saved) notice('Projektwissen gespeichert.' + (active()?.shareProjectContext ? ' Beim nächsten Ollama-Aufruf wird es einbezogen.' : ' Es bleibt lokal privat.'));
+  if (saved) notice('Projektwissen gespeichert.' + (active()?.shareProjectContext ? ' Beim nächsten Modellaufruf wird es einbezogen.' : ' Es bleibt lokal privat.'));
 });
 el('new-chat').addEventListener('click', () => { mutate(s => createChat(s)); closeSidebar(); el('prompt').focus(); });
 el('search').addEventListener('input', renderList);
 el('refresh').addEventListener('click', refreshModels);
 el('model').addEventListener('change', e => {
   store.settings.model = e.target.value;
-  el('model-state').textContent = store.settings.model ? 'Aktiv: ' + store.settings.model : 'Notizmodus · Modell manuell auswählen';
+  updateModelNotice(store.settings.model);
   persist();
 });
 el('rename-chat').addEventListener('click', () => {
@@ -180,11 +198,14 @@ el('composer').addEventListener('submit', async e => {
   if (sending) return;
   const content = el('prompt').value.trim();
   if (!content) return;
+  const model = el('model').value;
+  if (model.startsWith('openai:') && !window.confirm(
+    'Cloud-Anfrage an OpenAI senden?\nBis zu 24 Chat-Nachrichten und freigegebenes Projektwissen werden übertragen. API-Kosten sind möglich.'
+  )) return;
   if (!active() && !mutate(s => createChat(s))) return;
   const chatId = store.activeChatId;
   if (!mutate(s => appendMessage(s, chatId, 'user', content))) return;
   el('prompt').value = '';
-  const model = el('model').value;
   if (!model) { notice('Als lokale Notiz gespeichert. Wähle ein Modell für KI-Antworten.'); return; }
   sending = true;
   busyChatId = chatId;
@@ -262,5 +283,6 @@ el('import-file').addEventListener('change', async e => {
 
 render();
 setupIntegrations({ el, active, mutate, notice });
+setupAgent({ el, active, notice });
 refreshModels();
 if (storageWarnings.length) queueMicrotask(() => notice(storageWarnings.join(' ')));

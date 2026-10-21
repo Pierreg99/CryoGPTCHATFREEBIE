@@ -9,7 +9,7 @@
   Für Ideen, Code und Gespräche – ohne verpflichtenden Cloud-Dienst.
 
   <p>
-    <code>ALPHA 0.3</code> ·
+    <code>ALPHA 0.4</code> ·
     <code>LOCAL-FIRST</code> ·
     <code>NODE.JS 20+</code> ·
     <code>OLLAMA OPTIONAL</code>
@@ -113,6 +113,14 @@ Automatisierte Core-, Streaming- und IndexedDB-Migrationstests sowie Tests mit s
 - **Nicht unverändert öffentlich ins Internet stellen.** Dies ist ein lokales Experiment, keine produktionsreife SaaS-Lösung.
 - Vor einem JSON-Import ein Backup exportieren; bestätigter Import ersetzt den aktuellen Datenbestand.
 
+## 🤖 Alpha 0.4 · Optionale KI-Anbieter und kontrollierte Agentenschritte
+
+**Neu:** Ollama und eine optionale OpenAI-Chat-Completions-API können in derselben Modellauswahl genutzt werden. Die OpenAI-Anbindung benötigt serverseitig `OPENAI_API_KEY` **und** die explizite Modell-Allowlist `CRYO_OPENAI_MODELS`. Cloud-Nutzung bleibt standardmäßig aus; vor jeder Cloud-Anfrage wird der Nutzer gefragt. Die OpenAI API ist separat kostenpflichtig.
+
+Der **Agenten-Workspace** zeigt für erlaubte GitHub-Leseaktionen zunächst einen Plan. Erst nach expliziter Freigabe wird **genau ein** Schritt ausgeführt: README lesen oder den Cryo-Omega-Skill-Katalog durchsuchen. Ergebnisse werden nur auf Knopfdruck in einen Nachrichtenentwurf übertragen; sie starten keinen autonomen Agenten.
+
+**Einrichtung, Datenschutz und Grenzen:** [Modellanbieter & Agentenschritte](docs/model-providers-and-agents.md). Kein GitHub-Schreibzugriff, keine Shell-Kommandos und keine automatische Ausführung von Skills.
+
 ## 🔌 Optionale Integrationen (experimentell)
 
 Die neue GitHub-Anbindung kann explizit freigegebene **öffentliche** Repositories und den Cryo-Omega-Skill-Katalog schreibgeschützt einlesen. Die App zeigt eine Vorschau und übernimmt Inhalte nur nach deiner Bestätigung als privates Projektwissen. **Keine automatischen KI-Aufrufe, keine GitHub-Schreibrechte und keine Skill-Ausführung.**
@@ -137,7 +145,7 @@ CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Agentic-L
 - **Fallback:** Wenn IndexedDB nicht verfügbar ist, wird `localStorage` genutzt und eine Warnung angezeigt.
 - **Kein Cloud-Sync und keine Verschlüsselung:** Browserdaten können beim Löschen des Profils verloren gehen; wichtige Chats regelmäßig als JSON exportieren.
 
-**Noch nicht enthalten:** automatische Wissenssuche (RAG), beliebiger lokaler Dateizugriff, GitHub-Schreib-/Cloud-Sync, Skill-Ausführung oder browserübergreifende Synchronisierung.
+**Noch nicht enthalten:** automatische Wissenssuche (RAG), beliebiger lokaler Dateizugriff, GitHub-Schreib-/Cloud-Sync, autonome Skill-Ausführung oder browserübergreifende Synchronisierung.
 
 ## 🛣️ Roadmap
 
@@ -145,6 +153,7 @@ CRYO_GITHUB_REPOS=Pierreg99/CryoGPTCHATFREEBIE,Pierreg99/cryo-omega-AI-Agentic-L
 - [x] **Alpha 0.2:** Streaming-Ausgabe, Stopp-Schaltfläche, gekennzeichnete Teilantworten, manuelle Modellauswahl und neue Stream-Tests.
 - [x] **Alpha 0.3 (erster Schritt):** IndexedDB-Migration, versionierte Backups und manuell freigegebenes Projektwissen pro Chat.
 - [x] **Optionale Integration (experimentell):** GitHub-README-Vorschau, kontrollierte Skill-Katalogsuche und manuelle Übernahme ins Projektwissen.
+- [x] **Alpha 0.4 (MVP):** Optionale OpenAI-API, getrennte Modellauswahl und bestätigungspflichtige GitHub-Agentenschritte.
 - [ ] **Alpha 0.3 (weitere Schritte):** Browser-E2E, Accessibility und robuste größere Chatverläufe.
 - [ ] **Zukunft:** Kontrollierte Cryo-Omega-Skill-Registry, Projektwissen und Agenten-Workflows.
 
