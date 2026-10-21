@@ -23,12 +23,12 @@ function allowedPath(path) {
   return path;
 }
 
-async function apiJson(url, fetchImpl) {
+async function apiJson(url, fetchImpl, signal) {
   let response;
   try {
     response = await fetchImpl(url, {
       headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'CryoGPTCHATFREEBIE-local-bridge', 'X-GitHub-Api-Version': '2022-11-28' },
-      signal: AbortSignal.timeout(DEFAULT_TIMEOUT_MS)
+      signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(DEFAULT_TIMEOUT_MS)]) : AbortSignal.timeout(DEFAULT_TIMEOUT_MS)
     });
   } catch {
     throw Object.assign(new Error('GitHub ist momentan nicht erreichbar.'), { status: 503 });
@@ -42,12 +42,12 @@ async function apiJson(url, fetchImpl) {
   catch { throw Object.assign(new Error('Ungültige Antwort von GitHub.'), { status: 502 }); }
 }
 
-export async function readGithubFile({ repo, path, allowlist = configuredRepositories(), fetchImpl = fetch }) {
+export async function readGithubFile({ repo, path, allowlist = configuredRepositories(), fetchImpl = fetch, signal }) {
   allowedRepo(repo, allowlist);
   allowedPath(path);
   // Fixed API origin. No arbitrary URLs, no private token, no write capability.
   const url = `https://api.github.com/repos/${repo}/contents/${path.split('/').map(encodeURIComponent).join('/')}`;
-  const file = await apiJson(url, fetchImpl);
+  const file = await apiJson(url, fetchImpl, signal);
   if (file?.type !== 'file' || file.encoding !== 'base64' || typeof file.content !== 'string' || !Number.isInteger(file.size) || file.size < 0 || file.size > MAX_FILE_BYTES) {
     throw Object.assign(new Error('Datei hat kein unterstütztes Textformat oder ist zu groß.'), { status: 422 });
   }
@@ -68,9 +68,9 @@ export async function githubPreview(options) {
   return { repo, path, text: content.slice(0, MAX_PREVIEW), truncated: content.length > MAX_PREVIEW, readonly: true };
 }
 
-export async function searchGithubSkills({ repo, query = '', allowlist = configuredRepositories(), fetchImpl = fetch }) {
+export async function searchGithubSkills({ repo, query = '', allowlist = configuredRepositories(), fetchImpl = fetch, signal }) {
   if (typeof query !== 'string' || query.length > 100) throw Object.assign(new Error('Suchbegriff zu lang.'), { status: 400 });
-  const { content } = await readGithubFile({ repo, path: 'skills/catalog.json', allowlist, fetchImpl });
+  const { content } = await readGithubFile({ repo, path: 'skills/catalog.json', allowlist, fetchImpl, signal });
   let catalog;
   try { catalog = JSON.parse(content); }
   catch { throw Object.assign(new Error('Skill-Katalog enthält kein gültiges JSON.'), { status: 422 }); }
