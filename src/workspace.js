@@ -141,6 +141,7 @@ export function setupWorkspace({ el, notice, refreshModels, active }) {
   const navigate = () => {
     let key = location.hash.slice(1);
     if (!titles[key]) key = "chat";
+    const initial = !current;
     const changed = current !== key;
     current = key;
     closeMenu();
@@ -162,6 +163,10 @@ export function setupWorkspace({ el, notice, refreshModels, active }) {
       key === "chat" ? active()?.title || "Neuer Chat" : titles[key][1];
     document.title =
       (key === "chat" ? "Chat" : titles[key][1]) + " · Cryo Workspace";
+    if (changed && key === "chat" && !initial) {
+      el("chat-heading").tabIndex = -1;
+      el("chat-heading").focus({ preventScroll: true });
+    }
     if (changed && key !== "chat")
       el("view-title").focus({ preventScroll: true });
     el("models-offline").disabled = el("model").disabled;
@@ -210,6 +215,17 @@ export function setupWorkspace({ el, notice, refreshModels, active }) {
   });
   matchMedia("(max-width:850px)").addEventListener("change", closeMenu);
   window.addEventListener("hashchange", navigate);
+  nav.addEventListener("click", (event) => {
+    const link = event.target.closest("a[data-view]");
+    if (link && location.hash === link.getAttribute("href")) {
+      event.preventDefault();
+      navigate();
+      const heading =
+        current === "chat" ? el("chat-heading") : el("view-title");
+      heading.tabIndex = -1;
+      heading.focus({ preventScroll: true });
+    }
+  });
   for (const [id, route] of [
     ["notes-toggle", "knowledge"],
     ["godot-toggle", "godot"],
@@ -259,6 +275,8 @@ export function setupWorkspace({ el, notice, refreshModels, active }) {
     /* preferences are optional */
   }
   function renderModels() {
+    el("models-offline").disabled = el("model").disabled;
+    el("models-refresh").disabled = el("model").disabled;
     const list = el("model-cards");
     list.replaceChildren();
     const needle = el("model-search").value.toLowerCase();
