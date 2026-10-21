@@ -63,6 +63,25 @@
               <button type="button" id="integration-import" disabled>Als privates Projektwissen übernehmen</button>
               <small>Nur freigegebene öffentliche Repositories. Kein automatischer Upload, keine Skill-Ausführung. Eingefügte Daten werden zunächst nicht an Ollama gesendet.</small>
             </section>
+            <section class="agent-panel" aria-label="Freizugebende Agentenschritte">
+              <div class="eyebrow">HUMAN IN THE LOOP / READ ONLY</div>
+              <h3>Agenten-Workspace</h3>
+              <p>Erst planen, dann jeden GitHub-Schritt einzeln bestätigen. Keine autonome Ausführung.</p>
+              <label for="agent-operation">Erlaubte Aktion</label>
+              <select id="agent-operation" aria-label="Agentenaktion">
+                <option value="read-readme">Repository README lesen</option>
+                <option value="search-skills">Cryo-Omega Skills suchen</option>
+              </select>
+              <label for="agent-query">Suchtext für Skills</label>
+              <input id="agent-query" type="search" maxlength="100" placeholder="z. B. agent, UI, Kubernetes">
+              <div class="agent-actions">
+                <button id="agent-plan" type="button">Schritt planen</button>
+                <button id="agent-approve" type="button" disabled>Prüfen und freigeben</button>
+              </div>
+              <pre id="agent-preview" aria-label="Geplanter Agentenschritt">Noch kein Agentenschritt geplant.</pre>
+              <button id="agent-use" type="button" disabled>Ergebnis als Nachricht vorbereiten</button>
+              <small>Das Ergebnis wird nie automatisch an ein Modell gesendet; die Übernahme füllt lediglich das Eingabefeld.</small>
+            </section>
           </section>
         </section>
         <section class="messages" id="messages" aria-label="Chatverlauf" aria-live="polite"></section>
@@ -84,12 +103,12 @@
             <label class="sr-only" for="prompt">Nachricht eingeben</label>
             <textarea id="prompt" rows="3" maxlength="12000" required placeholder="Frage stellen oder eine Idee notieren …"></textarea>
             <div class="composer-footer">
-              <label>MODELL <select id="model" aria-label="Ollama-Modell"><option value="">Nur lokal speichern</option></select></label>
+              <label>MODELL <select id="model" aria-label="KI-Modell auswählen"><option value="">Nur lokal speichern</option></select></label>
               <div class="generation-controls"><button id="stop" type="button" hidden aria-label="Laufende KI-Antwort stoppen">■ Stoppen</button><button id="send" type="submit">Senden ↗</button></div>
             </div>
-            <p class="model-state" id="model-state">Notizmodus · Modell manuell auswählen</p>
+            <p class="model-state" id="model-state">Notizmodus · Modell manuell auswählen</p><p id="cloud-warning" class="cloud-warning" hidden>☁ Cloud-Modell: Chatnachrichten und freigegebenes Projektwissen werden an einen externen API-Anbieter gesendet. API-Kosten möglich. Jede Anfrage benötigt eine Bestätigung.</p>
           </form>
-          <p class="disclaimer">Alpha-Software: Nachrichten und Projektwissen werden unverschlüsselt im Browser gespeichert. Ohne lokales Modell entstehen keine KI-Antworten.</p>
+          <p class="disclaimer">Alpha-Software: Nachrichten und Projektwissen werden unverschlüsselt im Browser gespeichert. Cloud-Modelle sind standardmäßig deaktiviert. Cloud-Anfragen können Kosten auslösen.</p>
         </div>
       </div>
     </main>
