@@ -101,9 +101,6 @@
   grid-column: 2;
   margin: 0;
 }
-.prompt-grid button::after {
-  content: "↗︎";
-}
 .message > div:last-child {
   position: relative;
 }
@@ -343,7 +340,6 @@
   color: #a3e4da;
 }
 .process-steps li[data-state="done"]::before {
-  content: "✓";
   background: #24524e;
   color: #c8fff0;
   border-color: #648f83;
@@ -1073,4 +1069,21 @@
   font-size: 8px;
   letter-spacing: 0.4px;
   vertical-align: middle;
+}
+
+/* Action symbols use the same stroke SVGs as the workspace navigation. */
+.icon-control:not(.mobile-menu) {
+  display: inline-flex;
+}
+.icon-control {
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.icon-control .ui-icon {
+  width: 18px;
+  height: 18px;
+}
+.privacy strong {
+  letter-spacing: 1px;
 }

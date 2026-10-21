@@ -22,6 +22,12 @@ test("roadmap API data preserves all 100 deliverables and acceptance gates acros
   );
   assert.equal(milestones.find((m) => m.version === "0.7").status, "partial");
   assert.equal(milestones.at(-1).status, "planned");
+  assert.deepEqual(
+    ["implemented", "partial", "planned"].map(
+      (status) => milestones.filter((m) => m.status === status).length,
+    ),
+    [8, 3, 89],
+  );
 });
 test("missing, duplicate or incomplete roadmap entries fail instead of publishing misleading data", () => {
   assert.throws(() =>
@@ -36,6 +42,14 @@ test("missing, duplicate or incomplete roadmap entries fail instead of publishin
         "**Unvollständig:** Chats erstellen",
       ),
     ),
+  );
+  assert.throws(
+    () => parseRoadmap(source.replace("Implementiert v0.8", "Ungeprüft v0.8")),
+    /Status/,
+  );
+  assert.throws(
+    () => parseRoadmap(source.replace("Implementiert v0.8", "toString v0.8")),
+    /Status/,
   );
   assert.throws(() => parseRoadmap(""));
 });

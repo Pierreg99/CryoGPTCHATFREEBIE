@@ -1,29 +1,5 @@
 // Presentation only: existing controls, handlers and permission boundaries stay in place.
-const paths = {
-  chat: "M4 4h16v12H9l-5 4V4Z",
-  knowledge: "M5 3h11l3 3v15H5V3Zm3 6h8M8 13h8M8 17h5",
-  focus: "m13 2-8 12h7l-1 8 8-12h-7l1-8Z",
-  agents: "M8 5h8v4H8V5ZM6 15h4v4H6v-4Zm8 0h4v4h-4v-4ZM12 9v3M8 15v-3h8v3",
-  skills: "m8 6-6 6 6 6m8-12 6 6-6 6M14 3l-4 18",
-  godot: "m12 2 9 5v10l-9 5-9-5V7l9-5ZM3 7l9 5 9-5M12 12v10",
-  roadmap: "M4 4h16v16H4V4ZM8 8h3M8 12h8M8 16h5",
-  models: "M12 3 3 8l9 5 9-5-9-5ZM3 12l9 5 9-5M3 16l9 5 9-5",
-};
-function icon(key) {
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("viewBox", "0 0 24 24");
-  svg.setAttribute("fill", "none");
-  svg.setAttribute("stroke", "currentColor");
-  svg.setAttribute("stroke-width", "1.5");
-  svg.setAttribute("stroke-linecap", "round");
-  svg.setAttribute("stroke-linejoin", "round");
-  svg.setAttribute("aria-hidden", "true");
-  svg.classList.add("ui-icon");
-  const path = document.createElementNS(svg.namespaceURI, "path");
-  path.setAttribute("d", paths[key] || paths.chat);
-  svg.append(path);
-  return svg;
-}
+import { icon } from "./icons.js";
 function emptyState(key, title, description, action, onClick) {
   const section = document.createElement("div");
   section.className = "empty-state";
@@ -42,11 +18,25 @@ function emptyState(key, title, description, action, onClick) {
   return section;
 }
 export function refineInterface({ el, active }) {
-  document
-    .querySelectorAll(".workspace-nav a")
-    .forEach((link) =>
-      link.querySelector("span").replaceChildren(icon(link.dataset.view)),
-    );
+  for (const [id, key, label, iconOnly = false] of [
+    ["nav-toggle", "menu", "Navigation öffnen", true],
+    ["refresh", "refresh", "Modelle aktualisieren", true],
+    ["rename-chat", "rename", "Umbenennen"],
+    ["notes-toggle", "knowledge", "Projektwissen"],
+    ["godot-toggle", "godot", "Godot MCP"],
+    ["focus-toggle", "focus", "Hyperfocus"],
+    ["export", "download", "Export"],
+    ["import", "upload", "Import"],
+    ["stop", "stop", "Stoppen"],
+    ["focus-stop", "stop", "Stoppen"],
+    ["send", "send", "Senden"],
+  ]) {
+    const button = el(id);
+    button.replaceChildren(icon(key));
+    button.classList.add("icon-control");
+    if (iconOnly) button.setAttribute("aria-label", label);
+    else button.append(document.createTextNode(label));
+  }
   const navLabel = document.createElement("div");
   navLabel.className = "nav-caption";
   navLabel.textContent = "DEIN WORKSPACE";
@@ -95,7 +85,7 @@ export function refineInterface({ el, active }) {
   guide.className = "context-guide";
   guide.setAttribute("aria-label", "So funktioniert Projektwissen");
   guide.innerHTML =
-    '<div class="eyebrow">BEWUSST VERBINDEN</div><h3>Guter Kontext.<br>Bessere Antworten.</h3><ol><li><strong>Festhalten</strong><p>Ziele, Entscheidungen und Hintergrundwissen für diesen Chat sammeln.</p></li><li><strong>Freigeben</strong><p>Du entscheidest, ob deine Notizen mit der nächsten Modellanfrage gesendet werden.</p></li><li><strong>Weiterdenken</strong><p>GitHub-Referenzen kannst du nach Prüfung im Bereich Skills übernehmen.</p></li></ol><a href="#skills">GitHub & Skills öffnen →</a>';
+    '<div class="eyebrow">BEWUSST VERBINDEN</div><h3>Guter Kontext.<br>Bessere Antworten.</h3><ol><li><strong>Festhalten</strong><p>Ziele, Entscheidungen und Hintergrundwissen für diesen Chat sammeln.</p></li><li><strong>Freigeben</strong><p>Du entscheidest, ob deine Notizen mit der nächsten Modellanfrage gesendet werden.</p></li><li><strong>Weiterdenken</strong><p>GitHub-Referenzen kannst du nach Prüfung im Bereich Skills übernehmen.</p></li></ol><a href="#skills">GitHub & Skills öffnen</a>';
   knowledge.append(guide);
   const knowledgeEmpty = emptyState(
     "knowledge",

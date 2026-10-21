@@ -195,7 +195,7 @@ export function setupBackupRestore({
         for (const [label, value] of [
           [
             "Backup-Version",
-            summary.sourceVersion + " → " + summary.targetVersion,
+            summary.sourceVersion + " zu " + summary.targetVersion,
           ],
           ["Aktuelle Chats", getStore().chats.length],
           ["Chats im Backup", summary.chats],

@@ -304,7 +304,10 @@ export function setupHyperfocus({ el, active, notice }) {
         data.mode.toUpperCase() +
         "\n" +
         data.steps
-          .map((s) => "✓ " + s.operation + (s.repo ? " · " + s.repo : ""))
+          .map(
+            (s) =>
+              "Abgeschlossen: " + s.operation + (s.repo ? " · " + s.repo : ""),
+          )
           .join("\n") +
         "\n\n" +
         data.brief +

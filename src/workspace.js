@@ -1,3 +1,4 @@
+import { icon } from "./icons.js";
 import { createRoadmapPanel } from "./roadmap-ui.js";
 const titles = {
   chat: [
@@ -45,15 +46,14 @@ export function setupWorkspace({ el, notice, refreshModels, active }) {
   const nav = document.createElement("nav");
   nav.className = "workspace-nav";
   nav.setAttribute("aria-label", "Workspace");
-  const icons = ["◈", "▤", "ϟ", "⌘", "⌗", "◇", "⌑", "◉"];
-  Object.entries(titles).forEach(([key, [, title]], i) => {
+  Object.entries(titles).forEach(([key, [, title]]) => {
     const link = document.createElement("a");
     link.href = "#" + key;
     link.dataset.view = key;
-    const icon = document.createElement("span");
-    icon.textContent = icons[i];
-    icon.setAttribute("aria-hidden", "true");
-    link.append(icon, key === "chat" ? "Chat" : title);
+    const mark = document.createElement("span");
+    mark.append(icon(key));
+    mark.setAttribute("aria-hidden", "true");
+    link.append(mark, key === "chat" ? "Chat" : title);
     nav.append(link);
   });
   el("new-chat").before(nav);
@@ -317,8 +317,8 @@ export function setupWorkspace({ el, notice, refreshModels, active }) {
       });
       const favorite = document.createElement("button");
       favorite.textContent = favorites.includes(option.value)
-        ? "★ Favorit"
-        : "☆ Merken";
+        ? "Favorit"
+        : "Merken";
       favorite.setAttribute(
         "aria-pressed",
         String(favorites.includes(option.value)),

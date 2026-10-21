@@ -42,13 +42,13 @@
         ></nav>
         <div class="sidebar-bottom">
           <div class="privacy">
-            ◈ &nbsp; <strong>LOCAL FIRST</strong
+            <strong>LOCAL FIRST</strong
             ><span id="app-version" class="release-badge">ENTWICKLUNG</span
             ><small>Chats bleiben in deinem Browser.</small>
           </div>
           <div class="button-row">
-            <button id="export" type="button">↓ Export</button
-            ><button id="import" type="button">↑ Import</button>
+            <button id="export" type="button">Export</button
+            ><button id="import" type="button">Import</button>
           </div>
           <input
             id="import-file"
@@ -68,20 +68,20 @@
             aria-controls="sidebar"
             aria-expanded="false"
           >
-            ☰
+            Menü
           </button>
           <div class="breadcrumb">
             CRYO OS <span>/</span> <strong id="top-title">Neuer Chat</strong>
           </div>
           <div class="top-actions">
-            <span id="status" role="status">○ Verbindung wird geprüft</span
+            <span id="status" role="status">Verbindung wird geprüft</span
             ><button
               id="refresh"
               type="button"
               aria-label="Lokale Modelle aktualisieren"
               title="Modelle aktualisieren"
             >
-              ↻
+              Modelle aktualisieren
             </button>
           </div>
         </header>
@@ -94,29 +94,29 @@
               Cloud-Zwang.
             </p>
             <div class="chat-tools">
-              <button id="rename-chat" type="button">✎ Umbenennen</button
-              ><button id="delete-chat" type="button">⌫ Löschen</button
+              <button id="rename-chat" type="button">Umbenennen</button
+              ><button id="delete-chat" type="button">Löschen</button
               ><button
                 id="notes-toggle"
                 type="button"
                 aria-expanded="false"
                 aria-controls="project-panel"
               >
-                ◈ Projektwissen</button
+                Projektwissen</button
               ><button
                 id="godot-toggle"
                 type="button"
                 aria-expanded="false"
                 aria-controls="godot-panel"
               >
-                🎮 Godot MCP</button
+                Godot MCP</button
               ><button
                 id="focus-toggle"
                 type="button"
                 aria-expanded="false"
                 aria-controls="focus-panel"
               >
-                ⚡ Hyperfocus
+                Hyperfocus
               </button>
             </div>
             <section
@@ -299,7 +299,7 @@ Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
               hidden
             >
               <div class="eyebrow">CRYO OMEGA / BOUNDED AUTOPILOT</div>
-              <h3>⚡ Hyperfocus Workflow</h3>
+              <h3>Hyperfocus Workflow</h3>
               <p>
                 Ein Ziel. Ein prüfbarer Plan. Ein ausdrücklich genehmigter Lauf.
                 Kein autonomer Schreibzugriff.
@@ -360,7 +360,7 @@ Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
                   2 · Prüfen &amp; Autopilot starten
                 </button>
                 <button id="focus-stop" type="button" hidden disabled>
-                  ■ Stoppen
+                  Stoppen
                 </button>
               </div>
               <div class="focus-columns">
@@ -406,28 +406,28 @@ Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
                 type="button"
                 data-prompt="Entwirf eine modulare Architektur für einen sicheren KI-Agenten."
               >
-                ⌘ &nbsp;<strong>Agenten-Architektur</strong
+                <strong>Agenten-Architektur</strong
                 ><small>Systeme und Schnittstellen</small>
               </button>
               <button
                 type="button"
                 data-prompt="Prüfe folgenden Code auf Fehler und Verbesserungen:\n\n"
               >
-                ⌗ &nbsp;<strong>Code verbessern</strong
+                <strong>Code verbessern</strong
                 ><small>Tests und Refactoring</small>
               </button>
               <button
                 type="button"
                 data-prompt="Plane den nächsten kleinen Meilenstein für mein Spielprojekt."
               >
-                ◈ &nbsp;<strong>Spiele entwickeln</strong
+                <strong>Spiele entwickeln</strong
                 ><small>Idee bis Prototyp</small>
               </button>
               <button
                 type="button"
                 data-prompt="Erstelle einen klaren Projektplan mit Aufgaben und Risiken."
               >
-                ✧ &nbsp;<strong>Projekt planen</strong
+                <strong>Projekt planen</strong
                 ><small>Schritt für Schritt</small>
               </button>
             </div>
@@ -468,23 +468,23 @@ Keine Vorschau. Ziel: scenes/cryogptchat/</pre>
                     hidden
                     aria-label="Laufende KI-Antwort stoppen"
                   >
-                    ■ Stoppen</button
-                  ><button id="send" type="submit">Senden ↗</button>
+                    Stoppen</button
+                  ><button id="send" type="submit">Senden</button>
                 </div>
               </div>
               <p class="model-state" id="model-state">
                 Notizmodus · Modell manuell auswählen
               </p>
               <p id="cloud-warning" class="cloud-warning" hidden>
-                ☁ Cloud-Modell: Chatnachrichten und freigegebenes Projektwissen
+                Cloud-Modell: Chatnachrichten und freigegebenes Projektwissen
                 werden an einen externen API-Anbieter gesendet. API-Kosten
                 möglich. Jede Anfrage benötigt eine Bestätigung.
               </p>
             </form>
             <p class="disclaimer">
-              Vorabversion: Nachrichten und Projektwissen werden
-              unverschlüsselt im Browser gespeichert. Cloud-Modelle sind
-              standardmäßig deaktiviert. Cloud-Anfragen können Kosten auslösen.
+              Vorabversion: Nachrichten und Projektwissen werden unverschlüsselt
+              im Browser gespeichert. Cloud-Modelle sind standardmäßig
+              deaktiviert. Cloud-Anfragen können Kosten auslösen.
             </p>
           </div>
         </div>
