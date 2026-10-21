@@ -182,7 +182,7 @@ Es werden **keine** bestehenden Szenen überschrieben und **keine** Dateipfade o
 | Zeitraum im Versionsraster | Schwerpunkt | Status |
 | :--- | :--- | :--- |
 | **v0.1–v0.4** | Chat, Streaming, IndexedDB, OpenAI Opt-in, GitHub-/Skill-Read-only und Godot MCP | ✅ Im Code / historische Phasen |
-| **v0.5** | Hyperfocus: zielgerichtete, einmal bestätigte read-only Automatisierung | 🟡 In Entwicklung |
+| **v0.5** | Hyperfocus: einmal bestätigte, begrenzte read-only Recherche mit optionaler Ollama-Planung | ✅ MVP in `main` (Browser-E2E offen) |
 | **v0.6–v1.0** | Browser-Tests, Accessibility, Datenrettung und Security-Baseline | ⬜ Geplant |
 | **v1.1–v3.0** | Zuverlässigkeit, Projektwissen, Skill-Registry und zitierte Quellen | ⬜ Vision |
 | **v3.1–v5.0** | Geprüfte Agentenrechte, sichere GitHub-Workflows und Godot/3D | ⬜ Vision |
