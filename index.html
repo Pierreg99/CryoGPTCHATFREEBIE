@@ -36,7 +36,7 @@
           <div class="eyebrow">ALPHA 0.4 &nbsp;•&nbsp; PRIVATE AI WORKSPACE</div>
           <h1 id="chat-heading">CryoGPT<span>Chat.</span></h1>
           <p id="chat-subtitle">Dein Arbeitsbereich für Ideen, Code und Gespräche – ohne Cloud-Zwang.</p>
-          <div class="chat-tools"><button id="rename-chat" type="button">✎ Umbenennen</button><button id="delete-chat" type="button">⌫ Löschen</button><button id="notes-toggle" type="button" aria-expanded="false" aria-controls="project-panel">◈ Projektwissen</button><button id="godot-toggle" type="button" aria-expanded="false" aria-controls="godot-panel">🎮 Godot MCP</button></div>
+          <div class="chat-tools"><button id="rename-chat" type="button">✎ Umbenennen</button><button id="delete-chat" type="button">⌫ Löschen</button><button id="notes-toggle" type="button" aria-expanded="false" aria-controls="project-panel">◈ Projektwissen</button><button id="godot-toggle" type="button" aria-expanded="false" aria-controls="godot-panel">🎮 Godot MCP</button><button id="focus-toggle" type="button" aria-expanded="false" aria-controls="focus-panel">⚡ Hyperfocus</button></div>
           <section class="project-panel" id="project-panel" aria-label="Projektwissen dieser Unterhaltung" hidden>
             <div class="eyebrow">PROJECT KNOWLEDGE / NUR FÜR DIESEN CHAT</div>
             <label for="project-context">Notizen, Entscheidungen und Hintergrundwissen</label>
@@ -104,6 +104,32 @@
               <small>Szenenerstellung ist standardmäßig gesperrt und erfordert GODOT_SCENE_WRITES=true sowie deine ausdrückliche Bestätigung. Keine bestehenden Szenen überschreiben.</small>
             </div>
             <small>Jede Abfrage erfordert deine Bestätigung. Nur zwei Informationswerkzeuge sind freigegeben. Godot MCP wird niemals automatisch installiert oder gestartet. Einrichtung: docs/integrations/godot-mcp.md</small>
+          </section>
+          <section class="project-panel focus-panel" id="focus-panel" aria-label="Hyperfocus Autopilot" hidden>
+            <div class="eyebrow">CRYO OMEGA / BOUNDED AUTOPILOT</div>
+            <h3>⚡ Hyperfocus Workflow</h3>
+            <p>Ein Ziel. Ein prüfbarer Plan. Ein ausdrücklich genehmigter Lauf. Kein autonomer Schreibzugriff.</p>
+            <label for="focus-goal">Konkretes Arbeitsziel</label>
+            <textarea id="focus-goal" rows="3" maxlength="600" placeholder="Beispiel: Erstelle einen 15-Minuten-Plan, um eine sichere Skill-Auswahl für mein Chat-Projekt zu integrieren."></textarea>
+            <div class="focus-grid">
+              <label>Projekt-Repository<select id="focus-repo" aria-label="Projekt-Repository für Hyperfocus" disabled></select></label>
+              <label>Skill-Katalog (optional)<select id="focus-skills-repo" aria-label="Skill-Repository für Hyperfocus" disabled></select></label>
+              <label>Suchwort<input id="focus-query" type="search" maxlength="100" placeholder="z. B. agent, workflow"></label>
+              <label>Zeitbudget<select id="focus-minutes" aria-label="Fokuszeit"><option value="15">15 Minuten</option><option value="25">25 Minuten</option><option value="45">45 Minuten</option></select></label>
+              <label>Planer-Modell<select id="focus-model" aria-label="Optionales lokales Ollama-Modell"><option value="">Ohne Modell / Offline-Fokusplan</option></select></label>
+            </div>
+            <p id="focus-status" class="focus-status" role="status">Initialisiere Hyperfocus …</p>
+            <div class="focus-actions">
+              <button id="focus-plan" type="button" disabled>1 · Plan erstellen</button>
+              <button id="focus-run" type="button" disabled>2 · Prüfen &amp; Autopilot starten</button>
+              <button id="focus-stop" type="button" hidden disabled>■ Stoppen</button>
+            </div>
+            <div class="focus-columns">
+              <div><strong>Vorschau / Berechtigungen</strong><pre id="focus-preview">Noch kein Arbeitsplan erstellt.</pre></div>
+              <div><strong>Ergebnis / Fortschritt</strong><pre id="focus-result">Noch keine Ergebnisse.</pre></div>
+            </div>
+            <button id="focus-draft" type="button" disabled>Ergebnis als Chat-Entwurf übernehmen</button>
+            <small>Je Lauf höchstens zwei schreibgeschützte GitHub-Abfragen und optional eine Ollama-Auswertung. Keine API-Kosten durch OpenAI, keine Shell, keine GitHub-Schreibaktionen, keine Skill-Ausführung und keine Godot-Aktionen. Kein Hintergrundbetrieb.</small>
           </section>
         </section>
         <section class="messages" id="messages" aria-label="Chatverlauf" aria-live="polite"></section>
