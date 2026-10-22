@@ -1,18 +1,28 @@
 <div align="center">
-  <img src="assets/readme/hero-v2.svg" alt="CryoGPTCHATFREEBIE – Cryo-Neon-Illustration des lokalen KI-Workspace" width="100%" />
-  <h1>CryoGPTCHATFREEBIE</h1>
-  <p><strong>Deine Chats. Deine Modelle. Deine Kontrolle.</strong></p>
-  <p>Ein lokaler KI-Workspace für Chats, Projektwissen und kontrollierte Entwickler-Workflows.</p>
-  <p><code>1.0.0-rc.1</code> · <code>LOCAL FIRST</code> · <code>PROVIDER: OPT-IN</code></p>
-  <p>
-    <a href="#schnellstart">Schnellstart</a> ·
-    <a href="#funktionen">Funktionen</a> ·
-    <a href="#drei-designwelten">Designwelten</a> ·
-    <a href="#systemarchitektur">Architektur</a> ·
-    <a href="#datenschutz-und-grenzen">Sicherheit</a> ·
-    <a href="#roadmap">Roadmap</a>
-  </p>
+
+<img src="assets/readme/hero-v2.svg" alt="CryoGPTCHATFREEBIE – lokaler KI-Workspace im Cryo-Neon-Design" width="100%" />
+
+# ❄️ CryoGPTCHATFREEBIE
+
+**Deine Chats · Deine Modelle · Deine Kontrolle**
+
+Lokaler, datenschutzbewusster KI-Workspace mit optionalen Modellen und explizit freigegebenen Entwickler-Workflows.
+
+[![CI](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml/badge.svg)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Pierreg99/CryoGPTCHATFREEBIE?include_prereleases&label=GitHub%20Release)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/releases)
+[![Issues](https://img.shields.io/github/issues/Pierreg99/CryoGPTCHATFREEBIE)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/Pierreg99/CryoGPTCHATFREEBIE)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pulls)
+[![Last Commit](https://img.shields.io/github/last-commit/Pierreg99/CryoGPTCHATFREEBIE/main)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/commits/main)
+[![License](https://img.shields.io/github/license/Pierreg99/CryoGPTCHATFREEBIE)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE)
+
+**Anwendungsversion: `1.0.0-rc.1` · LOCAL FIRST · PROVIDER OPT-IN**
+
+[🚀 Schnellstart](#schnellstart) · [✨ Funktionen](#funktionen) · [🎨 Designs](#drei-designwelten) · [🏗 Architektur](#systemarchitektur) · [🧪 Qualität](#tests-und-release-prüfung) · [🛡 Sicherheit](#datenschutz-und-grenzen) · [🗺 Roadmap](#roadmap) · [📊 Projektzentrale](#projektzentrale)
+
 </div>
+
+> [!IMPORTANT]
+> **Release Candidate, keine stabile 1.0.** Die manuelle WCAG-2.2-AA-Abnahme mit assistiver Technik ist noch offen. CI-Badges zeigen den tatsächlichen GitHub-Workflowstatus, nicht eine zugesicherte Produktfreigabe.
 
 ## Aktueller Stand
 
@@ -148,6 +158,51 @@ Die [Master-Roadmap mit Checkboxen pro Meilenstein](docs/roadmap/ROADMAP-100.md)
 ![Aktuelle Roadmap mit ausgeschriebenen Statusangaben](docs/screenshots/roadmap.png)
 
 [Roadmap auf Mobile](docs/screenshots/roadmap-mobile.png). Die Clean-, Neon- und Produkt-README verweisen auf diese gemeinsame Roadmap und führen keinen separaten Versionsplan.
+
+## Projektzentrale
+
+> Die Links führen zu den jeweils aktuellen Quellen. Roadmap-Checkboxen sind Entwicklungsstände und keine veröffentlichten Releases.
+
+| Bereich | Live-Quelle / Dokument |
+| :--- | :--- |
+| 🔄 CI und Testläufe | [GitHub Actions](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml) |
+| 🧩 Aufgaben | [Offene Issues](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues) |
+| 🔀 Änderungen | [Pull Requests](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pulls) |
+| 📦 Veröffentlichungen | [Releases](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/releases) |
+| 🗺 Meilensteine | [100er-Master-Roadmap](docs/roadmap/ROADMAP-100.md) |
+| 🧭 Ausführungsplan | [PLAN.md](PLAN.md) |
+| 📊 Fortschritt und Nachweise | [PROGRESS.md](PROGRESS.md) |
+| 🔍 Qualitätsaudit | [AUDIT.md](AUDIT.md) |
+| 🤝 Übergabe | [HANDOFF.md](HANDOFF.md) · [HANDOVER.md](HANDOVER.md) |
+
+<details>
+<summary><strong>🧱 Architektur als interaktives Diagramm öffnen</strong></summary>
+
+```mermaid
+flowchart TD
+    UI["Browser · Cryo-Neon Workspace"] --> DB["IndexedDB / lokaler Fallback"]
+    UI --> API["Node.js · 127.0.0.1"]
+    API --> O["Ollama · optional"]
+    API --> C["OpenAI · explizite Cloud-Freigabe"]
+    API --> G["GitHub / Skills · Allowlist"]
+    API --> M["Godot MCP · manuelle Freigabe"]
+```
+
+Alle externen Integrationen sind optional und haben dokumentierte Freigabegrenzen.
+
+</details>
+
+<details>
+<summary><strong>🧪 Release-Gates und Prüfnachweise anzeigen</strong></summary>
+
+- [x] Node-Testmatrix und Browser-E2E als CI-Workflows konfiguriert
+- [x] Reproduzierbarer Quellpaket-Check als Workflow konfiguriert
+- [ ] Manuelle WCAG-2.2-AA-Abnahme nachweisen
+- [ ] Stabile Version 1.0 erst nach abgeschlossenen REQUIRED-Gates freigeben
+
+[Release-Checkliste](docs/RELEASE-CHECKLIST.md) · [Accessibility-Bericht](docs/accessibility-report.md)
+
+</details>
 
 ## Mitmachen
 
