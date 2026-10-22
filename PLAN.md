@@ -14,6 +14,10 @@ Stand: 22. Oktober 2026. Prioritäten sind Planungsstände, keine behaupteten Ab
 | P2 | Wiederverwendbare README-Bausteine in weiteren Repos | verifiziertes Referenzmuster | Übernahme ohne angenommene Features oder falsche Status-Badges |
 | P2 | Skill-/Agenten-Workflows ausbauen | Sicherheitsreview und Opt-in | Allowlist- und Negativtests dokumentiert |
 
+## README-Meilenstein am 22.10.2026
+
+Die README-Gates für das SVG-Dashboard, die Screenshot-Galerie, die Dokumentationstests und die projektübergreifende Governance wurden in [PR #20](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/20) umgesetzt und nach erfolgreichen [Main-CI-Prüfungen](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732254173) übernommen. **P0 manuelle WCAG-2.2-AA-Abnahme ist weiter offen.**
+
 ## Ablauf für Änderungen
 
 1. Audit der Projektfakten und vorhandenen Artefakte.
