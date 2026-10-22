@@ -9,7 +9,7 @@ Stand der Prüfung: 22. Oktober 2026. Keine frei erfundenen Prozentangaben.
 | CI-Baseline von `main` | Node 20/22/24, Browser-E2E und Release-Check beim Merge-Commit von PR #20 erfolgreich | [Lauf 39732254173](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732254173) |
 | Dashboard-Erweiterung | Sechs lokale SVG-Navigationskacheln, Screenshot-Galerie, Workflow-Diagramm und Dokumentationschecks in `main`; Build-Checks grün | [README-Dashboard](README.md#dashboard) · [PR #20](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/20) · [PR-CI](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732170322) |
 | Roadmap | 100 Entwicklungsmeilensteine dokumentiert; keine 100 veröffentlichten Releases | [Master-Roadmap](docs/roadmap/ROADMAP-100.md) |
-| Accessibility | Automatische Prüfungen vorhanden; manuelle WCAG-2.2-AA-Abnahme offen | [Release-Gates](docs/RELEASE-CHECKLIST.md) · [Accessibility-Bericht](docs/accessibility-report.md) |
+| Accessibility | Automatische Prüfungen vorhanden; P0-Manuallauf als Issue #22 mit M01–M10/X01–X10-Testmatrix vorbereitet, aber noch nicht ausgeführt | [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) · [Release-Gates](docs/RELEASE-CHECKLIST.md) · [Accessibility-Bericht](docs/accessibility-report.md) |
 | Sicherheitsgrenzen | Lokaler Einzelbenutzerbetrieb mit separat freizugebenden Integrationen | [Threat Model](docs/security/THREAT-MODEL.md) |
 
 ## Nachweisregel

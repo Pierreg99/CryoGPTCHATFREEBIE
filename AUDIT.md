@@ -8,7 +8,7 @@ Stand: 22. Oktober 2026.
 | P1 | Markdown-/Asset-Vertrag | [Dokumentationstests](tests/documentation.test.js) prüfen lokale Links, Anker, zugängliche SVG-Metadaten, Galerie und Details; PR- und Main-CI grün | Bei künftigen Designänderungen Tests mitführen |
 | P1 | Release-Gate-Checkboxen | Ungültige `- []`-Checkboxen zu `- [ ]` korrigiert und in Tests abgesichert | Manuelle WCAG-Abnahme weiterhin offen lassen |
 | P1 | README-Markdown-Rendering | Kopfbereich HTML-strukturiert, SVG-Kacheln als lokale Links, Details und Mermaid als GitHub-kompatible Blöcke angelegt | Visuelle GitHub-Prüfung bei Layout-Änderungen wiederholen |
-| P0 | Manuelle Accessibility | Version `1.0.0-rc.1`; manuelle WCAG-2.2-AA-Abnahme weiterhin ausstehend | Stable-1.0-Release bis zur dokumentierten Abnahme blockieren |
+| P0 | Manuelle Accessibility | Version `1.0.0-rc.1`; Issue #22 und detaillierte M01–M10/X01–X10-Testmatrix bereiten die reale AT-Abnahme vor, liefern aber noch keinen positiven Nachweis | [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) vollständig ausführen; Stable-1.0 bis danach blockieren |
 | P1 | CI-Baseline | Main-Lauf nach PR #20 mit Erfolg abgeschlossen | [Lauf 39732254173](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732254173); jeden neuen PR separat prüfen |
 | P1 | Merge-Politik | Repository meldete `allow_auto_merge=false` | Kein ungeprüfter Merge; CI, PR-Review und GitHub-Regeln beachten |
 
