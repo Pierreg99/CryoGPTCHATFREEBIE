@@ -2,7 +2,7 @@
 
 <img src="assets/readme/hero-v2.svg" alt="CryoGPTCHATFREEBIE – lokaler KI-Workspace im Cryo-Neon-Design" width="100%" />
 
-# ❄️ CryoGPTCHATFREEBIE
+# CryoGPTCHATFREEBIE
 
 **Deine Chats · Deine Modelle · Deine Kontrolle**
 
@@ -17,7 +17,7 @@ Lokaler, datenschutzbewusster KI-Workspace mit optionalen Modellen und explizit 
 
 **Anwendungsversion: `1.0.0-rc.1` · LOCAL FIRST · PROVIDER OPT-IN**
 
-[🚀 Schnellstart](#schnellstart) · [✨ Funktionen](#funktionen) · [🎨 Designs](#drei-designwelten) · [🏗 Architektur](#systemarchitektur) · [🧪 Qualität](#tests-und-release-prüfung) · [🛡 Sicherheit](#datenschutz-und-grenzen) · [🗺 Roadmap](#roadmap) · [📊 Projektzentrale](#projektzentrale)
+[Schnellstart](#schnellstart) · [Funktionen](#funktionen) · [Designs](#drei-designwelten) · [Architektur](#systemarchitektur) · [Qualität](#tests-und-release-prüfung) · [Sicherheit](#datenschutz-und-grenzen) · [Roadmap](#roadmap) · [Projektzentrale](#projektzentrale)
 
 </div>
 
@@ -165,18 +165,18 @@ Die [Master-Roadmap mit Checkboxen pro Meilenstein](docs/roadmap/ROADMAP-100.md)
 
 | Bereich | Live-Quelle / Dokument |
 | :--- | :--- |
-| 🔄 CI und Testläufe | [GitHub Actions](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml) |
-| 🧩 Aufgaben | [Offene Issues](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues) |
-| 🔀 Änderungen | [Pull Requests](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pulls) |
-| 📦 Veröffentlichungen | [Releases](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/releases) |
-| 🗺 Meilensteine | [100er-Master-Roadmap](docs/roadmap/ROADMAP-100.md) |
-| 🧭 Ausführungsplan | [PLAN.md](PLAN.md) |
-| 📊 Fortschritt und Nachweise | [PROGRESS.md](PROGRESS.md) |
-| 🔍 Qualitätsaudit | [AUDIT.md](AUDIT.md) |
-| 🤝 Übergabe | [HANDOFF.md](HANDOFF.md) · [HANDOVER.md](HANDOVER.md) |
+|  CI und Testläufe | [GitHub Actions](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml) |
+|  Aufgaben | [Offene Issues](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues) |
+|  Änderungen | [Pull Requests](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pulls) |
+|  Veröffentlichungen | [Releases](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/releases) |
+|  Meilensteine | [100er-Master-Roadmap](docs/roadmap/ROADMAP-100.md) |
+|  Ausführungsplan | [PLAN.md](PLAN.md) |
+|  Fortschritt und Nachweise | [PROGRESS.md](PROGRESS.md) |
+|  Qualitätsaudit | [AUDIT.md](AUDIT.md) |
+|  Übergabe | [HANDOFF.md](HANDOFF.md) · [HANDOVER.md](HANDOVER.md) |
 
 <details>
-<summary><strong>🧱 Architektur als interaktives Diagramm öffnen</strong></summary>
+<summary><strong> Architektur als interaktives Diagramm öffnen</strong></summary>
 
 ```mermaid
 flowchart TD
@@ -193,12 +193,12 @@ Alle externen Integrationen sind optional und haben dokumentierte Freigabegrenze
 </details>
 
 <details>
-<summary><strong>🧪 Release-Gates und Prüfnachweise anzeigen</strong></summary>
+<summary><strong> Release-Gates und Prüfnachweise anzeigen</strong></summary>
 
 - [x] Node-Testmatrix und Browser-E2E als CI-Workflows konfiguriert
 - [x] Reproduzierbarer Quellpaket-Check als Workflow konfiguriert
-- [ ] Manuelle WCAG-2.2-AA-Abnahme nachweisen
-- [ ] Stabile Version 1.0 erst nach abgeschlossenen REQUIRED-Gates freigeben
+- [] Manuelle WCAG-2.2-AA-Abnahme nachweisen
+- [] Stabile Version 1.0 erst nach abgeschlossenen REQUIRED-Gates freigeben
 
 [Release-Checkliste](docs/RELEASE-CHECKLIST.md) · [Accessibility-Bericht](docs/accessibility-report.md)
 
