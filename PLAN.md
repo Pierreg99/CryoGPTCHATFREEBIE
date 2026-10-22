@@ -6,7 +6,7 @@ Stand: 22. Oktober 2026. Prioritäten sind Planungsstände, keine behaupteten Ab
 
 | Priorität | Aufgabe | Abhängigkeit | Akzeptanzkriterium |
 | --- | --- | --- | --- |
-| P0 | Manuelle WCAG-2.2-AA-Abnahme durchführen | Assistive Technik, menschliche Prüfung und Nachweise | REQUIRED-Gate mit dokumentierten Belegen erfüllt |
+| P0 | Manuelle WCAG-2.2-AA-Abnahme durchführen | [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22), reale Assistive Technik, menschliche Prüfung und Nachweise | M01–M10 und X01–X10 dokumentiert; Blocker/Major retested; REQUIRED-Gate erst danach geschlossen |
 | P0 | Release-Candidate-Qualität erhalten | Node 20/22/24, Chromium-E2E und Release-Check | alle Pflichtchecks erfolgreich; kein Stable-1.0-Versprechen |
 | P1 | README nach Cryo-Workflow-Standard ausbauen | vorhandene Screenshots, GitHub-kompatible SVGs und Linkprüfung | sechs verlinkte Kacheln, Screenshot-Galerie, native Details, Mermaid und funktionierende lokale Links |
 | P1 | README-Governance mit CI absichern | Dokumentationstest und prüfbarer PR | Icons, Anker, Gate-Checkboxen und Projekt-Cockpit validiert |
@@ -17,6 +17,10 @@ Stand: 22. Oktober 2026. Prioritäten sind Planungsstände, keine behaupteten Ab
 ## README-Meilenstein am 22.10.2026
 
 Die README-Gates für das SVG-Dashboard, die Screenshot-Galerie, die Dokumentationstests und die projektübergreifende Governance wurden in [PR #20](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/20) umgesetzt und nach erfolgreichen [Main-CI-Prüfungen](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732254173) übernommen. **P0 manuelle WCAG-2.2-AA-Abnahme ist weiter offen.**
+
+## Aktiver P0-Meilenstein
+
+Die manuelle Accessibility-Abnahme ist in [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) als Release-Gate operationalisiert. Die Testmatrix und Befundvorlage stehen in [docs/accessibility-report.md](docs/accessibility-report.md). `1.0.0-rc.1` bleibt bestehen, bis die reale AT-Prüfung abgeschlossen und nachgewiesen ist.
 
 ## Ablauf für Änderungen
 

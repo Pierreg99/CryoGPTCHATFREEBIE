@@ -12,9 +12,11 @@
 4. PR-Reviews, Security-Befunde, Branch-Regeln und GitHub-Mergeability prüfen; erst dann mergen.
 5. Nach Merge `main`-CI überprüfen und Projektunterlagen auf den neuen Stand setzen.
 
-## Produkt-Meilenstein nach dem README
+## Aktiver P0-Produktmeilenstein
 
-Die manuelle WCAG-2.2-AA-Abnahme mit echter assistiver Technik durchführen und in [docs/accessibility-report.md](docs/accessibility-report.md) dokumentieren.
+Die manuelle WCAG-2.2-AA-Abnahme wird über [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) gesteuert. [docs/accessibility-report.md](docs/accessibility-report.md) enthält die M01–M10-Kernflows, X01–X10-Querschnittschecks, Befundvorlage und Exit-Kriterien.
+
+Nächste reale Aktion: Eine konkrete OS-/Browser-/Screenreader-Kombination auf dem Release-Candidate starten, Commit-SHA und Versionen protokollieren und die Matrix ohne positive Annahmen abarbeiten.
 
 **Nicht behaupten:** Stabile 1.0, echte externe Modell-E2E oder vollständige Accessibility-Freigabe. Auto-Merge nicht als aktiv voraussetzen.
 
