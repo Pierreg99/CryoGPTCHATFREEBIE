@@ -249,7 +249,7 @@ Alle externen Integrationen sind optional und haben dokumentierte Freigabegrenze
 
 </details>
 
-## README- und Release-Workflow
+## README und Release Workflow
 
 Unser [Cryo-Workflow-Standard](https://github.com/Pierreg99/Workflows) wird für Dokumentationsänderungen genauso angewandt wie für Code: **Audit, Plan, Branch/PR, Checks, Review, kontrollierter Merge und synchronisierte Übergabe**. Die ausführbare Workflow-Registry ist ein separates Projekt; das Diagramm dokumentiert hier den Prozess und startet nichts automatisch.
 
