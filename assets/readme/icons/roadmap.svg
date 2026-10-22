@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">Roadmap</title>
+<desc id="desc">Vektorsymbol für die README-Navigation: Roadmap.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#10283f"/><stop offset="1" stop-color="#1b1237"/></linearGradient>
+  <linearGradient id="edge" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#8cefa3" stop-opacity=".85"/><stop offset="1" stop-color="#a177f3" stop-opacity=".35"/></linearGradient>
+</defs>
+<rect x="2" y="2" width="124" height="124" rx="24" fill="url(#bg)" stroke="url(#edge)" stroke-width="2"/>
+<circle cx="105" cy="20" r="30" fill="#8cefa3" opacity=".075"/>
+<circle cx="25" cy="113" r="24" fill="#ac73f7" opacity=".075"/>
+<g fill="none" stroke="#8cefa3" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M30 102V84c0-8 7-14 15-14h36c8 0 15-7 15-15V30" stroke-dasharray="5 7"/><circle cx="30" cy="103" r="10"/><circle cx="64" cy="70" r="10"/><path d="m84 30 12-13 12 13-12 13-12-13Z"/><path d="m26 103 3 3 6-7m25-29 3 3 6-7"/></g>
+</svg>
