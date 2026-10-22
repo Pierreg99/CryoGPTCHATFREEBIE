@@ -1,28 +1,52 @@
-<div align="center">
+<p align="center">
+  <a href="#dashboard"><img src="assets/readme/hero-v2.svg" alt="CryoGPTCHATFREEBIE: lokaler KI-Workspace im Cryo-Neon-Design" width="100%" /></a>
+</p>
 
-<img src="assets/readme/hero-v2.svg" alt="CryoGPTCHATFREEBIE – lokaler KI-Workspace im Cryo-Neon-Design" width="100%" />
+<h1 align="center">CryoGPTCHATFREEBIE</h1>
+<p align="center"><strong>Deine Chats. Deine Modelle. Deine Kontrolle.</strong></p>
+<p align="center">Ein lokaler KI-Workspace mit optionalen Modellen und kontrollierten Entwickler-Workflows.</p>
 
-# CryoGPTCHATFREEBIE
+<p align="center">
+  <a href="https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml"><img alt="GitHub Actions CI" src="https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml/badge.svg" /></a>
+  <a href="https://github.com/Pierreg99/CryoGPTCHATFREEBIE/releases"><img alt="GitHub Releases" src="https://img.shields.io/github/v/release/Pierreg99/CryoGPTCHATFREEBIE?include_prereleases&amp;label=Release" /></a>
+  <a href="https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues"><img alt="Offene Issues" src="https://img.shields.io/github/issues/Pierreg99/CryoGPTCHATFREEBIE" /></a>
+  <a href="https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pulls"><img alt="Offene Pull Requests" src="https://img.shields.io/github/issues-pr/Pierreg99/CryoGPTCHATFREEBIE" /></a>
+  <a href="https://github.com/Pierreg99/CryoGPTCHATFREEBIE/commits/main"><img alt="Letzter Main-Commit" src="https://img.shields.io/github/last-commit/Pierreg99/CryoGPTCHATFREEBIE/main" /></a>
+  <a href="https://github.com/Pierreg99/CryoGPTCHATFREEBIE"><img alt="Repository-Lizenz" src="https://img.shields.io/github/license/Pierreg99/CryoGPTCHATFREEBIE" /></a>
+</p>
 
-**Deine Chats · Deine Modelle · Deine Kontrolle**
-
-Lokaler, datenschutzbewusster KI-Workspace mit optionalen Modellen und explizit freigegebenen Entwickler-Workflows.
-
-[![CI](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml/badge.svg)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/Pierreg99/CryoGPTCHATFREEBIE?include_prereleases&label=GitHub%20Release)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/releases)
-[![Issues](https://img.shields.io/github/issues/Pierreg99/CryoGPTCHATFREEBIE)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/Pierreg99/CryoGPTCHATFREEBIE)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pulls)
-[![Last Commit](https://img.shields.io/github/last-commit/Pierreg99/CryoGPTCHATFREEBIE/main)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/commits/main)
-[![License](https://img.shields.io/github/license/Pierreg99/CryoGPTCHATFREEBIE)](https://github.com/Pierreg99/CryoGPTCHATFREEBIE)
-
-**Anwendungsversion: `1.0.0-rc.1` · LOCAL FIRST · PROVIDER OPT-IN**
-
-[Schnellstart](#schnellstart) · [Funktionen](#funktionen) · [Designs](#drei-designwelten) · [Architektur](#systemarchitektur) · [Qualität](#tests-und-release-prüfung) · [Sicherheit](#datenschutz-und-grenzen) · [Roadmap](#roadmap) · [Projektzentrale](#projektzentrale)
-
-</div>
+<p align="center"><code>1.0.0-rc.1</code> · <code>LOCAL FIRST</code> · <code>PROVIDER OPT-IN</code> · <a href="#dashboard">Zum Dashboard</a></p>
 
 > [!IMPORTANT]
 > **Release Candidate, keine stabile 1.0.** Die manuelle WCAG-2.2-AA-Abnahme mit assistiver Technik ist noch offen. CI-Badges zeigen den tatsächlichen GitHub-Workflowstatus, nicht eine zugesicherte Produktfreigabe.
+
+## Dashboard
+
+**Klicke auf eine Kachel**, um direkt zum Thema zu springen. Die Icons sind lokal versionierte SVG-Dateien; die Navigation funktioniert direkt auf GitHub, ohne JavaScript.
+
+<table>
+<tr>
+  <td width="33%" align="center"><a href="#schnellstart"><img src="assets/readme/icons/start.svg" width="64" alt="Schnellstart öffnen" /></a><br/><strong><a href="#schnellstart">Schnellstart</a></strong><br/><sub>Installation und Modelle</sub></td>
+  <td width="33%" align="center"><a href="#funktionen"><img src="assets/readme/icons/features.svg" width="64" alt="Funktionen öffnen" /></a><br/><strong><a href="#funktionen">Funktionen</a></strong><br/><sub>Chats, Agenten, Integrationen</sub></td>
+  <td width="33%" align="center"><a href="#oberflächen-galerie"><img src="assets/readme/icons/gallery.svg" width="64" alt="Oberflächen-Galerie öffnen" /></a><br/><strong><a href="#oberflächen-galerie">Galerie</a></strong><br/><sub>Reale Desktop- und Mobilansichten</sub></td>
+</tr>
+<tr>
+  <td align="center"><a href="#systemarchitektur"><img src="assets/readme/icons/architecture.svg" width="64" alt="Systemarchitektur öffnen" /></a><br/><strong><a href="#systemarchitektur">Architektur</a></strong><br/><sub>Lokaler Server und Datenfluss</sub></td>
+  <td align="center"><a href="#datenschutz-und-grenzen"><img src="assets/readme/icons/security.svg" width="64" alt="Sicherheitsgrenzen öffnen" /></a><br/><strong><a href="#datenschutz-und-grenzen">Sicherheit</a></strong><br/><sub>Freigaben und lokale Speicherung</sub></td>
+  <td align="center"><a href="#roadmap"><img src="assets/readme/icons/roadmap.svg" width="64" alt="Roadmap öffnen" /></a><br/><strong><a href="#roadmap">Roadmap</a></strong><br/><sub>100 Meilensteine und offene Gates</sub></td>
+</tr>
+</table>
+
+### Projekt-Cockpit
+
+| Planung | Nachweise | Qualität | Übergabe |
+| :--- | :--- | :--- | :--- |
+| [Master-Roadmap](docs/roadmap/ROADMAP-100.md) · [PLAN](PLAN.md) | [PROGRESS](PROGRESS.md) · [CI](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/workflows/ci.yml) | [AUDIT](AUDIT.md) · [Release-Gates](docs/RELEASE-CHECKLIST.md) | [HANDOFF](HANDOFF.md) · [HANDOVER](HANDOVER.md) |
+
+> [!NOTE]
+> Auf GitHub sind die SVG-Kacheln anklickbare Links und `<details>`-Abschnitte aufklappbar. Sie führen **keine Befehle aus**. Status-Badges stammen von GitHub; Entwicklungsfortschritt bleibt an echte PRs, Tests und Nachweise gebunden.
+
+[Tests und Release-Prüfung](#tests-und-release-prüfung) · [Projektzentrale](#projektzentrale) · [Workflow für Änderungen](#readme-und-release-workflow)
 
 ## Aktueller Stand
 
@@ -108,6 +132,27 @@ Clean, Neon und Produktansicht verwenden dieselben aktuellen Funktions- und Rele
 
 Alle Grafiken liegen in [assets/readme](assets/readme/); externe Bild-CDNs sind nicht erforderlich.
 
+## Oberflächen-Galerie
+
+Die folgenden Abbildungen sind im Repository gespeicherte Screenshots. Klicke auf ein Bild für die Originalgröße. Die SVG-Banner unter [Drei Designwelten](#drei-designwelten) sind dagegen Illustrationen.
+
+<table>
+<tr>
+  <td width="50%" align="center"><a href="docs/screenshots/workspace-desktop.png"><img src="docs/screenshots/workspace-desktop.png" alt="Cryo-Neon-Workspace auf Desktop" width="100%" /></a><br/><strong>Workspace · Desktop</strong></td>
+  <td width="50%" align="center"><a href="docs/screenshots/workspace-mobile.png"><img src="docs/screenshots/workspace-mobile.png" alt="Cryo-Neon-Workspace auf Mobilgeräten" width="100%" /></a><br/><strong>Workspace · Mobile</strong></td>
+</tr>
+<tr>
+  <td align="center"><a href="docs/screenshots/models.png"><img src="docs/screenshots/models.png" alt="Modellzentrale mit lokaler Konfiguration" width="100%" /></a><br/><strong>Modelle</strong></td>
+  <td align="center"><a href="docs/screenshots/skills.png"><img src="docs/screenshots/skills.png" alt="GitHub- und Skill-Referenzen" width="100%" /></a><br/><strong>GitHub &amp; Skills</strong></td>
+</tr>
+<tr>
+  <td align="center"><a href="docs/screenshots/roadmap.png"><img src="docs/screenshots/roadmap.png" alt="Roadmap mit Projekt-Meilensteinen" width="100%" /></a><br/><strong>Roadmap</strong></td>
+  <td align="center"><a href="docs/screenshots/backup-restore.png"><img src="docs/screenshots/backup-restore.png" alt="Backup und Wiederherstellung" width="100%" /></a><br/><strong>Backup &amp; Recovery</strong></td>
+</tr>
+</table>
+
+[Bedienungsanleitung](docs/workspace.md) · [Weitere Screenshots](docs/screenshots/) · [Zur Navigation](#dashboard)
+
 ## Systemarchitektur
 
 <img src="assets/readme/architecture-v2.svg" alt="Browser mit IndexedDB und Rücksetzpunkt, lokaler Node.js-Server und ausdrücklich konfigurierte Modell-, GitHub- und Godot-Verbindungen" width="100%" />
@@ -176,7 +221,7 @@ Die [Master-Roadmap mit Checkboxen pro Meilenstein](docs/roadmap/ROADMAP-100.md)
 |  Übergabe | [HANDOFF.md](HANDOFF.md) · [HANDOVER.md](HANDOVER.md) |
 
 <details>
-<summary><strong> Architektur als interaktives Diagramm öffnen</strong></summary>
+<summary><strong>Architektur als interaktives Diagramm öffnen</strong></summary>
 
 ```mermaid
 flowchart TD
@@ -193,16 +238,51 @@ Alle externen Integrationen sind optional und haben dokumentierte Freigabegrenze
 </details>
 
 <details>
-<summary><strong> Release-Gates und Prüfnachweise anzeigen</strong></summary>
+<summary><strong>Release-Gates und Prüfnachweise anzeigen</strong></summary>
 
 - [x] Node-Testmatrix und Browser-E2E als CI-Workflows konfiguriert
 - [x] Reproduzierbarer Quellpaket-Check als Workflow konfiguriert
-- [] Manuelle WCAG-2.2-AA-Abnahme nachweisen
-- [] Stabile Version 1.0 erst nach abgeschlossenen REQUIRED-Gates freigeben
+- [ ] Manuelle WCAG-2.2-AA-Abnahme nachweisen
+- [ ] Stabile Version 1.0 erst nach abgeschlossenen REQUIRED-Gates freigeben
 
 [Release-Checkliste](docs/RELEASE-CHECKLIST.md) · [Accessibility-Bericht](docs/accessibility-report.md)
 
 </details>
+
+## README- und Release-Workflow
+
+Unser [Cryo-Workflow-Standard](https://github.com/Pierreg99/Workflows) wird für Dokumentationsänderungen genauso angewandt wie für Code: **Audit, Plan, Branch/PR, Checks, Review, kontrollierter Merge und synchronisierte Übergabe**. Die ausführbare Workflow-Registry ist ein separates Projekt; das Diagramm dokumentiert hier den Prozess und startet nichts automatisch.
+
+```mermaid
+flowchart LR
+    A["Audit & Faktencheck"] --> B["PLAN & Akzeptanzkriterien"]
+    B --> C["Branch + Pull Request"]
+    C --> D{"Node / Browser / Release gruen?"}
+    D -->|Nein| E["Korrigieren & erneut testen"]
+    E --> D
+    D -->|Ja| F{"Review und Branch-Regeln erfuellt?"}
+    F -->|Nein| G["Manuell freigeben / Blocker loesen"]
+    G --> F
+    F -->|Ja| H["Kontrolliert mergen"]
+    H --> I["PROGRESS / AUDIT / HANDOFF aktualisieren"]
+```
+
+<details>
+<summary><strong>Checkliste für README- und Dokumentations-PRs</strong></summary>
+
+- [ ] README-Links, Section-Anker, Screenshots und SVG-Assets geprüft.
+- [ ] Keine Emoji-Zeichen in den README-Varianten (bestehender Dokumentationstest).
+- [ ] Node.js 20/22/24, Browser-E2E und Release-Check auf dem PR erfolgreich.
+- [ ] Review und Merge-Regeln geprüft; keine Sicherheitsbefunde offen.
+- [ ] PLAN, PROGRESS, AUDIT, HANDOFF und HANDOVER bei Bedarf synchronisiert.
+- [ ] Release-Candidate-Status und noch offene manuelle Accessibility-Abnahme unverändert korrekt.
+
+Die Befehle zum Nachprüfen stehen in [Tests und Release-Prüfung](#tests-und-release-prüfung).
+
+</details>
+
+> [!IMPORTANT]
+> GitHub Auto-Merge ist für dieses Repository derzeit **nicht aktiviert**. Ein grüner Dokumentations-PR ersetzt außerdem **nicht** die manuelle WCAG-2.2-AA-Abnahme für eine stabile Version 1.0.
 
 ## Mitmachen
 
