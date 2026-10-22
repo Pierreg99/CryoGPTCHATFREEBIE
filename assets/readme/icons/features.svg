@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">Funktionen</title>
+<desc id="desc">Vektorsymbol für die README-Navigation: Funktionen.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#10283f"/><stop offset="1" stop-color="#1b1237"/></linearGradient>
+  <linearGradient id="edge" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#a88cff" stop-opacity=".85"/><stop offset="1" stop-color="#a177f3" stop-opacity=".35"/></linearGradient>
+</defs>
+<rect x="2" y="2" width="124" height="124" rx="24" fill="url(#bg)" stroke="url(#edge)" stroke-width="2"/>
+<circle cx="105" cy="20" r="30" fill="#a88cff" opacity=".075"/>
+<circle cx="25" cy="113" r="24" fill="#ac73f7" opacity=".075"/>
+<g fill="none" stroke="#a88cff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><rect x="27" y="28" width="32" height="32" rx="7"/><rect x="69" y="28" width="32" height="32" rx="7"/><rect x="27" y="70" width="32" height="32" rx="7"/><rect x="69" y="70" width="32" height="32" rx="7"/><path d="M43 36v16M35 44h16m28-6 12 12m0-12-12 12m-43 36 7 7 10-14m24 9h14"/></g>
+</svg>

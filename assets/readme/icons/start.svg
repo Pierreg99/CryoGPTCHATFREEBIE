@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">Schnellstart</title>
+<desc id="desc">Vektorsymbol für die README-Navigation: Schnellstart.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#10283f"/><stop offset="1" stop-color="#1b1237"/></linearGradient>
+  <linearGradient id="edge" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#50e2ff" stop-opacity=".85"/><stop offset="1" stop-color="#a177f3" stop-opacity=".35"/></linearGradient>
+</defs>
+<rect x="2" y="2" width="124" height="124" rx="24" fill="url(#bg)" stroke="url(#edge)" stroke-width="2"/>
+<circle cx="105" cy="20" r="30" fill="#50e2ff" opacity=".075"/>
+<circle cx="25" cy="113" r="24" fill="#ac73f7" opacity=".075"/>
+<g fill="none" stroke="#50e2ff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M49 79 37 91l3-20 26-26c9-9 21-12 31-11-1 10-4 22-13 31L58 91l-9-12Z"/><path d="m61 59 17 17M40 71l-11 1-8 8 19 2M58 91l2 19 8-8 1-11"/><circle cx="82" cy="50" r="5"/><path d="m35 93-9 9m20-2-8 9"/></g>
+</svg>

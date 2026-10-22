@@ -77,3 +77,60 @@ test("README artwork matches current storage and release metadata", () => {
   }
   assert.match(read("assets/readme/architecture.svg"), /IndexedDB/);
 });
+
+test("README workflow dashboard is navigable with local accessible SVG icons", () => {
+  const source = read("README.md");
+  assert.match(source, /^## Dashboard$/m);
+  const targets = new Map([
+    ["start", "schnellstart"],
+    ["features", "funktionen"],
+    ["gallery", "oberflächen-galerie"],
+    ["architecture", "systemarchitektur"],
+    ["security", "datenschutz-und-grenzen"],
+    ["roadmap", "roadmap"],
+  ]);
+  for (const [icon, anchor] of targets) {
+    const file = "assets/readme/icons/" + icon + ".svg";
+    assert.ok(existsSync(path.join(root, file)), file + ": missing icon");
+    const markup = read(file);
+    assert.match(markup, /<svg\s/);
+    assert.match(markup, /<title\s+id="title">/);
+    assert.match(markup, /<desc\s+id="desc">/);
+    assert.doesNotMatch(markup, /<script|onload=|javascript:/i);
+    assert.ok(
+      source.includes('href="#' + anchor + '"><img src="' + file + '"'),
+      file + ": tile does not link to its destination",
+    );
+  }
+  assert.match(source, /^## Projektzentrale$/m);
+  assert.match(source, /^## README und Release Workflow$/m);
+  for (const file of ["PLAN.md", "PROGRESS.md", "AUDIT.md", "HANDOFF.md", "HANDOVER.md"]) {
+    assert.ok(source.includes("](" + file + ")"), file + ": missing project governance link");
+  }
+});
+
+test("README gallery shows versioned screenshots and correctly structured release gates", () => {
+  const source = read("README.md");
+  assert.match(source, /^## Oberflächen-Galerie$/m);
+  for (const name of [
+    "workspace-desktop.png",
+    "workspace-mobile.png",
+    "models.png",
+    "skills.png",
+    "roadmap.png",
+    "backup-restore.png",
+  ]) {
+    const file = "docs/screenshots/" + name;
+    assert.ok(existsSync(path.join(root, file)), file + ": screenshot missing");
+    assert.ok(source.includes('src="' + file + '"'), file + ": not rendered in gallery");
+  }
+  assert.equal(
+    [...source.matchAll(/^<details>$/gm)].length,
+    [...source.matchAll(/^<\/details>$/gm)].length,
+    "README detail sections must be balanced",
+  );
+  assert.doesNotMatch(source, /^- \[\] /m, "invalid task-list checkbox syntax");
+  assert.match(source, /^- \[ \] Manuelle WCAG-2\.2-AA-Abnahme/m);
+  assert.match(source, /^- \[ \] Stabile Version 1\.0/m);
+  assert.match(source, /Auto-Merge ist für dieses Repository derzeit \*\*nicht aktiviert\*\*/);
+});
