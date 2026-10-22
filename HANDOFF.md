@@ -1,5 +1,9 @@
 # HANDOFF · Nächste konkrete Arbeit
 
+## Abgeschlossener README-Meilenstein
+
+[PR #20](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/20) ist nach erfolgreichem Node-, Browser- und Release-CI-Lauf in `main` gemergt. Der [Main-Lauf nach Merge](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732254173) war ebenfalls erfolgreich. Das Dashboard bietet sechs klickbare SVG-Kacheln, eine Screenshot-Galerie und den dokumentierten Cryo-Review-Ablauf.
+
 ## README-Workflow
 
 1. Für neue README-Änderungen einen Branch und Pull Request verwenden; keine direkten ungeprüften Main-Schreiboperationen.
