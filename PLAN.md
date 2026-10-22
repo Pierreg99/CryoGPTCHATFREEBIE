@@ -1,20 +1,26 @@
 # PLAN · CryoGPTCHATFREEBIE
 
-Stand: 22. Oktober 2026. Prioritäten sind Planung, keine behaupteten Abschlüsse.
+Stand: 22. Oktober 2026. Prioritäten sind Planungsstände, keine behaupteten Abschlüsse.
+
+## Qualitätsgates
 
 | Priorität | Aufgabe | Abhängigkeit | Akzeptanzkriterium |
 | --- | --- | --- | --- |
-| P0 | Manuelle WCAG-2.2-AA-Abnahme | reale Assistive Technology und Prüfnachweise | REQUIRED-Gate mit Belegen abgeschlossen |
-| P0 | Release-Candidate-Qualität erhalten | Node-/Browser-CI | alle relevanten Checks grün |
-| P1 | README und Dokumentationslinks aktuell halten | verifizierte Projektquellen | Links und Statusangaben geprüft |
-| P1 | Release-Prozess kontrolliert prüfen | P0-Gates | reproduzierbarer Build und dokumentierte Freigabe |
-| P2 | Skill-Registry und Agenten-Workflows erweitern | Sicherheits-Review und Opt-in | Allowlist- und Negativtests vorhanden |
+| P0 | Manuelle WCAG-2.2-AA-Abnahme durchführen | Assistive Technik, menschliche Prüfung und Nachweise | REQUIRED-Gate mit dokumentierten Belegen erfüllt |
+| P0 | Release-Candidate-Qualität erhalten | Node 20/22/24, Chromium-E2E und Release-Check | alle Pflichtchecks erfolgreich; kein Stable-1.0-Versprechen |
+| P1 | README nach Cryo-Workflow-Standard ausbauen | vorhandene Screenshots, GitHub-kompatible SVGs und Linkprüfung | sechs verlinkte Kacheln, Screenshot-Galerie, native Details, Mermaid und funktionierende lokale Links |
+| P1 | README-Governance mit CI absichern | Dokumentationstest und prüfbarer PR | Icons, Anker, Gate-Checkboxen und Projekt-Cockpit validiert |
+| P1 | Projektunterlagen synchron halten | gesicherte Aussagen aus Commits, PRs, Tests | PLAN / PROGRESS / AUDIT / HANDOFF / HANDOVER aktuell und widerspruchsfrei |
+| P2 | Wiederverwendbare README-Bausteine in weiteren Repos | verifiziertes Referenzmuster | Übernahme ohne angenommene Features oder falsche Status-Badges |
+| P2 | Skill-/Agenten-Workflows ausbauen | Sicherheitsreview und Opt-in | Allowlist- und Negativtests dokumentiert |
 
-## Reihenfolge
+## Ablauf für Änderungen
 
-1. Dokumentations-PR prüfen und CI abwarten.
-2. Accessibility-Prüfung mit echter assistiver Technik dokumentieren.
-3. Offene Befunde beheben und erneut prüfen.
-4. Erst nach allen Gates eine stabile Freigabe erwägen.
+1. Audit der Projektfakten und vorhandenen Artefakte.
+2. Änderungen mit prüfbaren Akzeptanzkriterien planen.
+3. Feature-Branch und Pull Request verwenden.
+4. Dokumentationstest, Node-Matrix, Browser-E2E und Release-Check ausführen.
+5. Review- und Merge-Sperren prüfen; nur bei erfolgreichen Gates mergen.
+6. Nachweise und Handoff synchronisieren.
 
-[Master-Roadmap](docs/roadmap/ROADMAP-100.md) · [Release-Gates](docs/RELEASE-CHECKLIST.md)
+[README-Dashboard](README.md#dashboard) · [Workflow-Referenz](https://github.com/Pierreg99/Workflows) · [Master-Roadmap](docs/roadmap/ROADMAP-100.md) · [Release-Gates](docs/RELEASE-CHECKLIST.md)
