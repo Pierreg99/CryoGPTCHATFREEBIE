@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">Architektur</title>
+<desc id="desc">Vektorsymbol für die README-Navigation: Architektur.</desc>
+<defs>
+  <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#10283f"/><stop offset="1" stop-color="#1b1237"/></linearGradient>
+  <linearGradient id="edge" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#63d8c5" stop-opacity=".85"/><stop offset="1" stop-color="#a177f3" stop-opacity=".35"/></linearGradient>
+</defs>
+<rect x="2" y="2" width="124" height="124" rx="24" fill="url(#bg)" stroke="url(#edge)" stroke-width="2"/>
+<circle cx="105" cy="20" r="30" fill="#63d8c5" opacity=".075"/>
+<circle cx="25" cy="113" r="24" fill="#ac73f7" opacity=".075"/>
+<g fill="none" stroke="#63d8c5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><rect x="48" y="20" width="32" height="25" rx="5"/><rect x="19" y="83" width="31" height="25" rx="5"/><rect x="78" y="83" width="31" height="25" rx="5"/><path d="M64 45v19m0 0H34v19m30-19h29v19"/><path d="M57 31h14m-44 63h15m44 0h15"/><circle cx="64" cy="64" r="3" fill="currentColor" stroke="none"/></g>
+</svg>
