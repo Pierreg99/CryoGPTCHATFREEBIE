@@ -103,7 +103,7 @@ test("README workflow dashboard is navigable with local accessible SVG icons", (
     );
   }
   assert.match(source, /^## Projektzentrale$/m);
-  assert.match(source, /^## README- und Release-Workflow$/m);
+  assert.match(source, /^## README und Release Workflow$/m);
   for (const file of ["PLAN.md", "PROGRESS.md", "AUDIT.md", "HANDOFF.md", "HANDOVER.md"]) {
     assert.ok(source.includes("](" + file + ")"), file + ": missing project governance link");
   }
