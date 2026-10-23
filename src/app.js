@@ -182,14 +182,16 @@ function renderList() {
 const MESSAGE_PAGE_SIZE = 80;
 let messageWindowChat = null;
 let messageWindowLength = 0;
+let messageWindowMessages = null;
 let messageWindowEnd = 0;
 function renderMessages() {
   const chat = active(),
     list = el("messages");
   const all = chat?.messages || [];
-  if (chat?.id !== messageWindowChat || all.length > messageWindowLength)
+  if (chat?.id !== messageWindowChat || all !== messageWindowMessages || all.length > messageWindowLength)
     messageWindowEnd = all.length;
   messageWindowChat = chat?.id || null;
+  messageWindowMessages = all;
   messageWindowLength = all.length;
   const page = messagePage(all, messageWindowEnd, MESSAGE_PAGE_SIZE);
   messageWindowEnd = page.end;
@@ -203,6 +205,10 @@ function renderMessages() {
     button.addEventListener("click", () => {
       messageWindowEnd = end;
       renderMessages();
+      // The clicked button was replaced; return keyboard focus to the same paging action.
+      const successor = list.querySelector(`[data-page="${direction}"]`) || list.querySelector('.message-page-button');
+      if (!successor) list.tabIndex = -1;
+      (successor || list).focus();
     });
     return button;
   };

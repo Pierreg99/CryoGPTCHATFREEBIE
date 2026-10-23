@@ -26,6 +26,7 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 
 ## Roadmap v1.2/v1.3 · Branch-Prüfpunkte
 
+- Review-Nachbesserung: Zeitzonen-Offsets werden beim Datumsfilter erst nach UTC konvertiert, Restore derselben Chat-ID invalidiert das sichtbare Fenster anhand der Nachrichtenarray-Identität, und Paging gibt den Tastaturfokus auf einen verfügbaren Nachfolgebutton zurück. Regressionstests decken alle drei Verhalten ab.
 - Der vollständige Chatverlauf bleibt mit bis zu 600 Nachrichten in IndexedDB/Backup; nur die angezeigte Seite ist auf 80 DOM-Nachrichten begrenzt. Der Seitenwechsel erfolgt bewusst über beschriftete Buttons, keine unsichtbare Scrollmagie.
 - Die Gesprächssuche verwendet das vollständige lokale Nachrichtenarray, nicht nur die aktuell gerenderten `article`-Elemente. Treffer außerhalb des Fensters steuern die aktuelle Nachrichtenansicht.
 - Seitenleistenfilter verarbeiten ausschließlich vorhandene Daten (`title`, `updatedAt`, `projectContext`, `role` und Nachrichteninhalt). Projektwissen bleibt privat und löst kein Opt-in aus.

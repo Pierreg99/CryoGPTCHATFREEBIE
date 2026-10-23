@@ -253,3 +253,20 @@ test("v1.3 filters combine local project, date, role and exact chat", async ({ p
   await expect(page.locator("#chat-filter-summary")).toHaveText("3 von 3 Gesprächen");
   await expect(page.locator("#chat-list .chat-link")).toHaveCount(3);
 });
+
+test('paging keeps visible keyboard focus after re-render', async ({ page }) => {
+  await offline(page);
+  await page.addInitScript(backup =>
+    localStorage.setItem("crygptchat.alpha.v1", JSON.stringify(backup)), largeBackup());
+  await page.goto("/");
+  const older = page.locator('[data-page="older"]');
+  await older.focus();
+  await page.keyboard.press("Enter");
+  await expect(older).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(older).toBeFocused();
+  await expect(page.locator('.message[data-message-id="m-360"]')).toHaveCount(1);
+  await page.locator('[data-page="newer"]').focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator('[data-page="newer"]')).toBeFocused();
+});

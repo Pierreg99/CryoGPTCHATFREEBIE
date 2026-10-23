@@ -65,7 +65,9 @@ export function filterChats(store, query = '', filters = {}) {
   const to = validDay(filters.to);
   return store.chats.filter(chat => {
     if (filters.chatId && chat.id !== filters.chatId) return false;
-    const updated = chat.updatedAt.slice(0, 10);
+    const timestamp = Date.parse(chat.updatedAt);
+    // The date input is a UTC calendar-day filter, including imported offset timestamps.
+    const updated = Number.isFinite(timestamp) ? new Date(timestamp).toISOString().slice(0, 10) : '';
     if (from && updated < from || to && updated > to) return false;
     if (project && !lower(chat.projectContext).includes(project)) return false;
     const messages = role ? chat.messages.filter(message => message.role === role) : chat.messages;

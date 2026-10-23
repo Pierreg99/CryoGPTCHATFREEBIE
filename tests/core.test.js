@@ -96,3 +96,10 @@ test('v1.2 message window bounds DOM to at most 80 while preserving every stored
   assert.equal(messagePage(messages, 1, 10000).items.length, 1);
   assert.equal(messages.length, 600);
 });
+
+test('UTC date filter normalizes time-zone-offset timestamps from valid backups', () => {
+  let state = createChat(emptyStore(), 'tz', 'Zeitzonen', '2026-10-20T23:30:00-02:00');
+  assert.deepEqual(filterChats(state, '', { from: '2026-10-21', to: '2026-10-21' }).map(chat => chat.id), ['tz']);
+  assert.equal(filterChats(state, '', { to: '2026-10-20' }).length, 0);
+  assert.deepEqual(filterChats(parseBackup(JSON.stringify(state)), '', { from: '2026-10-21', to: '2026-10-21' }).map(chat => chat.id), ['tz']);
+});
