@@ -290,6 +290,13 @@ test("v1.4 creates isolated projects, assigns chats and preserves notes through 
   await page.locator("#cryo-dialog-confirm").click();
   await page.locator("#workspace-notes").fill("Independent beta notes");
   await page.locator("#save-workspace-notes").click();
+  // Drafts are retained by project until explicitly saved, never sent to a model.
+  await page.locator("#workspace-notes").fill("Unsaved beta draft");
+  await page.locator("#chat-project").selectOption({ label: "Cryo Alpha" });
+  await page.locator("#chat-project").selectOption({ label: "Cryo Beta" });
+  await expect(page.locator("#workspace-notes")).toHaveValue("Unsaved beta draft");
+  await page.locator("#workspace-notes").fill("Independent beta notes");
+  await page.locator("#save-workspace-notes").click();
   await page.reload();
   await page.locator("#notes-toggle").click();
   await expect(page.locator("#workspace-notes")).toHaveValue("Independent beta notes");

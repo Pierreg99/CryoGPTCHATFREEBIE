@@ -43,3 +43,5 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 - Unit-/Browser-Fälle und manuelle WCAG-Matrix M17 ergänzt. Gates erst nach grünem finalem PR-Head als bestanden bezeichnen.
 
 - Follow-up CodeAnt review: ISO-Zeitstempel ohne Offset werden bei der Datumssuche ausdrücklich als UTC behandelt. Tastatur-Paging überträgt den Fokus zum Nachfolgebutton; Pointer-Paging verzichtet auf zwangsweises Fokussieren und positioniert die neue Seite kontrolliert. Node-/Playwright-Regressionen ergänzt.
+
+- Review-Fix v1.4: Änderungsdatum wird bei geänderter Projektzuordnung aktualisiert, nicht bei idempotenter Wahl. Ungespeicherte lokale Notizen werden projektweise im Sitzungs-Memory vorgehalten und bei Import/Rücksetzung verworfen; niemals ungefragt in Modellkontext übertragen. Unit-/Browser-Regressionen ergänzt.

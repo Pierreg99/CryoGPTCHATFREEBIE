@@ -27,11 +27,13 @@ export function createProject(store, id = uid(), name = 'Neues Projekt') {
   return { ...store, projects: [{ id, name: title, notes: '' }, ...store.projects] };
 }
 
-export function setChatProject(store, chatId, projectId = null) {
+export function setChatProject(store, chatId, projectId = null, now = new Date().toISOString()) {
   if (!store.chats.some(chat => chat.id === chatId)) throw new Error('Chat nicht gefunden.');
   if (projectId && !store.projects.some(project => project.id === projectId)) throw new Error('Projekt nicht gefunden.');
+  const nextId = projectId || null;
   return { ...store, chats: store.chats.map(chat =>
-    chat.id === chatId ? { ...chat, projectId: projectId || null } : chat) };
+    chat.id === chatId && chat.projectId !== nextId ?
+      { ...chat, projectId: nextId, updatedAt: now } : chat) };
 }
 
 export function setProjectNotes(store, projectId, notes) {

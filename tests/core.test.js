@@ -147,3 +147,18 @@ test('timezone-less ISO date inputs have a deterministic UTC search day', () => 
   const spaced = createChat(emptyStore(), 'space', 'Naive timestamp with space', '2026-10-21 23:30:00');
   assert.deepEqual(filterChats(spaced, '', { to: '2026-10-21' }).map(c => c.id), ['space']);
 });
+
+test('moving a chat between projects updates its date exactly when assignment changes', () => {
+  const initial = '2026-10-20T08:00:00.000Z';
+  const changed = '2026-10-22T10:00:00.000Z';
+  let s = createChat(emptyStore(), 'chat', 'Notizen', initial);
+  s = createProject(s, 'p', 'Project');
+  s = setChatProject(s, 'chat', 'p', changed);
+  assert.equal(s.chats[0].updatedAt, changed);
+  assert.deepEqual(filterChats(s, '', { from: '2026-10-22', projectId: 'p' }).map(c => c.id), ['chat']);
+  s = setChatProject(s, 'chat', 'p', '2026-10-23T01:00:00.000Z');
+  assert.equal(s.chats[0].updatedAt, changed);
+  s = setChatProject(s, 'chat', null, '2026-10-23T01:00:00.000Z');
+  assert.equal(s.chats[0].projectId, null);
+  assert.equal(s.chats[0].updatedAt, '2026-10-23T01:00:00.000Z');
+});
