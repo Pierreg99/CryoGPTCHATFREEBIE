@@ -1,6 +1,6 @@
 # PROGRESS · Verifizierbarer Projektfortschritt
 
-Stand: 23. Oktober 2026. Die Workbench wurde mit PR #24 nach `main` integriert. Die Fehlerzentrale v1.1 wurde mit PR #25 nach `main` integriert; die zugehörige CI war wegen einer veralteten Roadmap-Zählung rot. Der Reparatur-PR #26 ist gesondert zu prüfen.
+Stand: 23. Oktober 2026. Die Workbench wurde mit PR #24 nach `main` integriert. Die Fehlerzentrale v1.1 wurde mit PR #25 nach `main` integriert; die zugehörige CI war wegen einer veralteten Roadmap-Zählung rot. PR #26 wurde gemergt; die CI auf dem neuen main-Commit `e7087138` ist erfolgreich ([Run 40015621693](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/40015621693)).
 
 | Bereich | Stand | Nachweis |
 | --- | --- | --- |
@@ -8,10 +8,11 @@ Stand: 23. Oktober 2026. Die Workbench wurde mit PR #24 nach `main` integriert. 
 | Workbench | Neue Startansicht, tatsächliche Statistiken, gruppierte Navigation, acht konsistent gestaltete Ansichten | [Shell](src/workbench.js), [Design](src/workbench.css) |
 | Bedienung | Befehlssuche, Gesprächssuche, Fokusmodus, Zeichenzähler | [Browser-Tests](e2e/workbench.spec.js) |
 | Screenshots | Aktuelle Offline-Ansichten mit frischem Profil; reproduzierbarer Capture-Befehl | [Galerie](docs/screenshots/), [Script](scripts/screenshots.mjs) |
-| Lokale Tests | 86 Node-Tests und 34 Browser-Tests; detaillierte Umgebung und Grenzen im Prüfbericht | [Workbench-Nachweis](docs/workbench-overhaul.md), [Testquellen](e2e/) |
+| Historische Workbench-Tests | Früher 86 Node-Tests und 34 Browser-Tests; aktueller Projektstand erfordert pro Commit neue CI-Prüfung | [Workbench-Nachweis](docs/workbench-overhaul.md), [Testquellen](e2e/) |
 | Fehlerzentrale v1.1 | Temporäre lokale Diagnose mit explizitem Modell- und Speicher-Retry in `main` via PR #25; manuelle Abnahme offen | [PR #25](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/25) |
-| CI | `main` nach PR #24 grün (Run 39955834851), nach Merge #25 rot (Run 40014461625); Korrektur in PR #26 auf eigenem Head prüfen | [GitHub Actions](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions) |
-| Accessibility | M01–M14 und X01–X10 noch manuell zu prüfen | [Accessibility-Bericht](docs/accessibility-report.md), [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) |
+| CI | Nach PR #26 ist `main` erfolgreich ([Run 40015621693](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/40015621693)); v1.2/v1.3-Branch muss separat validiert werden | [GitHub Actions](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions) |
+| v1.2/v1.3 | Branch: Fensterdarstellung, Volltextsuche unabhängig vom DOM, kombinierte lokale Filter und neue Testfälle; noch nicht gemergt | [PLAN](PLAN.md) · [Workbench](docs/workbench-overhaul.md) |
+| Accessibility | M01–M16 und X01–X10 noch manuell zu prüfen | [Accessibility-Bericht](docs/accessibility-report.md), [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) |
 | Roadmap | 100 dokumentierte Entwicklungsmeilensteine, keine 100 veröffentlichten Releases | [Master-Roadmap](docs/roadmap/ROADMAP-100.md) |
 
 [README](README.md) · [AUDIT](AUDIT.md) · [PLAN](PLAN.md)

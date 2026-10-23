@@ -266,29 +266,28 @@ export function setupWorkbench({ el, active, getStore, notice }) {
   }
   function updateSearch(reveal = false) {
     const term = el("conversation-query").value.trim().toLocaleLowerCase("de");
-    const rows = [...el("messages").querySelectorAll(".message")];
-    rows.forEach((row) => row.classList.remove("search-hit", "search-current"));
-    hits = term
-      ? rows.filter((row) =>
-          row
-            .querySelector("pre")
-            .textContent.toLocaleLowerCase("de")
-            .includes(term),
-        )
-      : [];
+    // Search the complete saved conversation, not just the 80 visible DOM nodes.
+    hits = term ? (active()?.messages || []).filter((message) =>
+      message.content.toLocaleLowerCase("de").includes(term)) : [];
     hitIndex = Math.min(hitIndex, Math.max(0, hits.length - 1));
-    hits.forEach((row, i) =>
-      row.classList.add(i === hitIndex ? "search-current" : "search-hit"),
-    );
+    const target = hits[hitIndex];
+    if (reveal && target)
+      document.dispatchEvent(new CustomEvent("workspace:reveal-message", { detail: target.id }));
+    for (const row of el("messages").querySelectorAll(".message")) {
+      row.classList.remove("search-hit", "search-current");
+      if (!term) continue;
+      if (row.dataset.messageId === target?.id) row.classList.add("search-current");
+      else if (hits.some(message => message.id === row.dataset.messageId)) row.classList.add("search-hit");
+    }
     el("conversation-matches").textContent = !term
       ? "Suchbegriff eingeben"
-      : hits.length
-        ? `${hitIndex + 1} / ${hits.length} Nachrichten`
-        : "Keine Treffer";
-    el("conversation-previous").disabled = el("conversation-next").disabled =
-      !hits.length;
-    if (reveal && hits.length)
-      hits[hitIndex].scrollIntoView({ block: "center" });
+      : hits.length ? `${hitIndex + 1} / ${hits.length} Nachrichten` : "Keine Treffer";
+    el("conversation-previous").disabled = el("conversation-next").disabled = !hits.length;
+    if (reveal && target) {
+      const row = [...el("messages").querySelectorAll(".message")]
+        .find(node => node.dataset.messageId === target.id);
+      row?.scrollIntoView({ block: "center" });
+    }
   }
   el("conversation-query").addEventListener("input", () => {
     hitIndex = 0;
@@ -362,6 +361,7 @@ export function setupWorkbench({ el, active, getStore, notice }) {
     childList: true,
   });
   document.addEventListener("workspace:chat", updateOverview);
+  document.addEventListener("workspace:messages", () => updateSearch());
   document.addEventListener("workspace:view", updateFocus);
   window.addEventListener("resize", updateFocus);
   updateOverview();

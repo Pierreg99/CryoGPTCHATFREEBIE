@@ -14,7 +14,7 @@ Abgeschlossene Funktionen sind im [Changelog als Checkliste](../../CHANGELOG.md)
 - **Security-Baseline umgesetzt:** v0.9 mit Host-/Origin-/CSP-Härtung, Limits, negativen HTTP-Tests und [Bedrohungsmodell](../security/THREAT-MODEL.md).
 - **1.0 vorbereitet:** Release-Candidate 1.0.0-rc.1 mit Plattform-/Migrationspolitik, reproduzierbarem Paket und blockierender [Release-Checkliste](../RELEASE-CHECKLIST.md); stabile Freigabe erst nach manueller Accessibility-Abnahme.
 - **Backup-Wiederherstellung umgesetzt:** v0.8 mit Dry-run, redigiertem Fehlerbericht, geprüftem Import und lokalem Rücksetzpunkt. [Belege und Grenzen](../backup-recovery.md).
-- **Teilweise umgesetzt:** v0.7 (WCAG-2.2-Regeln, Keyboard-/Fokus-/Reflow-Tests und [Prüfbericht](../accessibility-report.md); unabhängige Screenreader-Abnahme offen), v6.1 (Designsystem und responsive UI; umfassende Produktabnahme offen).
+- **Teilweise umgesetzt:** v0.7 (WCAG-2.2-Regeln; Screenreader-Abnahme offen), v1.1 (Fehlerzentrale), v1.2 (begrenzt gerenderte Chat-Fenster), v1.3 (lokale Suchfilter) und v6.1 (Designsystem und responsive UI). Auch für neue Funktionen bleiben CI-/manuelle Gates getrennt offen.
 - **Zukunftsplanung:** Übrige Meilensteine bis v10.0 beschreiben noch offene Gates, keine zugesagten Liefertermine.
 - **Abnahmeprinzip:** Jede Version benennt ein konkretes Artefakt und einen **prüfbaren Exit-Gate**. Funktionen mit externem Netzwerk, privaten Daten oder Writes bleiben standardmäßig deaktiviert und erfordern Sicherheitsprüfung sowie ausdrückliche Freigabe.
 
@@ -128,17 +128,22 @@ Datenbeständigkeit, UX und vorhersagbaren Betrieb etablieren.
 - [x] Sitzungsbasierte Fehlerzentrale für Speicher, Modellstatus, Chat und Aktionen mit kontextbezogenen Hinweisen.
 - [x] Nur ausdrücklich angeklickte, sichere Wiederholungen; kein automatischer Modell-Request.
 
-#### Geplant v1.2 · Chat-Performance
+#### Teilweise umgesetzt v1.2 · Chat-Performance
 
 **Lieferobjekt:** Große Chatverläufe virtuell rendern und Suche optimieren. **Abnahme:** Definierte Latenzbudgets im Browser-Test.
 
-- [ ] Entwicklungsmeilenstein vollständig abschließen.
+- [ ] Entwicklungsmeilenstein vollständig abschließen; Browser-Performance auf dem exakten PR-Head und reale Bedienbarkeit abnehmen.
+- [x] Bounded-window-Darstellung mit höchstens 80 Nachrichten und zugänglicher Seitennavigation statt 600 gleichzeitig gerenderten DOM-Nachrichten.
+- [x] Vollständigen lokalen Nachrichtenbestand unabhängig vom sichtbaren Fenster durchsuchen; alte Treffer gezielt anzeigen.
+- [x] Unit-Grenztests und Browser-Budget für 600 gespeicherte Nachrichten ergänzt.
 
-#### Geplant v1.3 · Suchfilter
+#### Teilweise umgesetzt v1.3 · Suchfilter
 
 **Lieferobjekt:** Suche nach Chat, Datum, Projekt und Nachrichtenrolle. **Abnahme:** Filterkombinationen deterministisch getestet.
 
-- [ ] Entwicklungsmeilenstein vollständig abschließen.
+- [ ] Entwicklungsmeilenstein vollständig abschließen; PR-CI und reale Accessibility-Abnahme prüfen.
+- [x] Filter für einzelne Chats, Änderungsdatum, private lokale Projekt-Notizen und Benutzer-/Assistentenrolle ergänzt.
+- [x] Kombinations- und Reset-Tests ohne Änderung am Backupformat oder Datenfreigabe ergänzt.
 
 #### Geplant v1.4 · Projekt-Arbeitsräume
 

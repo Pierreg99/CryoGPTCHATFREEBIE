@@ -1317,3 +1317,32 @@ textarea::placeholder {
   #error-center-open .error-label { display: none; }
   .error-center-dialog { padding: 15px; }
 }
+
+/* Roadmap v1.2/v1.3: bounded message views and optional local search refinements */
+.chat-filters {
+  max-height: min(38dvh, 320px);
+  overflow-y: auto;
+  border: 1px solid #363b4e;
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-size: 11px;
+  color: #d8d7ed;
+  scrollbar-width: thin;
+}
+.chat-filters summary { cursor: pointer; min-height: 30px; padding: 7px 2px; }
+.chat-filters label { display: block; margin: 9px 0 4px; color: #bbb5d2; }
+.chat-filters input, .chat-filters select {
+  margin: 0; padding: 8px; width: 100%; max-width: none;
+  border: 1px solid #51536b; border-radius: 7px;
+  background: #171b27; color: #f1eefb; font-size: 12px;
+}
+#chat-filter-summary { font-size: 11px; color: #cfc6e7; }
+#chat-filter-reset, .message-page-button {
+  border: 1px solid #685c83;
+  border-radius: 8px; background: #28263b;
+  color: #ede5ff; min-height: 44px; padding: 9px 13px;
+}
+#chat-filter-reset { width: 100%; margin: 6px 0; }
+.message-page-button {
+  align-self: center; width: min(100%, 320px); flex-shrink: 0;
+}

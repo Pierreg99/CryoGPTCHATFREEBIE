@@ -35,6 +35,25 @@
           placeholder="⌕  Gespräche durchsuchen …"
           autocomplete="off"
         />
+        <details class="chat-filters" id="chat-filter-panel">
+          <summary>Suche verfeinern</summary>
+          <label for="chat-filter-chat">Gespräch</label>
+          <select id="chat-filter-chat"><option value="">Alle Gespräche</option></select>
+          <label for="chat-filter-from">Zuletzt geändert ab</label>
+          <input id="chat-filter-from" type="date" />
+          <label for="chat-filter-to">Zuletzt geändert bis</label>
+          <input id="chat-filter-to" type="date" />
+          <label for="chat-filter-project">Projektwissen enthält</label>
+          <input id="chat-filter-project" type="search" maxlength="100" placeholder="Lokale Projektnotizen" />
+          <label for="chat-filter-role">Nachrichtenrolle</label>
+          <select id="chat-filter-role">
+            <option value="">Alle Rollen</option>
+            <option value="user">Meine Nachrichten</option>
+            <option value="assistant">KI-Nachrichten</option>
+          </select>
+          <p id="chat-filter-summary" role="status">0 Gespräche</p>
+          <button id="chat-filter-reset" type="button">Filter zurücksetzen</button>
+        </details>
         <div class="side-label">GESPRÄCHE <span id="chat-count">0</span></div>
         <nav
           id="chat-list"

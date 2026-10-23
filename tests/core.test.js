@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { emptyStore, createChat, appendMessage, deleteChat, renameChat, searchChats, parseBackup, toOllamaMessages, setProjectContext, MAX_PROJECT_CONTEXT, MAX_MESSAGE_LENGTH } from '../src/core.js';
+import { emptyStore, createChat, appendMessage, deleteChat, renameChat, searchChats, filterChats, messagePage, parseBackup, toOllamaMessages, setProjectContext, MAX_PROJECT_CONTEXT, MAX_MESSAGE_LENGTH } from '../src/core.js';
 const T = '2026-10-19T18:00:00.000Z';
 test('leerer Store hat stabiles Schema', () => { const s = emptyStore(); assert.equal(s.version, 2); assert.equal(s.chats.length, 0); });
 test('Chat anlegen und Titel aus erster Nachricht ableiten', () => { let s = createChat(emptyStore(), 'a', 'Neuer Chat', T); s = appendMessage(s, 'a', 'user', '  Hallo CryGPTCHAT  ', 'm1', T); assert.equal(s.chats[0].title, 'Hallo CryGPTCHAT'); assert.equal(s.chats[0].messages[0].content, 'Hallo CryGPTCHAT'); });
@@ -64,4 +64,35 @@ test('Freigabe aus alten oder manipulierten Backups wird nicht automatisch aktiv
   s.version = 1;
   s.chats[0].shareProjectContext = true;
   assert.equal(parseBackup(s).chats[0].shareProjectContext, false);
+});
+
+test('v1.3 filters combine chat title, edited date, project notes and message role', () => {
+  let state = emptyStore();
+  state = createChat(state, 'a', 'Alpha', '2026-10-20T12:00:00.000Z');
+  state = appendMessage(state, 'a', 'user', 'Search term', 'a1', '2026-10-20T12:00:00.000Z');
+  state = setProjectContext(state, 'a', 'Lokales Projektwissen', false, '2026-10-20T12:00:00.000Z');
+  state = createChat(state, 'b', 'Beta', '2026-10-21T12:00:00.000Z');
+  state = appendMessage(state, 'b', 'assistant', 'Search term', 'b1', '2026-10-21T12:00:00.000Z');
+  assert.deepEqual(filterChats(state, 'Search term', { role: 'user' }).map(c => c.id), ['a']);
+  assert.deepEqual(filterChats(state, 'Search term', { role: 'assistant' }).map(c => c.id), ['b']);
+  assert.deepEqual(filterChats(state, '', { project: 'PROJEKT', from: '2026-10-20', to: '2026-10-20', role: 'user' }).map(c => c.id), ['a']);
+  assert.deepEqual(filterChats(state, '', { project: 'PROJEKT', from: '2026-10-21' }), []);
+  assert.deepEqual(filterChats(state, '', { chatId: 'b' }).map(c => c.id), ['b']);
+  assert.deepEqual(filterChats(state, 'Alpha', { role: 'assistant' }), []);
+  assert.deepEqual(searchChats(state, 'Alpha').map(c => c.id), ['a']);
+});
+test('v1.2 message window bounds DOM to at most 80 while preserving every stored message', () => {
+  const messages = Array.from({ length: 600 }, (_, id) => ({ id: String(id), content: String(id) }));
+  const recent = messagePage(messages);
+  assert.equal(recent.start, 520);
+  assert.equal(recent.items.length, 80);
+  assert.equal(recent.items[0].id, '520');
+  assert.equal(recent.hasNewer, false);
+  const older = messagePage(messages, recent.start);
+  assert.equal(older.start, 440);
+  assert.equal(older.items.length, 80);
+  assert.equal(older.hasOlder, true);
+  assert.equal(older.hasNewer, true);
+  assert.equal(messagePage(messages, 1, 10000).items.length, 1);
+  assert.equal(messages.length, 600);
 });

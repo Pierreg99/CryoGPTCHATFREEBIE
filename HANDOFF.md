@@ -1,19 +1,25 @@
-# HANDOFF · Nächste konkrete Arbeit
+# HANDOFF · Roadmap v1.2/v1.3
 
 Stand: 23. Oktober 2026.
 
-## Ist-Stand
+## Nachweisbarer Ausgangspunkt
 
-- PR #24 (Workbench) wurde in `main` integriert; CI danach grün: [Run 39955834851](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39955834851).
-- PR #25 (v1.1 Fehlerzentrale) wurde in `main` gemergt (Commit `1da0f1f`), während der Roadmap-Zählertest noch fehlschlug. Der erste main-Lauf war rot: [Run 40014461625](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/40014461625).
-- [PR #26](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/26) korrigiert den Test und synchronisiert Planungs-, Audit- und Accessibility-Dokumente.
-- Diagnose bleibt lokal und nur während der Sitzung; ein Retry löst keine automatische neue KI-Anfrage aus.
+- PR #24 und #25 wurden integriert; Fehlerzählungs-Fix [PR #26](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/26) wurde nach vollständig erfolgreichen PR-Checks integriert.
+- Der `main`-Lauf für `e7087138` bestand Node 20/22/24, Chromium und Release-Check: [Run 40015621693](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/40015621693).
+- Der aktuelle Entwicklungsbranch ergänzt v1.2 und v1.3; die neuen Checks gelten erst nach einem eigenen grünen Lauf.
 
-## Nächste Schritte
+## Implementiert auf Entwicklungsbranch
 
-1. Exakten Head von PR #26 mit Node 20/22/24, Chromium-E2E und reproduzierbarem Release-Test prüfen.
-2. Diff/Sicherheitsumfang kontrollieren und nur nach erfüllten Merge-Gates integrieren.
-3. Fehlerzentrale in M14 mit realem Screenreader zusammen mit M01–M13 und X01–X10 prüfen. [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) blockiert stabile 1.0.
-4. Danach Roadmap v1.2 Chat-Performance und v1.3 Suchfilter mit messbarer Abnahme umsetzen.
+- Maximal 80 Chat-Nachrichten gleichzeitig im DOM, 600 bleiben im Store/JSON-Backup. Bewusste ältere/neuere Navigation.
+- Gesprächssuche durch alle lokal gespeicherten Nachrichten mit gezieltem Sprung zum Treffer, auch außerhalb des sichtbaren Fensters.
+- Kombinierbare Sidebar-Filter für Gespräch, Änderungsdatum (UTC-Tag), lokale Projekt-Notizen und Rolle.
+- Regressionssuite: 600-Nachrichten-Fall, 2500-ms-Seitenbudget auf Chromium, Suche alter Nachrichten, Filterkombinationen.
 
-Paket bleibt `1.0.0-rc.1`. [PLAN](PLAN.md) · [PROGRESS](PROGRESS.md) · [AUDIT](AUDIT.md) · [HANDOVER](HANDOVER.md)
+## Nächste Gates
+
+1. Exakte PR-Head SHA prüfen: Node.js-Matrix, Playwright/axe, reproduzierbares Release, Differenzen und Security.
+2. Bei roten Checks reparieren und erneut am finalen Commit testen, kein Merge unter Fehlern.
+3. Manuelle WCAG-2.2-AA-Testfälle M01–M16, insbesondere Paging und Filter mit echtem Screenreader, ausführen. [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) blockiert stabile 1.0.
+4. Nach erfolgreichem Integrationsgate v1.4 lokale Projekt-Arbeitsräume mit Backup- und Migrationsgate vorbereiten.
+
+[PLAN](PLAN.md) · [PROGRESS](PROGRESS.md) · [AUDIT](AUDIT.md) · [HANDOVER](HANDOVER.md) · [ROADMAP](docs/roadmap/ROADMAP-100.md)
