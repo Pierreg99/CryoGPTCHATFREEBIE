@@ -24,9 +24,9 @@ Stand: 23. Oktober 2026.
 
 | Arbeit | Stand | Gate |
 | --- | --- | --- |
-| Fehler aus Speicher, Modellstatus, KI-Anfragen und Aktionen bündeln | Entwicklungsbranch | [src/error-center.js](src/error-center.js) |
+| Fehler aus Speicher, Modellstatus, KI-Anfragen und Aktionen bündeln | In `main` über PR #25; CI-Nachbesserung in PR #26 | [src/error-center.js](src/error-center.js) |
 | Speicherversuch/Modellstatus ausdrücklich wiederholen | Entwicklungsbranch | Keine impliziten Cloud- oder Schreiboperationen |
 | Kontextsichere Fehleranzeige, Fokusrückgabe und Begrenzung | Entwicklungsbranch | Node- und Browser-Tests auf exaktem PR-Head |
 | Realer Screenreader-Test der Fehlerzentrale | offen | M14 im [Accessibility-Bericht](docs/accessibility-report.md) |
 
-PR-CI (Node 20/22/24, Chromium, Release-Verifikation) und Review abwarten. Das REQUIRED-Gate aus Issue #22 bleibt unverändert offen. Danach v1.2 Performance und v1.3 Suche priorisieren.
+PR #25 wurde trotz roter Roadmap-Assertion nach `main` integriert. Die angepasste Statuszählung und Dokumentation müssen im Reparatur-PR #26 auf dem finalen Head unter Node 20/22/24 und Chromium geprüft werden. Das REQUIRED-Gate aus Issue #22 bleibt unverändert offen. Danach v1.2 Performance und v1.3 Suche priorisieren.

@@ -12,7 +12,7 @@ CryoGPTCHATFREEBIE ist ein lokaler Einzelbenutzer-KI-Workspace mit optionalen Ol
 
 ## Architektur und Darstellung
 
-`src/app.js` verwaltet Store und Modell-/Chat-Lebenszyklus. `src/workspace.js` verwaltet die acht Ansichten. `src/workbench.js` ergänzt Startbereich, Befehlssuche, Gesprächssuche und Fokusmodus über bestehende Aktionen und Events. `src/workbench.css` wird als abschließende Shell-Schicht nach den vorhandenen Komponentenstyles geladen. Im Feature-Branch v1.1 ergänzt `src/error-center.js` eine flüchtige Fehlerwarteschlange (maximal 20, `textContent`-Darstellung) und sichere, nur manuell ausgeführte Retry-Aktionen. Keine neue Laufzeitabhängigkeit.
+`src/app.js` verwaltet Store und Modell-/Chat-Lebenszyklus. `src/workspace.js` verwaltet die acht Ansichten. `src/workbench.js` ergänzt Startbereich, Befehlssuche, Gesprächssuche und Fokusmodus über bestehende Aktionen und Events. `src/workbench.css` wird als abschließende Shell-Schicht nach den vorhandenen Komponentenstyles geladen. Seit PR #25 ergänzt `src/error-center.js` eine flüchtige Fehlerwarteschlange (maximal 20, `textContent`-Darstellung) und sichere, nur manuell ausgeführte Retry-Aktionen. Keine neue Laufzeitabhängigkeit.
 
 Die Befehlssuche startet keine KI-Anfragen. Fokuspräferenz: `cryo-focus-v1` in localStorage, nicht im Chat-Backup. Suchtext bleibt im Arbeitsspeicher. [Details und Prüfumgebung](docs/workbench-overhaul.md).
 

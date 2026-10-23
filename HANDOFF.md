@@ -1,20 +1,19 @@
 # HANDOFF · Nächste konkrete Arbeit
 
-Stand: 23. Oktober 2026. Die Workbench liegt seit PR #24 in `main`; Fehlerzentrale v1.1 ist in [PR #25](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/25) auf `feat/error-center-v1-1-20261023`.
+Stand: 23. Oktober 2026.
 
-## Umgesetzt (Branch, noch kein Merge)
+## Ist-Stand
 
-- Sitzungsbasierte Fehlerzentrale für Speicherung, Modellstatus, KI-Antwort und Aktionen.
-- Kontextbezogene Hinweise, bewusste Wiederholungen ohne automatische KI-Generierung, Löschfunktionen.
-- Neue Node-/Browser-Regressionstests, Roadmap-Status als teilweise umgesetzt.
+- PR #24 (Workbench) wurde in `main` integriert; CI danach grün: [Run 39955834851](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39955834851).
+- PR #25 (v1.1 Fehlerzentrale) wurde in `main` gemergt (Commit `1da0f1f`), während der Roadmap-Zählertest noch fehlschlug. Der erste main-Lauf war rot: [Run 40014461625](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/40014461625).
+- [PR #26](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/26) korrigiert den Test und synchronisiert Planungs-, Audit- und Accessibility-Dokumente.
+- Diagnose bleibt lokal und nur während der Sitzung; ein Retry löst keine automatische neue KI-Anfrage aus.
 
 ## Nächste Schritte
 
-1. PR #25 auf exaktem Head in Node 20/22/24, Playwright und Release-Verify testen. Der erste CI-Lauf fand eine veraltete Statuszählung in `tests/roadmap-data.test.js`, die im Folgecommit korrigiert wurde.
-2. Browser-Tests inklusive axe prüfen, Diff/Sicherheitsumfang reviewen und nur bei erfüllten CI-/Repository-Gates mergen.
-3. Fehlerzentrale M14 und weitere M01–M13 sowie X01–X10 mit realem Screenreader manuell prüfen. [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) blockiert weiterhin stabile 1.0.
-4. Nächste Roadmap-Funktionen v1.2 (große Chatverläufe) und v1.3 (Suchfilter) nach der Integration und Messung beginnen.
+1. Exakten Head von PR #26 mit Node 20/22/24, Chromium-E2E und reproduzierbarem Release-Test prüfen.
+2. Diff/Sicherheitsumfang kontrollieren und nur nach erfüllten Merge-Gates integrieren.
+3. Fehlerzentrale in M14 mit realem Screenreader zusammen mit M01–M13 und X01–X10 prüfen. [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) blockiert stabile 1.0.
+4. Danach Roadmap v1.2 Chat-Performance und v1.3 Suchfilter mit messbarer Abnahme umsetzen.
 
-Paketversion bleibt `1.0.0-rc.1`. Keine automatische Cloud-Retry, kein Stable-Release ohne manuelle Abnahme.
-
-[PLAN](PLAN.md) · [PROGRESS](PROGRESS.md) · [AUDIT](AUDIT.md) · [HANDOVER](HANDOVER.md)
+Paket bleibt `1.0.0-rc.1`. [PLAN](PLAN.md) · [PROGRESS](PROGRESS.md) · [AUDIT](AUDIT.md) · [HANDOVER](HANDOVER.md)

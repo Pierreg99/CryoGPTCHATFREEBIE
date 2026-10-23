@@ -15,11 +15,11 @@ Stand: 23. Oktober 2026.
 
 Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/workbench-overhaul.md). PR-CI und Merge-Status müssen getrennt am konkreten Commit geprüft werden.
 
-## V1.1 · Fehlerzentrale (PR #25, nicht gemergt)
+## V1.1 · Fehlerzentrale (PR #25 integriert; PR #26 repariert CI-Assertion)
 
 - Neue Diagnosen sind nur im Arbeitsspeicher (maximal 20, ein Eintrag je Bereich) und enthalten keine automatischen Berichte an externe Dienste.
 - Diagnoseeinträge werden mit `textContent` dargestellt; Meldungslänge und Bereichsbezeichner sind beschränkt.
 - Ein Retry erfordert Nutzerklick. Modell-Retry prüft nur den Status; lokale Speicherung versucht nur den aktuellen Stand erneut zu sichern. Unterbrochene Cloud-Anfragen werden ausdrücklich **nicht** erneut ausgelöst.
 - Ein Eintrag bleibt beim erneuten Fehler offen; erfolgreiche Modellstatus-Prüfung oder Speicherung entfernt ihn.
-- Neue Node-Tests, Playwright-Browserfälle und manuelle Prüfung M14 sind angelegt. CI-/AT-Ergebnisse dieser Änderung erst am finalen PR-Head bewerten.
+- Neue Node-Tests, Playwright-Browserfälle und manuelle Prüfung M14 sind angelegt. Der initiale `main`-Lauf nach PR #25 scheiterte an einer veralteten Roadmap-Zählung. PR #26 passt die Erwartung auf 8 implementiert / 4 teilweise / 88 geplant an. CI-/AT-Ergebnisse erst am finalen Fix-PR-Head bewerten.
 - Keine Änderung der Cloud-Zustimmungsgrenzen, des Servers außerhalb der expliziten neuen statischen Modul-URL oder des Release-Gates.
