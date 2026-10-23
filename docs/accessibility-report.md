@@ -70,6 +70,7 @@ Die Browser-Suite verwendet die Tags `wcag2a`, `wcag2aa`, `wcag21aa` und `wcag22
 | M11 | Befehlssuche | Strg+K/Cmd+K, Suchfeld, Trefferzahl, Pfeiltasten, Enter, Escape und Fokusrückgabe mit echtem Screenreader | offen |
 | M12 | Gesprächssuche | Trefferstatus, nächste/vorherige Nachricht, sichtbare Auswahl, Escape und Chatwechsel | offen |
 | M13 | Fokusmodus | Seitenleiste auf Desktop aus-/einblenden, gespeicherte Präferenz, Rückkehr über Befehlssuche und mobile Navigation | offen |
+| M14 | Fehlerzentrale | Modellstatus-Fehler simulieren, Dialog öffnen, Status ansagen, Retry/Entfernen bedienen, Escape und Fokusrückgabe, mobile Darstellung | offen |
 
 ### Querschnittsprüfungen
 
@@ -105,7 +106,7 @@ Jeder echte Befund erhält eine eindeutige ID und wird hier oder in einem verlin
 
 ## Exit-Kriterien für stabile 1.0
 
-- [ ] Alle M01–M10-Kernflows in mindestens einer dokumentierten realen Screenreader-/Browser-Kombination geprüft.
+- [ ] Alle M01–M14-Kernflows in mindestens einer dokumentierten realen Screenreader-/Browser-Kombination geprüft.
 - [ ] X01–X10 vollständig bewertet; nicht anwendbare Punkte begründet.
 - [ ] Blocker und Major-Befunde behoben und erneut getestet.
 - [ ] Automatisierte Node-, Browser- und Release-Checks nach den letzten Fixes erfolgreich.

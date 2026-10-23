@@ -15,6 +15,13 @@ Prüfbarer Kandidat für das 1.0-Ziel. Der folgende Stand umfasst auch die histo
 - [x] Nachrichten kopieren; Senden per Enter und Zeilenumbruch per Shift+Enter.
 - [x] Unicode-Inhalte einschließlich eigener Emojis beim Speichern, Neuladen und JSON-Export erhalten.
 
+### Fehlerzentrale v1.1 · PR #25 integriert (CI-Nachprüfung in PR #26 und manuelle Abnahme offen)
+
+- [ ] Vollständige Qualitätssicherung und Integration des Entwicklungsmeilensteins.
+- [x] Temporäre, kontextbezogene Problemübersicht für Speicherung, Modellstatus, Chat und Aktionen implementiert.
+- [x] Bewusste Wiederholungen ohne automatische erneute KI-Anfrage implementiert.
+- [x] Node- und Browser-Testfälle ergänzt; Ergebnisse am endgültigen PR-Commit gesondert zu prüfen.
+
 ### Workbench-Überarbeitung · 23.10.2026
 
 - [x] Neue zweispaltige Startansicht mit tatsächlichen Gesprächszahlen und aktivem Modellmodus.
