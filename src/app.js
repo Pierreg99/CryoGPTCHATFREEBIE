@@ -1,5 +1,6 @@
 import { setupAccessibility } from "./accessibility.js";
 import { setupWorkbench } from "./workbench.js";
+import { createErrorCenter } from "./error-center.js";
 import { setupBackupRestore } from "./backup-ui.js";
 import { refineInterface } from "./interface-polish.js";
 import { confirmAction, requestText } from "./dialogs.js";
@@ -32,6 +33,7 @@ let streamController = null,
   streamedText = "",
   persistence = null;
 const storageWarnings = [];
+const errorCenter = createErrorCenter();
 
 function notice(message) {
   const banner = el("notice");
@@ -68,6 +70,11 @@ try {
   storageWarnings.push(
     "Vorhandene Daten konnten nicht gelesen werden. Bitte erst dein altes Backup sichern und reparieren.",
   );
+  errorCenter.report({
+    scope: "storage",
+    title: "Lokale Daten nicht lesbar",
+    detail: "Speichern bleibt gesperrt. Vorhandene Daten sichern und das Backup prüfen.",
+  });
 }
 
 function persist() {
@@ -75,7 +82,20 @@ function persist() {
     notice("Speichern gesperrt: Datenproblem. Bitte vorhandene Daten sichern.");
     return;
   }
-  persistence.save(store).catch((error) => notice(error.message));
+  return persistence.save(store).then(
+    () => errorCenter.resolve("storage"),
+    () => {
+      const message = "Lokale Änderungen konnten nicht gespeichert werden.";
+      notice(message);
+      errorCenter.report({
+        scope: "storage",
+        title: "Speicherfehler",
+        detail: "Die Änderungen sind möglicherweise nur im Arbeitsspeicher. Bitte erst sichern oder Speicherzugriff prüfen.",
+        retryLabel: "Erneut speichern",
+        retry: () => persist(),
+      });
+    },
+  );
 }
 function active() {
   return store.chats.find((c) => c.id === store.activeChatId) || null;
@@ -92,6 +112,11 @@ function mutate(fn) {
     return true;
   } catch (error) {
     notice(error.message);
+    errorCenter.report({
+      scope: "action",
+      title: "Aktion fehlgeschlagen",
+      detail: error.message,
+    });
     return false;
   }
 }
@@ -231,6 +256,7 @@ async function refreshModels() {
     if (!res.ok) throw new Error("Server nicht erreichbar");
     const data = await res.json();
     if (request !== modelRefreshSerial || restoring) return;
+    errorCenter.resolve("models");
     if (typeof data.version === "string")
       el("app-version").textContent =
         (data.version.includes("-rc.")
@@ -252,6 +278,13 @@ async function refreshModels() {
     if (request !== modelRefreshSerial || restoring) return;
     models = [];
     el("status").textContent = "Keine KI-Verbindung";
+    errorCenter.report({
+      scope: "models",
+      title: "Modellverbindung fehlgeschlagen",
+      detail: "Der lokale Status-Endpunkt antwortet nicht. Notizen bleiben verfügbar.",
+      retryLabel: "Verbindung erneut prüfen",
+      retry: () => refreshModels(),
+    });
   }
   const picker = el("model");
   picker.replaceChildren();
@@ -639,6 +672,13 @@ el("composer").addEventListener("submit", async (e) => {
         );
       }
       notice("KI-Anfrage unterbrochen: " + error.message);
+      errorCenter.report({
+        scope: "chat",
+        title: "KI-Antwort unterbrochen",
+        detail: "Eventuell empfangener Text wurde erhalten. Erneutes Senden erfolgt ausschließlich manuell und kann Kosten verursachen.",
+        retryLabel: "Modellverbindung prüfen",
+        retry: () => refreshModels(),
+      });
     }
   } finally {
     sending = false;

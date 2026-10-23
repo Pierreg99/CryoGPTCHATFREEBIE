@@ -120,11 +120,13 @@ Von lokalem Experiment zu klar dokumentiertem Einzelbenutzer-Workspace.
 
 Datenbeständigkeit, UX und vorhersagbaren Betrieb etablieren.
 
-#### Geplant v1.1 · Fehlerzentrale
+#### Teilweise umgesetzt v1.1 · Fehlerzentrale
 
 **Lieferobjekt:** Kontextbezogene UI-Fehler und Wiederholungsaktionen bereitstellen. **Abnahme:** Fehlerfälle reproduzierbar sichtbar.
 
-- [ ] Entwicklungsmeilenstein vollständig abschließen.
+- [ ] Entwicklungsmeilenstein vollständig abschließen; aktuelle PR-CI und manuellen Screenreader-Flow abnehmen.
+- [x] Sitzungsbasierte Fehlerzentrale für Speicher, Modellstatus, Chat und Aktionen mit kontextbezogenen Hinweisen.
+- [x] Nur ausdrücklich angeklickte, sichere Wiederholungen; kein automatischer Modell-Request.
 
 #### Geplant v1.2 · Chat-Performance
 

@@ -72,6 +72,7 @@ const allow = new Set([
   "/src/recovery-storage.js",
   "/src/workspace.js",
   "/src/workbench.js",
+  "/src/error-center.js",
   "/src/workbench.css",
   "/src/interface-polish.js",
   "/src/icons.js",

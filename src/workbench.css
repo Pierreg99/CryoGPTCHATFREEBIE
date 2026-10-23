@@ -1260,3 +1260,60 @@ textarea::placeholder {
     padding-bottom: 18px;
   }
 }
+
+
+/* v1.1: bounded, keyboard-accessible, local-only issue center */
+#error-center-open {
+  min-width: 44px;
+  min-height: 44px;
+  gap: 7px;
+}
+#error-center-count {
+  font-variant-numeric: tabular-nums;
+  color: #f2dbff;
+}
+.error-center-dialog {
+  width: min(540px, calc(100vw - 24px));
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  padding: 24px;
+  border: 1px solid #76629b;
+  border-radius: 16px;
+  background: #171a24;
+  color: #f0edf8;
+  box-shadow: 0 24px 80px #000b;
+}
+.error-center-dialog::backdrop { background: #06070bc2; }
+.error-center-heading, .error-center-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.error-center-heading { justify-content: space-between; }
+.error-center-heading h2 { font-size: 21px; margin: 0; }
+.error-center-dialog p { line-height: 1.6; }
+#error-center-help { font-size: 13px; color: #cfcee4; }
+.error-center-entry {
+  margin: 12px 0;
+  padding: 14px;
+  border: 1px solid #494258;
+  border-radius: 10px;
+  background: #212330;
+  overflow-wrap: anywhere;
+}
+.error-center-entry h3 { margin: 0 0 8px; font-size: 15px; }
+.error-center-entry p { margin: 0 0 12px; font-size: 13px; }
+.error-center-dialog button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #8a7db7;
+  border-radius: 7px;
+  color: #f5f0ff;
+  background: #342a48;
+}
+#error-center-clear { margin-top: 12px; }
+@media (max-width: 600px) {
+  #error-center-open .error-label { display: none; }
+  .error-center-dialog { padding: 15px; }
+}

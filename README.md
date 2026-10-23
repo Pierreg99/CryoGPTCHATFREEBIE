@@ -66,6 +66,7 @@ Der Cryo-Neon-Workspace bietet acht Ansichten: Chat, Projektwissen, Hyperfocus, 
 | Gesprächssuche | **Im Chat suchen** im geöffneten Gespräch; passende Nachrichten vorwärts und rückwärts durchgehen |
 | Fokusmodus | **Fokus** auf Desktop blendet im Chat die Seitenleiste aus; die Einstellung wird lokal gespeichert |
 | Startbereich | Tatsächliche Gesprächs-/Nachrichtenzahlen, aktiver Modus und vier vorbereitete Chat-Entwürfe |
+| Fehlerzentrale (v1.1 in Entwicklung) | Probleme in der Sitzung einsehen; Modellstatus oder lokale Speicherung bewusst erneut prüfen. Keine automatische Chat-Anfrage und keine Telemetrie. |
 
 [Workbench-Anleitung und Architektur](docs/workbench-overhaul.md) · [Befehlssuche als Screenshot](docs/screenshots/commands.png)
 
