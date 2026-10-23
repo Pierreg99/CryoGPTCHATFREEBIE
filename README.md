@@ -66,6 +66,7 @@ Der Cryo-Neon-Workspace bietet acht Ansichten: Chat, Projektwissen, Hyperfocus, 
 | Gesprächssuche | **Im Chat suchen** im geöffneten Gespräch; Treffer werden auch in momentan ausgeblendeten älteren Nachrichten gefunden |
 | Nachrichtenfenster v1.2 (in Abnahme) | Höchstens 80 Chat-Nachrichten gleichzeitig im DOM; ältere/neuere Seiten ausdrücklich anwählbar, gesamter Verlauf bleibt gespeichert |
 | Suchfilter v1.3 (in Abnahme) | Gespräch, Änderungsdatum, lokales Projektwissen und Rolle kombinieren; nur lokale Daten, keine Cloud-Anfrage |
+| Passwort-Backups v1.6 (in Abnahme) | Optionaler lokaler AES-256-GCM-Export mit PBKDF2-SHA-256; verschlüsselte Importe erst nach Passwort und erneuter Vorschau. Passwort ist nicht wiederherstellbar. |
 | Projekt-Arbeitsräume v1.4 (in Abnahme) | Mehrere lokale Projekte mit privaten Notizen; Chatzuordnung und Projektfilter; Backup-Schema 3 mit Migration aus 1/2 |
 | Fokusmodus | **Fokus** auf Desktop blendet im Chat die Seitenleiste aus; die Einstellung wird lokal gespeichert |
 | Startbereich | Tatsächliche Gesprächs-/Nachrichtenzahlen, aktiver Modus und vier vorbereitete Chat-Entwürfe |

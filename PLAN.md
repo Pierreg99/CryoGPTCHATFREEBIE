@@ -60,3 +60,14 @@ Danach v1.4: mehrere lokale Projekträume mit gesichertem JSON-Roundtrip; Datenm
 | Release | CI-Matrix Node 20/22/24, Browser, reproducible release und manueller Flow M18 | Stable 1.0 durch Issue #22 weiterhin blockiert |
 
 Migrationsmatrix: [docs/schema-migration.md](docs/schema-migration.md). Nächster größerer Entwicklungsblock bleibt v1.6 optionale sichere Backup-Verschlüsselung; diese darf nicht ohne gesondertes Cryptography-Review als fertig gelten.
+
+## Roadmap v1.6 · Lokale Backup-Verschlüsselung
+
+| Änderung | Gate |
+| --- | --- |
+| AES-256-GCM; PBKDF2-SHA-256, 600.000 Iterationen; neue Salt-/Nonce-Zufallswerte je Export | Falsches Passwort, manipulierte Ciphertexte und wiederholte Exporte automatisiert prüfen |
+| Passwortexport und lokaler Import-Unlock vor bisheriger Vorschau | Browser-Roundtrip, Neuladen, Undo; kein stiller Restore und keine Provider-Anfrage |
+| Klartext-JSON-Export weiterhin verfügbar, Bestandsdaten bleiben lokal unverschlüsselt | Grenzen in README, Anleitung und Warnhinweisen darstellen |
+| Geschütztes Format maximal 4 MiB, Klartext maximal 3 MiB | Malformed-/Oversize-Rejection, no untrusted algorithm or KDF parameters |
+
+**Abnahme:** PR-CI auf finalem Head, Review und manuelle Screenreader-Probe M19 offen. Stable-1.0 bleibt durch Issue #22 gesperrt.

@@ -345,3 +345,65 @@ test("restore of the same chat ID resets the viewed window even when message cou
   await expect(page.locator('.message[data-message-id="danach-159"]')).toHaveCount(1);
   await expect(page.locator('.message[data-message-id="danach-0"]')).toHaveCount(0);
 });
+
+test("v1.6 encrypted backup stays local, rejects wrong passwords and restores after explicit approval", async ({ page }) => {
+  await original(page);
+  const pw = "Langes-Gesichertes-Passwort-2026!";
+  let modelCalls = 0;
+  await page.route("**/api/chat/**", route => { modelCalls++; return route.abort(); });
+  await page.locator("#encrypted-export").click();
+  await expect(page.locator("#encrypt-dialog")).toBeVisible();
+  await page.locator("#encrypt-password").fill(pw);
+  await page.locator("#encrypt-confirm").fill(pw);
+  const downloading = page.waitForEvent("download");
+  await page.locator("#encrypt-submit").click();
+  const download = await downloading;
+  const encrypted = await readFile(await download.path(), "utf8");
+  expect(encrypted).toContain("cryogptchat-encrypted-backup");
+  expect(encrypted).not.toContain("Original bleibt erhalten");
+  await expect(page.locator("#encrypt-dialog")).toHaveCount(0);
+  await page.locator("#new-chat").click();
+  await page.locator("#prompt").fill("Nur vor Import");
+  await page.locator("#send").click();
+  await expect(page.locator(".message pre")).toHaveText("Nur vor Import");
+  await page.locator("#import-file").setInputFiles({
+    name: "encrypted.json", mimeType: "application/json", buffer: Buffer.from(encrypted),
+  });
+  await expect(page.locator("#restore-unlock-section")).toBeVisible();
+  await expect(page.locator("#restore-apply")).toBeDisabled();
+  await page.locator("#restore-password").fill("Falsches-Passwort-2026!");
+  await page.locator("#restore-unlock").click();
+  await expect(page.locator("#restore-status")).toContainText("Passwort falsch oder Datei verändert");
+  await expect(page.locator("#restore-apply")).toBeDisabled();
+  await expect(page.locator("#restore-password")).toHaveValue("");
+  await page.locator("#restore-password").fill(pw);
+  await page.locator("#restore-unlock").click();
+  await expect(page.locator("#restore-status")).toContainText("Prüfung abgeschlossen");
+  await expect(page.locator("#restore-unlock-section")).toBeHidden();
+  await expect(page.locator("#restore-apply")).toBeDisabled();
+  await page.locator("#restore-approve").check();
+  await page.locator("#restore-apply").click();
+  await expect(page.locator("#restore-dialog")).toHaveCount(0);
+  await expect(page.locator(".message pre")).toHaveText("Original bleibt erhalten");
+  await page.reload();
+  await expect(page.locator(".message pre")).toHaveText("Original bleibt erhalten");
+  await expect(page.locator("#restore-checkpoint")).toBeEnabled();
+  await page.locator("#restore-checkpoint").click();
+  await expect(page.locator("#restore-status")).toContainText("Prüfung abgeschlossen");
+  await commit(page);
+  await expect(page.locator(".message pre")).toHaveText("Nur vor Import");
+  expect(modelCalls).toBe(0);
+});
+test("v1.6 export requires matching passwords and does not download on mismatch", async ({ page }) => {
+  await original(page);
+  await page.locator("#encrypted-export").click();
+  await page.locator("#encrypt-password").fill("Ein-starkes-Passwort-123");
+  await page.locator("#encrypt-confirm").fill("Ein-anderes-Passwort-321");
+  await page.locator("#encrypt-submit").click();
+  await expect(page.locator("#encrypt-status")).toContainText("stimmen nicht überein");
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#encrypt-dialog")).toHaveCount(0);
+  const scan = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+  expect(scan.violations).toEqual([]);
+});

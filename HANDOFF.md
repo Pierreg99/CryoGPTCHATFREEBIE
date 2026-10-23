@@ -37,3 +37,10 @@ Stand: 23. Oktober 2026.
 2. Das Schema-Migrationshandbuch und die synthetischen `tests/fixtures/backup-schema-v*.json` gegen Parser/Restore-Tests prüfen.
 3. Eine reale manuelle Wiederherstellungsprobe unter M18 sowie das übergreifende WCAG-2.2-AA-Issue #22 bleiben separat offen.
 4. Danach v1.6 (optionale Backup-Verschlüsselung mit KDF) als eigener Sicherheitsmeilenstein mit Bedrohungsmodell angehen; keinesfalls ungeprüfte Kryptographie shippen.
+
+## v1.6 · Nächster Integrationsschritt
+
+1. Neuen PR für `src/encrypted-backup.js`, Export-/Unlock-UI, Node- und Browser-Tests auf dem exakten Head prüfen.
+2. Kritische Regressionen: falsches Passwort / Ciphertext-Manipulation ersetzt niemals gespeicherte Daten; erlaubte Restore-Vorschau und Undo sind weiterhin manuell.
+3. Alle Pflichtjobs, Review-Anforderungen und Branch-Policy prüfen, dann erst mergen; CI-Fehler reparieren statt umgehen.
+4. M19 sowie Issue #22 bleiben echte menschliche Prüfungen. Kein Stable-1.0-Tag.

@@ -26,7 +26,7 @@ test("roadmap API data preserves all 100 deliverables and acceptance gates acros
     ["implemented", "partial", "planned"].map(
       (status) => milestones.filter((m) => m.status === status).length,
     ),
-    [8, 8, 84],
+    [8, 9, 83],
   );
 });
 test("missing, duplicate or incomplete roadmap entries fail instead of publishing misleading data", () => {

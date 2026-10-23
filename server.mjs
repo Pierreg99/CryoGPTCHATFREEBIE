@@ -69,6 +69,7 @@ const allow = new Set([
   "/src/accessibility.js",
   "/src/backup.js",
   "/src/backup-ui.js",
+  "/src/encrypted-backup.js",
   "/src/recovery-storage.js",
   "/src/workspace.js",
   "/src/workbench.js",

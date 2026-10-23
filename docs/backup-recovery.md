@@ -4,7 +4,7 @@ Roadmap v0.8 ist für das bestehende Chat-/Projektwissen-Format umgesetzt. Die A
 
 ## Ablauf
 
-1. **Import** wählen und JSON-Datei bis 3 MiB auswählen.
+1. **Import** wählen und JSON-Datei bis 3 MiB auswählen. Alternativ ein verschlüsseltes Backup bis 4 MiB: Passwort zuerst lokal eingeben, dann erfolgt die normale Vorschau. [Verschlüsselungsanleitung](encrypted-backups.md).
 2. Der Assistent führt einen Dry-run durch. Er zeigt Quell-/Zielformat, aktuelle und importierte Chatanzahl, Nachrichten, Notizen, vorhandene Kontextfreigaben, Fehlerpfade und Normalisierungen. Bis hierhin wird nichts ersetzt.
 3. Bei Bedarf den aktuellen Stand und einen redigierten Prüfbericht herunterladen. Der Bericht enthält keine Nachrichten oder Projektnotizen.
 4. Die Vorschau ausdrücklich bestätigen und **Backup importieren** wählen. Version 1 und 2 werden nach Version 3 migriert; alte Freigaben aus Version 1 werden nicht aktiviert. In Version 2 vorhandene explizite Kontextfreigaben werden angezeigt und erhalten. Der Import selbst erzeugt keine Modellanfrage.
@@ -29,3 +29,7 @@ Bereits geplante Agenten-/Hyperfocus-/GitHub-Vorschauen werden beim Restore auch
 ## Nachweise
 
 `tests/backup-recovery.test.js` und `tests/schema-migration.test.js` prüfen v1/v2/v3 anhand versionierter Fixtures, UTF-8-Größenlimits, redigierte Fehlerberichte, atomaren Commit/Rollback, Quota-Fehler, konkurrierende Änderungen, Fallback und Löschen des Punkts. `e2e/recovery.spec.js` führt echte IndexedDB-/Browser-Flows aus: Vorschau ohne Mutation, Import/Reload/Undo, Altformat, kaputte Datei und Schreibfehler. Weitere Restore-E2E prüfen das Verwerfen alter Freigaben und die geschützte Hyperfocus-Historie.
+
+## Passwortgeschützte Backups v1.6
+
+Die zusätzlich angebotene Export-Schaltfläche erzeugt eine verschlüsselte JSON-Datei. Die Passwortabfrage geschieht lokal im Browser; eine Datei mit Verschlüsselungsformat wird beim Import zuerst entsperrt und erst anschließend wie bisher im Dry-run geprüft. Ein falsches Passwort oder veränderte Daten führen zu keiner Wiederherstellung. Der bestehende Standardexport und der lokale Speicher sind **nicht** verschlüsselt. Der Rücksetzpunkt bleibt wie bisher im Browserprofil unverschlüsselt. [Format, Schutzumfang und Risiken](encrypted-backups.md).

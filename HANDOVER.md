@@ -31,3 +31,7 @@ Ab Schema 3 enthält `src/core.js` eigenständige Projekte und `chat.projectId`.
 ## v1.5 · Migrationsmatrix
 
 `tests/schema-migration.test.js` lädt versionierte synthetische Backup-Fixtures 1/2/3, prüft deterministische Migration nach Schema 3 sowie Freigaben, Projektreferenzen, redigierte Negativberichte und ein Restore/Undo im localStorage-Fallback. Die Dokumentation `docs/schema-migration.md` erklärt die Grenzen des Downgrades auf alte Clients. Keine automatische verlustfreie Konvertierung von Schema-3-Projekten auf Schema 2. Releaseversion bleibt `1.0.0-rc.1`.
+
+## v1.6 · Verschlüsselte Backups
+
+`src/encrypted-backup.js` implementiert ausschließlich Dateiverschlüsselung mit Browser-WebCrypto (AES-256-GCM / PBKDF2-SHA-256), keine Verschlüsselung des laufenden Speichers. `src/backup-ui.js` ergänzt separate Export-Passworteingabe und Entsperrung vor dem alten Restore-Dialog. Die vorhandene JSON-Vorschau, Importfreigabe und lokale Rücksetzfunktion bleiben die verbindlichen Daten-Gates. [Format und Bedienung](docs/encrypted-backups.md). Neue manuelle AT-Matrix M19 offen; bestehende Cloud-Opt-ins unverändert.
