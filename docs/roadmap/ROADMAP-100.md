@@ -165,11 +165,16 @@ Datenbeständigkeit, UX und vorhersagbaren Betrieb etablieren.
 
 **Nachweise:** [Migrationsmatrix](../schema-migration.md), [Fixtures](../../tests/fixtures/), [Schema-Regressionen](../../tests/schema-migration.test.js).
 
-#### Geplant v1.6 · Lokalverschlüsselung
+#### Teilweise umgesetzt v1.6 · Lokalverschlüsselung
 
 **Lieferobjekt:** Optional verschlüsselte Backups mit Passwort-KDF und Warnungen. **Abnahme:** Falsches Passwort und Restore-E2E.
 
-- [ ] Entwicklungsmeilenstein vollständig abschließen.
+- [ ] Entwicklungsmeilenstein vollständig abschließen; PR-CI, reale Screenreader-Prüfung M19 und Sicherheitsreview abnehmen.
+- [x] Optionaler lokaler Backup-Export mit AES-256-GCM, PBKDF2-SHA-256 (600.000 Iterationen), jeweils neuem Salt und Nonce.
+- [x] Verschlüsselte Dateien vor der unveränderten Restore-Dry-run-/Zustimmungsstrecke passwortgestützt entsperren; Passwort und Klartext nicht serverseitig speichern.
+- [x] Regressionen für falsche Passwörter, modifizierte Dateien, Wiederherstellung und Rücksetzpunkt ergänzt.
+
+**Nachweise:** [Krypto-Modul](../../src/encrypted-backup.js), [Export-/Import-UI](../../src/backup-ui.js), [Tests](../../tests/encrypted-backup.test.js), [Anleitung](../encrypted-backups.md).
 
 #### Geplant v1.7 · Offline-Installierbarkeit
 

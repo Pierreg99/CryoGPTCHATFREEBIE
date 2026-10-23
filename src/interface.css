@@ -1087,3 +1087,47 @@
 .privacy strong {
   letter-spacing: 1px;
 }
+
+/* Optional v1.6 local encrypted backups. Passwords are never stored. */
+.encrypted-export-button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 10px;
+  min-height: 44px;
+  border: 1px solid #7764a0;
+  border-radius: 9px;
+  color: #efe6ff;
+  background: #241f37;
+  font-size: 11px;
+}
+.backup-password-label {
+  display: block;
+  margin: 14px 0 8px;
+  font-size: 12px;
+  color: #e0dbea;
+}
+.backup-password-label input {
+  display: block;
+  width: 100%;
+  margin-top: 7px;
+  padding: 12px;
+  border: 1px solid #7c7897;
+  background: #161b2a;
+  color: #f1f2ff;
+  border-radius: 8px;
+}
+#restore-unlock-section {
+  padding: 12px;
+  border: 1px solid #566781;
+  border-radius: 10px;
+  margin: 15px 0;
+  font-size: 12px;
+}
+#restore-unlock {
+  padding: 11px 14px;
+  min-height: 44px;
+  border: 1px solid #8c83b3;
+  color: #f5ebff;
+  background: #302845;
+  border-radius: 8px;
+}

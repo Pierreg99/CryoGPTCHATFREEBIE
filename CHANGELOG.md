@@ -15,6 +15,13 @@ Prüfbarer Kandidat für das 1.0-Ziel. Der folgende Stand umfasst auch die histo
 - [x] Nachrichten kopieren; Senden per Enter und Zeilenumbruch per Shift+Enter.
 - [x] Unicode-Inhalte einschließlich eigener Emojis beim Speichern, Neuladen und JSON-Export erhalten.
 
+### Roadmap v1.6 · Optionale Backup-Verschlüsselung (PR-CI und manuelle Abnahme offen)
+
+- [ ] Sicherheitsreview, Node/Chromium/Release-Gates und Screenreader-Fall M19 abschließen.
+- [x] AES-256-GCM mit einzigartigem zufälligem Salt (128 Bit) und IV (96 Bit), PBKDF2-SHA-256 mit 600.000 Iterationen.
+- [x] Passwortgeschützten Export und Entsperren vor Restore-Vorschau/Bestätigung ergänzt.
+- [x] Falsches Passwort, Manipulation, verschlüsselten Roundtrip und Rücksetzpunkt als Regressionen ergänzt.
+
 ### Roadmap v1.5 · Versionsmigration (Entwicklungsbranch)
 
 - [ ] Vollständige Qualitätssicherung und manuelle Wiederherstellungs-/Accessibility-Abnahme M18 ausstehend.

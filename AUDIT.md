@@ -52,3 +52,12 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 - Die App verwirft weiterhin unzulässige Fremd-/Zukunftsversionen und verwaiste Projektzuordnungen. Fehlerberichte bleiben ohne Notiz- und Nachrichteninhalte.
 - Wiederherstellung (v3→v2-fixture→v3-Rücksetzpunkt) prüft Projekte/Chat-Zuordnungen. Quell-Backup vor einem Upgrade bleibt notwendig, denn ein alter v2-Client kann das neue v3-Format nicht direkt lesen.
 - Die Fixture-Daten sind künstlich. Keine tatsächlichen Nutzerbackups oder Live-Cloud-Provider im CI; manueller Browser-/Screenreader-Test M18 ausstehend.
+
+## v1.6 · Threat-Review-Kandidaten
+
+- Verschlüsselung erfolgt browserlokal durch WebCrypto; der serverseitige Node-Prozess erhält weder Passwort noch Backup. Die Datei enthält den expliziten Algorithmus, KDF-Kostenparameter, zufälligen Salt/IV und Ciphertext/Authentifizierungstag.
+- Der KDF-Aufwand ist fest, damit manipulierte Dateien keine extremen Parameter erzwingen. Importgröße und dekodierte Länge sind beschränkt; Änderungen der Daten oder falsches Passwort führen zu einheitlicher Entschlüsselungsfehlermeldung.
+- Passwörter werden nicht persistent gespeichert; JavaScript kann allerdings nicht garantieren, dass kurzzeitig gespeicherte Strings aus dem RAM sicher gelöscht sind.
+- Kein Schutz für bestehende IndexedDB/localStorage-Daten, Standard-JSON-Exporte, Restore-Checkpoints oder vom Nutzer anderswo gespeicherte Dateien. Kein Schutz gegen kompromittierten Browser/Host oder ein schwaches Passwort.
+- Der Restore-Dry-run mit expliziter Zustimmung und Undo läuft weiter; verschlüsselte Dateien werden erst nach Entsperren der regulären Schema-Validierung unterzogen.
+- Offen: Node-/Browser-Gates, manuelle AT-Prüfung M19, ggf. unabhängige Cryptography Review.
