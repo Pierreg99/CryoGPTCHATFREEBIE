@@ -103,3 +103,11 @@ test('UTC date filter normalizes time-zone-offset timestamps from valid backups'
   assert.equal(filterChats(state, '', { to: '2026-10-20' }).length, 0);
   assert.deepEqual(filterChats(parseBackup(JSON.stringify(state)), '', { from: '2026-10-21', to: '2026-10-21' }).map(chat => chat.id), ['tz']);
 });
+
+test('timezone-less ISO date inputs have a deterministic UTC search day', () => {
+  const local = createChat(emptyStore(), 'local-day', 'Naive timestamp', '2026-10-21T23:30:00');
+  assert.deepEqual(filterChats(local, '', { from: '2026-10-21', to: '2026-10-21' }).map(c => c.id), ['local-day']);
+  assert.deepEqual(filterChats(local, '', { from: '2026-10-22' }), []);
+  const spaced = createChat(emptyStore(), 'space', 'Naive timestamp with space', '2026-10-21 23:30:00');
+  assert.deepEqual(filterChats(spaced, '', { to: '2026-10-21' }).map(c => c.id), ['space']);
+});

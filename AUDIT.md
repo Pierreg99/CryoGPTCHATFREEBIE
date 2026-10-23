@@ -33,3 +33,5 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 - Alle Texte werden weiterhin über `textContent` oder `Option` erstellt; Datum ist als UTC-ISO-Tag aus `updatedAt` definiert.
 - Performance-Budget des Browser-Testfalls: `<= 80` sichtbare Nachrichten und maximal 2500 ms für einen Seitenwechsel mit 600 gespeicherten Nachrichten auf dem CI-Chromium. Ein bestandener automatischer Test beweist noch keine unabhängige AT-Abnahme.
 - Bestehende Freigabe-, Backup-, Netzwerk- und Stabilitäts-Gates nicht ändern. PR-Checks auf dem finalen Head und reale AT-Fälle M15–M16 bleiben separate Gates.
+
+- Follow-up CodeAnt review: ISO-Zeitstempel ohne Offset werden bei der Datumssuche ausdrücklich als UTC behandelt. Tastatur-Paging überträgt den Fokus zum Nachfolgebutton; Pointer-Paging verzichtet auf zwangsweises Fokussieren und positioniert die neue Seite kontrolliert. Node-/Playwright-Regressionen ergänzt.

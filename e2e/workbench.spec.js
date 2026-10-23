@@ -270,3 +270,13 @@ test('paging keeps visible keyboard focus after re-render', async ({ page }) => 
   await page.keyboard.press("Enter");
   await expect(page.locator('[data-page="newer"]')).toBeFocused();
 });
+
+test('pointer paging does not steal focus after replacing the page', async ({ page }) => {
+  await offline(page);
+  await page.addInitScript(backup =>
+    localStorage.setItem("crygptchat.alpha.v1", JSON.stringify(backup)), largeBackup());
+  await page.goto("/");
+  await page.locator('[data-page="older"]').click();
+  await expect(page.locator('[data-page="older"]')).not.toBeFocused();
+  await expect(page.locator('.message[data-message-id="m-440"]')).toHaveCount(1);
+});
