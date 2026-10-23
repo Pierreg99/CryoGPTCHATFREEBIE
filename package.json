@@ -9,7 +9,8 @@
     "test": "node scripts/test.mjs",
     "test:e2e": "playwright test",
     "release:build": "node scripts/release.mjs",
-    "release:verify": "node scripts/release.mjs --verify"
+    "release:verify": "node scripts/release.mjs --verify",
+    "screenshots": "node scripts/screenshots.mjs"
   },
   "engines": {
     "node": ">=20"

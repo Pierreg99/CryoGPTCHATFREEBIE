@@ -1,4 +1,5 @@
 import { setupAccessibility } from "./accessibility.js";
+import { setupWorkbench } from "./workbench.js";
 import { setupBackupRestore } from "./backup-ui.js";
 import { refineInterface } from "./interface-polish.js";
 import { confirmAction, requestText } from "./dialogs.js";
@@ -670,6 +671,7 @@ setupAgentFlow({ el, active, notice });
 setupWorkspace({ el, notice, refreshModels, active });
 refineInterface({ el, active });
 setupAccessibility({ el, notice });
+setupWorkbench({ el, active, getStore: () => store, notice });
 setupBackupRestore({
   el,
   getStore: () => store,

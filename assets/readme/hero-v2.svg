@@ -1,70 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 490" role="img" aria-labelledby="title desc"><title id="title">CryoGPTCHATFREEBIE – Local First AI Workspace</title><desc id="desc">Futuristisches Cryo-Neon-Produktbanner mit stilisierter Chat-Oberfläche; bewusst eine Illustration, kein Screenshot.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
+<title id="title">CryoGPTCHATFREEBIE · Dein persönlicher AI Workspace</title>
+<desc id="desc">Illustration des überarbeiteten Cryo Workbench mit violetten Akzenten, gruppierter Navigation und Befehlssuche. Release Candidate 1.0.0-rc.1; kein Screenshot.</desc>
 <defs>
-<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#060c1d"/><stop offset=".55" stop-color="#0c1b34"/><stop offset="1" stop-color="#111330"/></linearGradient>
-<linearGradient id="cryo" x1="0" y1="0" x2="1" y2=".7"><stop stop-color="#71f7e6"/><stop offset=".5" stop-color="#66bcff"/><stop offset="1" stop-color="#a68aff"/></linearGradient>
-<linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#203451" stop-opacity=".98"/><stop offset="1" stop-color="#10172d" stop-opacity=".98"/></linearGradient>
-<radialGradient id="halo"><stop stop-color="#35dbe0" stop-opacity=".42"/><stop offset=".68" stop-color="#4c5cd5" stop-opacity=".10"/><stop offset="1" stop-color="#3c5ad3" stop-opacity="0"/></radialGradient>
-<pattern id="mesh" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0V44" fill="none" stroke="#4a8ab7" stroke-opacity=".13" stroke-width="1"/></pattern>
-<filter id="blur"><feGaussianBlur stdDeviation="19"/></filter>
-<filter id="soft"><feGaussianBlur stdDeviation="5"/></filter>
-<clipPath id="frame"><rect x="680" y="58" width="538" height="371" rx="22"/></clipPath>
+<linearGradient id="back" x2="1" y2="1"><stop stop-color="#101219"/><stop offset="1" stop-color="#1c182b"/></linearGradient>
+<linearGradient id="panel" x2="1" y2="1"><stop stop-color="#242032"/><stop offset="1" stop-color="#151820"/></linearGradient>
 </defs>
-<rect x="0" y="0" width="1280" height="490" rx="26" fill="url(#bg)" stroke="none" stroke-width="1"/>
-<rect x="0" y="0" width="1280" height="490" rx="26" fill="url(#mesh)" stroke="none" stroke-width="1"/>
-<circle cx="1027" cy="204" r="315" fill="url(#halo)"/><ellipse cx="1088" cy="384" rx="260" ry="38" fill="#2ae4d3" opacity=".12" filter="url(#blur)"/>
-<path d="M0 396C238 338 352 507 666 436" fill="none" stroke="#45cded" stroke-opacity=".16" stroke-width="2"/>
-<path d="M50 72h27m-13 -13v27" stroke="#78ddf2" stroke-width="2" opacity=".6"/>
-<path d="M630 425l17 -17 17 17 -17 17z" fill="none" stroke="#64e5de" opacity=".5"/>
-<path d="M1116 30l9 -9 9 9 -9 9z" fill="#82dbee" opacity=".7"/>
-<rect x="58" y="53" width="218" height="33" rx="16" fill="#123a4b" stroke="#3e9ea8" stroke-width="1"/>
-<circle cx="75" cy="69" r="5" fill="#71fbe0"/>
-<text x="90" y="75" font-size="12" fill="#abfdf1" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="1.5" font-weight="800">LOCAL-FIRST · 1.0.0-rc.1</text>
-<text x="55" y="177" font-size="86" fill="url(#cryo)" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="900" letter-spacing="-3">CRYO</text>
-<text x="56" y="256" font-size="77" fill="#f2f9ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="850" letter-spacing="-2">GPTCHAT</text>
-<text x="61" y="306" font-size="21" fill="#a4b9dc" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="3.2" font-weight="700">FREEBIE  /  AI WORKSPACE</text>
-<path d="M61 334H542" stroke="url(#cryo)" stroke-width="2" stroke-linecap="round"/>
-<text x="61" y="373" font-size="18" fill="#e1f0fd" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="600">Deine Chats. Deine Modelle. Deine Kontrolle.</text>
-<rect x="60" y="400" width="131" height="33" rx="16" fill="#163d45" stroke="#378b87" stroke-width="1"/>
-<text x="76" y="421" font-size="11" fill="#9dfff0" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="800" letter-spacing=".6">OLLAMA LOCAL</text>
-<rect x="199" y="400" width="138" height="33" rx="16" fill="#1b284a" stroke="#5975bb" stroke-width="1"/>
-<text x="214" y="421" font-size="11" fill="#c4d8ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="800" letter-spacing=".6">OPENAI OPT-IN</text>
-<rect x="346" y="400" width="161" height="33" rx="16" fill="#2a2146" stroke="#7756aa" stroke-width="1"/>
-<text x="361" y="421" font-size="11" fill="#e3c6ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="800" letter-spacing=".6">SKILLS + GODOT</text>
-<rect x="680" y="58" width="538" height="371" rx="22" fill="url(#glass)" stroke="#70cdeb" stroke-opacity=".62" stroke-width="1.5"/>
-<g clip-path="url(#frame)">
-<rect x="680" y="58" width="538" height="47" rx="0" fill="#182740" stroke="none" stroke-width="1"/>
-<circle cx="704" cy="82" r="5" fill="#ef8f99"/><circle cx="722" cy="82" r="5" fill="#f8cb88"/><circle cx="740" cy="82" r="5" fill="#72e1c9"/>
-<text x="769" y="88" font-size="13" fill="#d6eafd" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="800" letter-spacing="1">CRYO / PERSONAL WORKSPACE</text>
-<rect x="697" y="120" width="134" height="290" rx="14" fill="#0d192c" stroke="none" stroke-width="1"/>
-<rect x="711" y="137" width="105" height="30" rx="8" fill="#183f51" stroke="none" stroke-width="1"/>
-<text x="724" y="157" font-size="12" fill="#a9fae8" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="700">+ Neuer Chat</text>
-<text x="712" y="192" font-size="10" fill="#6d98bc" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="700" letter-spacing="1.7">GESPRÄCHE</text>
-<rect x="707" y="206" width="115" height="35" rx="7" fill="#24395a" stroke="none" stroke-width="1"/>
-<text x="717" y="228" font-size="12" fill="#f1f9ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="650">Projektideen</text>
-<text x="716" y="266" font-size="11" fill="#89a6c8" font-family="Inter,Segoe UI,Arial,sans-serif" >Agenten-Setup</text>
-<text x="716" y="298" font-size="11" fill="#89a6c8" font-family="Inter,Segoe UI,Arial,sans-serif" >Godot MCP</text>
-<text x="716" y="332" font-size="11" fill="#89a6c8" font-family="Inter,Segoe UI,Arial,sans-serif" >GitHub &amp; Skills</text>
-<rect x="708" y="366" width="109" height="25" rx="12" fill="#173b43" stroke="#327c81" stroke-width="1"/>
-<text x="722" y="382" font-size="10" fill="#8af4df" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="700">LOCAL FIRST</text>
-<rect x="848" y="119" width="354" height="34" rx="10" fill="#182b46" stroke="none" stroke-width="1"/>
-<text x="867" y="141" font-size="13" fill="#e1f2ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="750">Cryo Omega / Integration</text>
-<circle cx="1176" cy="136" r="6" fill="#76f7ce"/>
-<rect x="903" y="168" width="273" height="53" rx="11" fill="#2b385b" stroke="none" stroke-width="1"/>
-<text x="918" y="190" font-size="13" fill="#f2f8ff" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="650">Verbinde mein Projektwissen</text>
-<text x="918" y="207" font-size="11" fill="#bbcee8" font-family="Inter,Segoe UI,Arial,sans-serif" >mit passenden Skills.</text>
-<rect x="856" y="233" width="308" height="81" rx="12" fill="#133f4b" stroke="#2e7786" stroke-width="1"/>
-<circle cx="879" cy="254" r="11" fill="#56dec9" fill-opacity=".19" stroke="#64e8d3"/>
-<text x="874" y="259" font-size="12" fill="#94fff0" font-family="Inter,Segoe UI,Arial,sans-serif" >AI</text>
-<text x="900" y="255" font-size="12" fill="#88e7d9" font-family="Inter,Segoe UI,Arial,sans-serif" font-weight="800">Cryo Assistant</text>
-<text x="874" y="277" font-size="13" fill="#e4f8fa" font-family="Inter,Segoe UI,Arial,sans-serif" >Skill-Referenzen prüfen</text>
-<text x="874" y="296" font-size="11" fill="#abdae2" font-family="Inter,Segoe UI,Arial,sans-serif" >Vorschau vor jeder Freigabe.</text>
-<rect x="857" y="332" width="344" height="46" rx="10" fill="#15263f" stroke="#38577a" stroke-width="1"/>
-<text x="873" y="361" font-size="12" fill="#8caac6" font-family="Inter,Segoe UI,Arial,sans-serif" >Frage stellen oder Projekt planen …</text>
-<circle cx="1175" cy="355" r="13" fill="url(#cryo)"/>
-<path d="M1171 355h8m-3 -4l4 4-4 4" fill="none" stroke="#0c2031" stroke-width="2" stroke-linecap="round"/>
+<rect width="1280" height="440" rx="24" fill="url(#back)"/>
+<rect x="1" y="1" width="1278" height="438" rx="24" fill="none" stroke="#41364e"/>
+<g font-family="Segoe UI,Arial,sans-serif">
+<circle cx="56" cy="54" r="4" fill="#a5e7d3"/>
+<text x="72" y="59" font-size="12" letter-spacing="2" fill="#a5e7d3">LOCAL FIRST / PERSONAL AI</text>
+<text x="50" y="156" font-size="86" font-weight="750" letter-spacing="5" fill="#f1f3fa">CRYO<tspan fill="#b4a0ff">.</tspan></text>
+<text x="54" y="205" font-size="18" letter-spacing="3" fill="#c0b2ed">GPTCHATFREEBIE</text>
+<text x="54" y="264" font-size="29" font-weight="600" fill="#f1f3fa">Große Ideen.</text>
+<text x="54" y="303" font-size="29" font-weight="600" fill="#b4a0ff">Dein nächster Schritt.</text>
+<text x="54" y="345" font-size="14" fill="#b7bbcd">Chat. Projektwissen. Modelle. Entwicklerwerkzeuge.</text>
+<rect x="54" y="375" width="196" height="29" rx="6" fill="#2a243a" stroke="#64547d"/>
+<text x="67" y="394" font-size="11" fill="#d7c8ff">1.0.0-rc.1 / RELEASE CANDIDATE</text>
+<text x="268" y="394" font-size="11" fill="#b7bbcd">Manuelle WCAG-Abnahme offen</text>
+<rect x="620" y="40" width="612" height="360" rx="15" fill="#0b0d12" stroke="#51465f"/>
+<path d="M620 91h612M760 91v309" fill="none" stroke="#343440"/>
+<text x="642" y="72" font-size="13" font-weight="700" letter-spacing="2" fill="#f1f3fa">CRYO.</text>
+<rect x="1094" y="54" width="118" height="25" rx="5" fill="#242032" stroke="#51465f"/>
+<text x="1108" y="71" font-size="10" fill="#d1c2f5">Befehle / Ctrl K</text>
+<rect x="636" y="109" width="109" height="30" rx="5" fill="#b4a0ff"/>
+<text x="650" y="129" font-size="11" fill="#171326">+ Neuer Chat</text>
+<text x="641" y="164" font-size="8" letter-spacing="1" fill="#aaaec0">DENKEN &amp; ENTWICKELN</text>
+<rect x="636" y="176" width="109" height="28" rx="5" fill="#292236"/>
+<text x="650" y="194" font-size="10" fill="#ddcfff">Chat</text>
+<text x="650" y="225" font-size="10" fill="#b7bbcd">Projektwissen</text>
+<text x="650" y="255" font-size="10" fill="#b7bbcd">Hyperfocus</text>
+<text x="641" y="291" font-size="8" letter-spacing="1" fill="#aaaec0">WERKZEUGE</text>
+<text x="650" y="319" font-size="10" fill="#b7bbcd">Agenten</text>
+<text x="650" y="349" font-size="10" fill="#b7bbcd">GitHub &amp; Skills</text>
+<text x="650" y="379" font-size="10" fill="#b7bbcd">Godot MCP</text>
+<text x="787" y="131" font-size="8" letter-spacing="1.5" fill="#c3b1f7">DEIN RAUM. DEIN TEMPO.</text>
+<text x="787" y="172" font-size="26" font-weight="600" fill="#f1f3fa">Große Ideen.</text>
+<text x="787" y="207" font-size="26" font-weight="600" fill="#b4a0ff">Dein nächster Schritt.</text>
+<rect x="787" y="232" width="202" height="56" rx="7" fill="url(#panel)" stroke="#3a334e"/>
+<text x="802" y="255" font-size="10" fill="#e1daf2">Code verbessern</text>
+<text x="802" y="273" font-size="8" fill="#a8adbf">Tests und Refactoring</text>
+<rect x="1002" y="232" width="202" height="56" rx="7" fill="#161922" stroke="#3a334e"/>
+<text x="1017" y="255" font-size="10" fill="#e1daf2">Projekt planen</text>
+<text x="1017" y="273" font-size="8" fill="#a8adbf">Schritt für Schritt</text>
+<rect x="787" y="307" width="417" height="72" rx="9" fill="#181b25" stroke="#605571"/>
+<text x="802" y="332" font-size="10" fill="#aeb4c7">Frage stellen oder eine Idee notieren …</text>
+<text x="802" y="362" font-size="8" fill="#bcaee0">MODELL / NUR LOKAL SPEICHERN</text>
+<rect x="1136" y="348" width="54" height="21" rx="4" fill="#b4a0ff"/>
+<text x="1145" y="362" font-size="8" fill="#171326">Senden</text>
 </g>
-<path d="M681 426h538" stroke="#92a8e4" stroke-opacity=".26"/>
-<text x="687" y="455" font-size="11" fill="#7992b4" font-family="Inter,Segoe UI,Arial,sans-serif" letter-spacing="1.7">CONCEPT VISUAL · NO LIVE SCREENSHOT</text>
-<text x="1209" y="455" font-size="11" fill="#78ccdf" font-family="Inter,Segoe UI,Arial,sans-serif" text-anchor="end" font-weight="700">01 / 03</text>
-<rect x="2" y="2" width="1276" height="486" rx="24" fill="none" stroke="#6ac9e5" stroke-opacity=".33" stroke-width="2"/>
 </svg>
