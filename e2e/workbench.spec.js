@@ -155,3 +155,33 @@ for (const width of [320, 390, 1440])
     await page.keyboard.press("Escape");
     await expect(page.locator("#command-open")).toBeFocused();
   });
+
+
+test("model failure enters the local error center and explicit retry resolves it", async ({ page }) => {
+  await page.route("**/api/status", (route) => route.abort());
+  await page.goto("/");
+  await expect(page.locator("#error-center-count")).toHaveText("1");
+  await page.locator("#error-center-open").click();
+  await expect(page.locator("#error-center-dialog")).toBeVisible();
+  await expect(page.locator("#error-center-list")).toContainText("Modellverbindung");
+  await page.unroute("**/api/status");
+  await offline(page);
+  await page.locator('[data-retry="models"]').click();
+  await expect(page.locator("#error-center-count")).toHaveText("0");
+  await expect(page.locator("#error-center-dialog")).toBeHidden();
+});
+test("error center never executes a model request on open or dismiss", async ({ page }) => {
+  await page.route("**/api/status", (route) => route.abort());
+  let inference = 0;
+  await page.route("**/api/chat/**", (route) => { inference++; return route.abort(); });
+  await page.goto("/");
+  await page.locator("#error-center-open").click();
+  const scan = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+  expect(scan.violations).toEqual([]);
+  await page.locator("#error-center-clear").click();
+  await expect(page.locator("#error-center-list section")).toHaveCount(0);
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#error-center-open")).toBeFocused();
+  expect(inference).toBe(0);
+});
