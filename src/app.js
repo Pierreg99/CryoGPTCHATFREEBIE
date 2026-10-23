@@ -182,14 +182,16 @@ function renderList() {
 const MESSAGE_PAGE_SIZE = 80;
 let messageWindowChat = null;
 let messageWindowLength = 0;
+let messageWindowMessages = null;
 let messageWindowEnd = 0;
 function renderMessages() {
   const chat = active(),
     list = el("messages");
   const all = chat?.messages || [];
-  if (chat?.id !== messageWindowChat || all.length > messageWindowLength)
+  if (chat?.id !== messageWindowChat || all !== messageWindowMessages || all.length > messageWindowLength)
     messageWindowEnd = all.length;
   messageWindowChat = chat?.id || null;
+  messageWindowMessages = all;
   messageWindowLength = all.length;
   const page = messagePage(all, messageWindowEnd, MESSAGE_PAGE_SIZE);
   messageWindowEnd = page.end;
@@ -200,9 +202,17 @@ function renderMessages() {
     button.className = "message-page-button";
     button.dataset.page = direction;
     button.textContent = text;
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
       messageWindowEnd = end;
       renderMessages();
+      // Only keyboard activation restores focus. Pointer activation must not trigger a scroll jump.
+      if (event.detail === 0) {
+        const successor = list.querySelector(`[data-page="${direction}"]`) || list.querySelector('.message-page-button');
+        if (!successor) list.tabIndex = -1;
+        (successor || list).focus({ preventScroll: true });
+      } else {
+        list.scrollTop = direction === "older" ? 0 : list.scrollHeight;
+      }
     });
     return button;
   };

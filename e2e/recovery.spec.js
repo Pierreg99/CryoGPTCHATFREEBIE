@@ -321,3 +321,27 @@ test("checkpoint protects prior focus history and discarding it purges only orph
     "Nachricht aus dem Backup",
   );
 });
+
+test("restore of the same chat ID resets the viewed window even when message count is unchanged", async ({ page }) => {
+  await providers(page);
+  const createdAt = "2026-10-21T10:00:00.000Z";
+  const mk = prefix => ({
+    version: 2, activeChatId: "same", settings: { model: "" },
+    chats: [{
+      id: "same", title: "Gleiche ID", createdAt, updatedAt: createdAt,
+      projectContext: "", shareProjectContext: false,
+      messages: Array.from({ length: 160 }, (_, i) => ({
+        id: prefix + i, role: "user", content: prefix + " Inhalt " + i, createdAt,
+      })),
+    }],
+  });
+  await page.addInitScript(backup =>
+    localStorage.setItem("crygptchat.alpha.v1", JSON.stringify(backup)), mk("vorher-"));
+  await page.goto("/");
+  await page.locator('[data-page="older"]').click();
+  await expect(page.locator('.message[data-message-id="vorher-0"]')).toHaveCount(1);
+  await preview(page, mk("danach-"));
+  await commit(page);
+  await expect(page.locator('.message[data-message-id="danach-159"]')).toHaveCount(1);
+  await expect(page.locator('.message[data-message-id="danach-0"]')).toHaveCount(0);
+});

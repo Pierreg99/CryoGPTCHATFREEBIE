@@ -65,7 +65,14 @@ export function filterChats(store, query = '', filters = {}) {
   const to = validDay(filters.to);
   return store.chats.filter(chat => {
     if (filters.chatId && chat.id !== filters.chatId) return false;
-    const updated = chat.updatedAt.slice(0, 10);
+    const rawDate = chat.updatedAt;
+    // Legacy ISO datetimes without timezone are interpreted as UTC, not local browser time.
+    const deterministic = typeof rawDate === 'string' &&
+      /^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/.test(rawDate)
+      ? rawDate.replace(' ', 'T') + 'Z' : rawDate;
+    const timestamp = Date.parse(deterministic);
+    // The date input is a UTC calendar-day filter, including imported offset timestamps.
+    const updated = Number.isFinite(timestamp) ? new Date(timestamp).toISOString().slice(0, 10) : '';
     if (from && updated < from || to && updated > to) return false;
     if (project && !lower(chat.projectContext).includes(project)) return false;
     const messages = role ? chat.messages.filter(message => message.role === role) : chat.messages;
