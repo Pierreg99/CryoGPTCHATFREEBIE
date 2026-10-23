@@ -122,7 +122,7 @@ test("backup dry-run migrates v1, preserves v2 opt-ins and does not mutate input
   const legacy = { ...source, version: 1 };
   const migrated = inspectBackup(JSON.stringify(legacy));
   assert.equal(migrated.summary.sourceVersion, 1);
-  assert.equal(migrated.backup.version, 2);
+  assert.equal(migrated.backup.version, 3);
   assert.equal(migrated.backup.chats[0].shareProjectContext, false);
   assert.ok(migrated.warnings.some((w) => w.path === "version"));
 });
@@ -227,4 +227,19 @@ test("discarding a recovery checkpoint does not change current chats", async () 
     const loaded = await createPersistence({ idb, fallback });
     assert.deepEqual(loaded.state, after);
   }
+});
+
+test('v3 backup inspector previews two projects and rejects orphan assignments', () => {
+  const source = createChat(emptyStore(), 'chat', 'Gespräch');
+  source.projects = [{ id: 'cryo', name: 'Cryo', notes: 'Privat' }, { id: 'engine', name: 'Engine', notes: 'Build' }];
+  source.chats[0].projectId = 'engine';
+  const clean = inspectBackup(JSON.stringify(source));
+  assert.equal(clean.ok, true);
+  assert.equal(clean.summary.projects, 2);
+  assert.deepEqual(clean.backup, source);
+  source.chats[0].projectId = 'unknown';
+  const broken = inspectBackup(JSON.stringify(source));
+  assert.equal(broken.ok, false);
+  assert.ok(broken.errors.some(issue => issue.path === 'chats[0].projectId'));
+  assert.doesNotMatch(JSON.stringify(backupReport(broken)), /Privat|Build/);
 });

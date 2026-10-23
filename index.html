@@ -45,6 +45,8 @@
           <input id="chat-filter-to" type="date" />
           <label for="chat-filter-project">Projektwissen enthält</label>
           <input id="chat-filter-project" type="search" maxlength="100" placeholder="Lokale Projektnotizen" />
+          <label for="chat-filter-workspace">Projekt-Arbeitsraum</label>
+          <select id="chat-filter-workspace"><option value="">Alle Projekte</option></select>
           <label for="chat-filter-role">Nachrichtenrolle</label>
           <select id="chat-filter-role">
             <option value="">Alle Rollen</option>
@@ -145,6 +147,16 @@
               aria-label="Projektwissen dieser Unterhaltung"
               hidden
             >
+              <div class="eyebrow">PROJECT WORKSPACES / LOKAL</div>
+              <div class="workspace-project-controls">
+                <label for="chat-project">Projekt dieses Chats</label>
+                <select id="chat-project"><option value="">Ohne Projekt</option></select>
+                <button id="create-project" type="button">Neues Projekt erstellen</button>
+              </div>
+              <label for="workspace-notes">Private Notizen des gesamten Projekts (maximal 4.000 Zeichen)</label>
+              <textarea id="workspace-notes" rows="3" maxlength="4000" placeholder="Projektziele, Entscheidungen und Aufgaben – nur lokal"></textarea>
+              <button id="save-workspace-notes" type="button">Projektnotizen speichern</button>
+              <p id="workspace-notes-status" role="status">Noch kein Projekt gewählt.</p>
               <div class="eyebrow">PROJECT KNOWLEDGE / NUR FÜR DIESEN CHAT</div>
               <label for="project-context"
                 >Notizen, Entscheidungen und Hintergrundwissen</label

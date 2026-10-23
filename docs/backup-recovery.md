@@ -1,16 +1,16 @@
 # Geprüfte Backup-Wiederherstellung
 
-Roadmap v0.8 ist für das bestehende Chat-/Projektwissen-Format umgesetzt. Backups der Versionen 1 und 2 bleiben kompatibel. Die App prüft eine Datei lokal; kein Backup wird dafür an einen Server oder ein Modell übertragen.
+Roadmap v0.8 ist für das bestehende Chat-/Projektwissen-Format umgesetzt. Die App unterstützt jetzt Sicherungen der Schemas 1, 2 und 3. Bestehende v1/v2-Backups bleiben importierbar. Die App prüft eine Datei lokal; kein Backup wird dafür an einen Server oder ein Modell übertragen.
 
 ## Ablauf
 
 1. **Import** wählen und JSON-Datei bis 3 MiB auswählen.
 2. Der Assistent führt einen Dry-run durch. Er zeigt Quell-/Zielformat, aktuelle und importierte Chatanzahl, Nachrichten, Notizen, vorhandene Kontextfreigaben, Fehlerpfade und Normalisierungen. Bis hierhin wird nichts ersetzt.
 3. Bei Bedarf den aktuellen Stand und einen redigierten Prüfbericht herunterladen. Der Bericht enthält keine Nachrichten oder Projektnotizen.
-4. Die Vorschau ausdrücklich bestätigen und **Backup importieren** wählen. Version 1 wird nach Version 2 migriert; alte Modellfreigaben werden nicht aktiviert. In Version 2 vorhandene Kontextfreigaben werden angezeigt und erhalten. Der Import selbst erzeugt keine Modellanfrage.
+4. Die Vorschau ausdrücklich bestätigen und **Backup importieren** wählen. Version 1 und 2 werden nach Version 3 migriert; alte Freigaben aus Version 1 werden nicht aktiviert. In Version 2 vorhandene explizite Kontextfreigaben werden angezeigt und erhalten. Der Import selbst erzeugt keine Modellanfrage.
 5. Nach erfolgreichem Import steht **Letzten Import zurücksetzen** bereit. Auch das Zurücksetzen verlangt eine Vorschau und Zustimmung. Nach erfolgreichem Rücksetzen wird der Rücksetzpunkt verbraucht. Mit **Rücksetzpunkt löschen** kann die zusätzliche Kopie auch ohne Rücksetzen entfernt werden.
 
-Nachrichten, Projektwissen, aktive Chat-ID und Modellauswahl werden wiederhergestellt; das gewählte Modell muss weiterhin beim Provider verfügbar und serverseitig erlaubt sein. Favoriten und Bewegungseinstellungen gehören nicht zum Chat-Backup und bleiben unverändert. Vorhandene Hyperfocus-Ergebnisse für Chats im Rücksetzpunkt werden bis zur Rücksetzung oder Löschung dieses Punkts vor der normalen Bereinigung geschützt; die Historie unterliegt weiterhin ihrem globalen Größenlimit.
+Nachrichten, Projektwissen, private Arbeitsraum-Notizen, Projektzuordnungen, aktive Chat-ID und Modellauswahl werden wiederhergestellt; das gewählte Modell muss weiterhin beim Provider verfügbar und serverseitig erlaubt sein. Favoriten und Bewegungseinstellungen gehören nicht zum Chat-Backup und bleiben unverändert. Vorhandene Hyperfocus-Ergebnisse für Chats im Rücksetzpunkt werden bis zur Rücksetzung oder Löschung dieses Punkts vor der normalen Bereinigung geschützt; die Historie unterliegt weiterhin ihrem globalen Größenlimit.
 
 ## Aktuelle Oberfläche
 

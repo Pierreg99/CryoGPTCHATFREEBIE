@@ -4,6 +4,8 @@ import {
   MAX_MESSAGES,
   MAX_MESSAGE_LENGTH,
   MAX_PROJECT_CONTEXT,
+  MAX_PROJECTS,
+  MAX_WORKSPACE_NOTES,
   parseBackup,
 } from "./core.js";
 export const MAX_BACKUP_BYTES = 3 * 1024 * 1024;
@@ -43,8 +45,26 @@ export function inspectBackup(raw) {
   if (!value || typeof value !== "object" || Array.isArray(value))
     issue("$", "Ein Backup-Objekt wird erwartet.");
   else {
-    if (![1, VERSION].includes(value.version))
-      issue("version", "Unterstützt werden Backup-Version 1 und 2.");
+    if (![1, 2, VERSION].includes(value.version))
+      issue("version", "Unterstützt werden Backup-Versionen 1, 2 und 3.");
+    if (value.version === VERSION) {
+      if (!Array.isArray(value.projects) || value.projects.length > MAX_PROJECTS)
+        issue("projects", "Eine Liste mit höchstens 40 Projekten wird erwartet.");
+      else {
+        const ids = new Set();
+        value.projects.forEach((project, i) => {
+          const at = `projects[${i}]`;
+          if (!project || typeof project.id !== "string" || !project.id ||
+              project.id.length > 100 || ids.has(project.id))
+            issue(at + ".id", "Projekt-ID fehlt, ist zu lang oder doppelt.");
+          if (project?.id) ids.add(project.id);
+          if (typeof project?.name !== "string" || !project.name.trim() || project.name.length > 100)
+            issue(at + ".name", "Projektname muss 1 bis 100 Zeichen haben.");
+          if (typeof project?.notes !== "string" || project.notes.length > MAX_WORKSPACE_NOTES)
+            issue(at + ".notes", "Projektnotizen dürfen höchstens 4000 Zeichen haben.");
+        });
+      }
+    }
     if (!Array.isArray(value.chats) || value.chats.length > MAX_CHATS)
       issue(
         "chats",
@@ -83,6 +103,9 @@ export function inspectBackup(raw) {
               message:
                 "Ungültiges oder fehlendes Chatdatum wird durch den Importzeitpunkt ersetzt.",
             });
+        if (value.version === VERSION && chat.projectId != null &&
+            (!Array.isArray(value.projects) || !value.projects.some(project => project?.id === chat.projectId)))
+          issue(at + ".projectId", "Projektzuordnung verweist auf kein bekanntes Projekt.");
         if (
           chat.projectContext !== undefined &&
           (typeof chat.projectContext !== "string" ||
@@ -146,11 +169,11 @@ export function inspectBackup(raw) {
       warnings: warnings.slice(0, 50),
     };
   }
-  if (value.version === 1)
+  if (value.version < VERSION)
     warnings.unshift({
       path: "version",
-      message:
-        "Version 1 wird nach Version 2 migriert. Modellfreigaben aus Altformaten werden nicht aktiviert.",
+      message: `Version ${value.version} wird nach Version ${VERSION} migriert. ` +
+        (value.version === 1 ? "Modellfreigaben aus Altformaten werden nicht aktiviert." : "Bestehende explizite Kontextfreigaben werden erhalten."),
     });
   if (backup.activeChatId !== value.activeChatId)
     warnings.push({
@@ -173,6 +196,7 @@ export function inspectBackup(raw) {
       sourceVersion: value.version,
       targetVersion: VERSION,
       chats: backup.chats.length,
+      projects: backup.projects.length,
       messages: backup.chats.reduce((n, c) => n + c.messages.length, 0),
       notes: backup.chats.filter((c) => c.projectContext).length,
       sharedContexts: shared,

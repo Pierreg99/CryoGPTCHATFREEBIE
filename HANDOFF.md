@@ -23,3 +23,10 @@ Stand: 23. Oktober 2026.
 4. Nach erfolgreichem Integrationsgate v1.4 lokale Projekt-Arbeitsräume mit Backup- und Migrationsgate vorbereiten.
 
 [PLAN](PLAN.md) · [PROGRESS](PROGRESS.md) · [AUDIT](AUDIT.md) · [HANDOVER](HANDOVER.md) · [ROADMAP](docs/roadmap/ROADMAP-100.md)
+
+## Weiterarbeit v1.4
+
+1. PR #28 vollständig prüfen und nur bei grünen Node-, Browser- und Release-Checks integrieren.
+2. v1.4 gegen Schema 1/2/3 sowie Recovery-Rollback testen, Testbefunde beheben und nur nach CI auf finalem Head integrieren.
+3. M17 (Projekt erstellen, zuordnen, Notizen, Fokus, mobile Ansicht) mit echtem Screenreader prüfen; Issue #22 blockiert stabile 1.0.
+4. v1.5 Migration/Downgrade-Pfade danach weiter ausbauen.

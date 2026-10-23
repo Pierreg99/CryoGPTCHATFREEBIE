@@ -14,7 +14,7 @@ Abgeschlossene Funktionen sind im [Changelog als Checkliste](../../CHANGELOG.md)
 - **Security-Baseline umgesetzt:** v0.9 mit Host-/Origin-/CSP-Härtung, Limits, negativen HTTP-Tests und [Bedrohungsmodell](../security/THREAT-MODEL.md).
 - **1.0 vorbereitet:** Release-Candidate 1.0.0-rc.1 mit Plattform-/Migrationspolitik, reproduzierbarem Paket und blockierender [Release-Checkliste](../RELEASE-CHECKLIST.md); stabile Freigabe erst nach manueller Accessibility-Abnahme.
 - **Backup-Wiederherstellung umgesetzt:** v0.8 mit Dry-run, redigiertem Fehlerbericht, geprüftem Import und lokalem Rücksetzpunkt. [Belege und Grenzen](../backup-recovery.md).
-- **Teilweise umgesetzt:** v0.7 (WCAG-2.2-Regeln; Screenreader-Abnahme offen), v1.1 (Fehlerzentrale), v1.2 (begrenzt gerenderte Chat-Fenster), v1.3 (lokale Suchfilter) und v6.1 (Designsystem und responsive UI). Auch für neue Funktionen bleiben CI-/manuelle Gates getrennt offen.
+- **Teilweise umgesetzt:** v0.7 (WCAG-2.2-Regeln; Screenreader-Abnahme offen), v1.1 (Fehlerzentrale), v1.2 (begrenzt gerenderte Chat-Fenster), v1.3 (lokale Suchfilter), v1.4 (lokale Projekt-Arbeitsräume) und v6.1 (Designsystem und responsive UI). Auch für neue Funktionen bleiben CI-/manuelle Gates getrennt offen.
 - **Zukunftsplanung:** Übrige Meilensteine bis v10.0 beschreiben noch offene Gates, keine zugesagten Liefertermine.
 - **Abnahmeprinzip:** Jede Version benennt ein konkretes Artefakt und einen **prüfbaren Exit-Gate**. Funktionen mit externem Netzwerk, privaten Daten oder Writes bleiben standardmäßig deaktiviert und erfordern Sicherheitsprüfung sowie ausdrückliche Freigabe.
 
@@ -145,11 +145,14 @@ Datenbeständigkeit, UX und vorhersagbaren Betrieb etablieren.
 - [x] Filter für einzelne Chats, Änderungsdatum, private lokale Projekt-Notizen und Benutzer-/Assistentenrolle ergänzt.
 - [x] Kombinations- und Reset-Tests ohne Änderung am Backupformat oder Datenfreigabe ergänzt.
 
-#### Geplant v1.4 · Projekt-Arbeitsräume
+#### Teilweise umgesetzt v1.4 · Projekt-Arbeitsräume
 
 **Lieferobjekt:** Chats und Notizen mehreren lokalen Projekten zuordnen. **Abnahme:** Import-/Export-Roundtrip mehrerer Projekte.
 
-- [ ] Entwicklungsmeilenstein vollständig abschließen.
+- [ ] Entwicklungsmeilenstein vollständig abschließen; PR-CI, Screenreader-Gate M17 und Migrations-Rollback prüfen.
+- [x] Mehrere lokale Projektobjekte mit privaten Notizen erstellen, Chats zuordnen und filtern.
+- [x] Schema-3-Backup mit v1/v2-Migration, Referenzprüfung und Roundtrip-Tests ergänzen.
+- [x] Separate Projektnotizen werden niemals automatisch an Modellanbieter gesendet.
 
 #### Geplant v1.5 · Versionsmigration
 

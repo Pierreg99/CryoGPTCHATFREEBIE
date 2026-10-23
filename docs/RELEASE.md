@@ -10,9 +10,9 @@ Der Notiz-/Chat-Speicher benötigt keine npm-Laufzeitabhängigkeiten. Ollama, Op
 
 ## Datenmigration und Rollback
 
-Das Anwendungsversionierungsschema ist von Backup-Versionen getrennt. Version-1-Backups werden nach Schema 2 migriert; Version-2-Daten bleiben kompatibel. Unbekannte Backup-Versionen werden vor einer Mutation abgewiesen. Die aktuelle IndexedDB-Struktur und der Schlüssel `current` bleiben erhalten; der zusätzliche Rücksetzpunkt verwendet einen eigenen Schlüssel.
+Das Anwendungsversionierungsschema ist von Backup-Versionen getrennt. Backups der Schemas 1 und 2 werden durch die neuere App nach Schema 3 migriert. Explizite chatbezogene Freigaben aus Schema 2 bleiben erhalten, während Freigaben aus Schema 1 nicht automatisch aktiviert werden. Projekte und Projektzuordnungen werden nur in Schema 3 transportiert. Unbekannte Backup-Versionen werden vor einer Mutation abgewiesen. Die aktuelle IndexedDB-Struktur und der Schlüssel `current` bleiben erhalten; der zusätzliche Rücksetzpunkt verwendet einen eigenen Schlüssel.
 
-Vor einem Upgrade einen JSON-Export erzeugen. Für Rollback auf Alpha 0.4 kann der gleiche Schema-2-Export genutzt werden; neue UI-Präferenzen werden von alten Versionen ignoriert. Die alte Version bietet den neuen Undo-Assistenten nicht. Ein Dateisystem-/Serverrollback ändert nicht automatisch Browserdaten. Wiederherstellungspunkt und externe Exporte sind unverschlüsselte Kopien und müssen bei endgültiger Löschung berücksichtigt werden.
+Vor einem Upgrade einen JSON-Export erzeugen. Schema-3-Exporte können von älteren Clients mit Schema-1/2-Unterstützung nicht direkt importiert werden. Vor dem Upgrade einen separaten Schema-2-Export aufbewahren. Ein alter Client darf Schema-3-Daten nicht ungeprüft überschreiben. Die alte Version bietet den neuen Undo-Assistenten nicht. Ein Dateisystem-/Serverrollback ändert nicht automatisch Browserdaten. Wiederherstellungspunkt und externe Exporte sind unverschlüsselte Kopien und müssen bei endgültiger Löschung berücksichtigt werden.
 
 ## Reproduzierbares Paket
 

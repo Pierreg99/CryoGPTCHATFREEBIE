@@ -73,6 +73,7 @@ Die Browser-Suite verwendet die Tags `wcag2a`, `wcag2aa`, `wcag21aa` und `wcag22
 | M14 | Fehlerzentrale | Modellstatus-Fehler simulieren, Dialog öffnen, Status ansagen, Retry/Entfernen bedienen, Escape und Fokusrückgabe, mobile Darstellung | offen |
 | M15 | Nachrichtenfenster | 600 Nachrichten, ältere/neuere Seiten, Fokus und Ansage, Suche nach ausgeblendeten Texten, keine fehlenden oder doppelt gelesenen Nachrichten | offen |
 | M16 | Suchfilter | Gespräch, Datum, private Notizen, Rolle kombinieren und zurücksetzen; mobile Darstellung, Beschriftungen, Trefferstatus und Tastaturbedienung | offen |
+| M17 | Projekt-Arbeitsräume | Projekt erstellen, Chat zuordnen und zwischen Projekten wechseln, getrennte Notizen speichern, Statusansage, Export/Import und 320px-Reflow | offen |
 
 ### Querschnittsprüfungen
 

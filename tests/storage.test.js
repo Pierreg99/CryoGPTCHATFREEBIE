@@ -55,7 +55,7 @@ test('v1 localStorage snapshot migrates to IndexedDB and only then removes old d
   const idb = fakeIndexedDB();
   const store = await createPersistence({ idb, fallback });
   assert.equal(store.kind, 'IndexedDB');
-  assert.equal(store.state.version, 2);
+  assert.equal(store.state.version, 3);
   assert.equal(store.state.chats[0].id, 'old');
   assert.equal(fallback.getItem(LEGACY_KEY), null);
   assert.equal(idb.values.get('current').chats[0].id, 'old');

@@ -270,3 +270,40 @@ test('paging keeps visible keyboard focus after re-render', async ({ page }) => 
   await page.keyboard.press("Enter");
   await expect(page.locator('[data-page="newer"]')).toBeFocused();
 });
+
+test("v1.4 creates isolated projects, assigns chats and preserves notes through refresh and backup export", async ({ page }) => {
+  await offline(page);
+  await page.goto("/");
+  await page.locator("#new-chat").click();
+  await page.locator("#notes-toggle").click();
+  await page.locator("#create-project").click();
+  await page.locator("#cryo-dialog-input").fill("Cryo Alpha");
+  await page.locator("#cryo-dialog-confirm").click();
+  await expect(page.locator("#chat-project")).toHaveValue(/.+/);
+  await page.locator("#workspace-notes").fill("Only locally stored alpha notes");
+  await page.locator("#save-workspace-notes").click();
+  await page.locator("#new-chat").click();
+  // The project panel stays open when a new chat is created.
+  await page.locator("#create-project").click();
+  await page.locator("#cryo-dialog-input").fill("Cryo Beta");
+  await page.locator("#cryo-dialog-confirm").click();
+  await page.locator("#workspace-notes").fill("Independent beta notes");
+  await page.locator("#save-workspace-notes").click();
+  await page.reload();
+  await page.locator("#notes-toggle").click();
+  await expect(page.locator("#workspace-notes")).toHaveValue("Independent beta notes");
+  await page.locator("#chat-project").selectOption({ label: "Cryo Alpha" });
+  await expect(page.locator("#workspace-notes")).toHaveValue("Only locally stored alpha notes");
+  await expect(page.locator("#project-share")).not.toBeChecked();
+  const downloadPromise = page.waitForEvent("download");
+  await page.locator("#export").click();
+  const download = await downloadPromise;
+  const saved = JSON.parse(await (await import("node:fs/promises")).readFile(await download.path(), "utf8"));
+  expect(saved.version).toBe(3);
+  expect(saved.projects).toHaveLength(2);
+  expect(saved.projects.map(project => project.notes).sort()).toEqual(["Independent beta notes", "Only locally stored alpha notes"]);
+  expect(saved.chats.every(chat => saved.projects.some(project => project.id === chat.projectId))).toBe(true);
+  await page.locator("#chat-filter-panel summary").click();
+  await page.locator("#chat-filter-workspace").selectOption({ label: "Cryo Alpha" });
+  await expect(page.locator("#chat-list .chat-link")).toHaveCount(2);
+});

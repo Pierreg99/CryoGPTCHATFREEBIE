@@ -199,6 +199,7 @@ export function setupBackupRestore({
           ],
           ["Aktuelle Chats", getStore().chats.length],
           ["Chats im Backup", summary.chats],
+          ["Projekt-Arbeitsräume", summary.projects],
           ["Nachrichten", summary.messages],
           ["Chats mit Notizen", summary.notes],
           ["Kontextfreigaben", summary.sharedContexts],

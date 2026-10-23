@@ -23,3 +23,7 @@ README mit lokalen SVG-Kacheln, echten Screenshots, Details und Mermaid. Keine E
 ## Offene Abnahme
 
 Cloud- und Schreibzugriffe bleiben ausdrücklich freizugeben. Stable-1.0 wartet auf die reale manuelle WCAG-2.2-AA-Abnahme einschließlich Workbench-Fällen M11–M13, Fehlerzentrale M14, Nachrichtenpaging M15 und Suchfiltern M16. [Release-Gates](docs/RELEASE-CHECKLIST.md) · [Accessibility-Bericht](docs/accessibility-report.md) · [HANDOFF](HANDOFF.md).
+
+## Lokale Projekt-Arbeitsräume v1.4
+
+Ab Schema 3 enthält `src/core.js` eigenständige Projekte und `chat.projectId`. Die Bedienung erfolgt lokal im bestehenden Projektwissen-Panel über `src/app.js`; `src/backup.js` prüft v1/v2/v3 einschließlich referenzieller Integrität. Neue Projektnotizen werden nie automatisch an Modelle gesendet; chatbezogenes Projektwissen benötigt weiterhin das separate Opt-in. Vor einem Rollback einen kompatiblen Backup-Export aufbewahren. CI- und AT-Gates sind separat nachzuweisen.

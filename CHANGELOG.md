@@ -15,6 +15,13 @@ Prüfbarer Kandidat für das 1.0-Ziel. Der folgende Stand umfasst auch die histo
 - [x] Nachrichten kopieren; Senden per Enter und Zeilenumbruch per Shift+Enter.
 - [x] Unicode-Inhalte einschließlich eigener Emojis beim Speichern, Neuladen und JSON-Export erhalten.
 
+### Roadmap v1.4 · Lokale Projekt-Arbeitsräume (Entwicklungsbranch)
+
+- [ ] CI auf dem exakten v1.4-PR-Head und manuelle Accessibility-Abnahme M17 abschließen.
+- [x] Bis zu 40 Projekt-Arbeitsräume, Chatzuordnung und lokale Projektfilter ergänzt.
+- [x] Getrennte private Projekt-Notizen mit maximal 4000 Zeichen ohne automatische Modellfreigabe.
+- [x] Backup-Schema 3 mit v1/v2-Migration, Konsistenzprüfung und Roundtrip-Tests ergänzt.
+
 ### Roadmap v1.2 und v1.3 · Entwicklungsbranch (CI/AT-Gates offen)
 
 - [ ] Auf finaler Commit-SHA alle Pflichtprüfungen ausführen und manuelle Accessibility-Abnahme nachweisen.

@@ -33,3 +33,11 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 - Alle Texte werden weiterhin über `textContent` oder `Option` erstellt; Datum ist als UTC-ISO-Tag aus `updatedAt` definiert.
 - Performance-Budget des Browser-Testfalls: `<= 80` sichtbare Nachrichten und maximal 2500 ms für einen Seitenwechsel mit 600 gespeicherten Nachrichten auf dem CI-Chromium. Ein bestandener automatischer Test beweist noch keine unabhängige AT-Abnahme.
 - Bestehende Freigabe-, Backup-, Netzwerk- und Stabilitäts-Gates nicht ändern. PR-Checks auf dem finalen Head und reale AT-Fälle M15–M16 bleiben separate Gates.
+
+## Roadmap v1.4 · Daten- und Freigabeaudit
+
+- Schema `VERSION=3`: höchstens 40 Projekte mit ID, Name und bis zu 4000 Zeichen Notizen; Schemas 1/2 werden nach 3 migriert.
+- Nur gültige Projekt-IDs zuordnen; Duplikate, verwaiste Zuordnungen, zu lange Inhalte und fehlende Pflichtfelder im Backup abweisen. Import erfordert weiterhin Vorschau und ausdrückliche Bestätigung.
+- Nur chatbezogenes `shareProjectContext` kann Modellkontext freigeben. Neue Projekt-Arbeitsraum-Notizen bleiben immer lokal.
+- Alte Clients mit Schema 2 können Schema-3-Backups nicht direkt lesen; vor Upgrade alten Export sichern. Kein automatischer Downgrade.
+- Unit-/Browser-Fälle und manuelle WCAG-Matrix M17 ergänzt. Gates erst nach grünem finalem PR-Head als bestanden bezeichnen.

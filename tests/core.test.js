@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { emptyStore, createChat, appendMessage, deleteChat, renameChat, searchChats, filterChats, messagePage, parseBackup, toOllamaMessages, setProjectContext, MAX_PROJECT_CONTEXT, MAX_MESSAGE_LENGTH } from '../src/core.js';
+import { emptyStore, createChat, appendMessage, deleteChat, renameChat, searchChats, filterChats, messagePage, parseBackup, toOllamaMessages, setProjectContext, createProject, setChatProject, setProjectNotes, MAX_PROJECT_CONTEXT, MAX_MESSAGE_LENGTH } from '../src/core.js';
 const T = '2026-10-19T18:00:00.000Z';
-test('leerer Store hat stabiles Schema', () => { const s = emptyStore(); assert.equal(s.version, 2); assert.equal(s.chats.length, 0); });
+test('leerer Store hat stabiles Schema', () => { const s = emptyStore(); assert.equal(s.version, 3); assert.equal(s.chats.length, 0); });
 test('Chat anlegen und Titel aus erster Nachricht ableiten', () => { let s = createChat(emptyStore(), 'a', 'Neuer Chat', T); s = appendMessage(s, 'a', 'user', '  Hallo CryGPTCHAT  ', 'm1', T); assert.equal(s.chats[0].title, 'Hallo CryGPTCHAT'); assert.equal(s.chats[0].messages[0].content, 'Hallo CryGPTCHAT'); });
 test('Chat umbenennen und löschen', () => { let s = createChat(emptyStore(), 'a', 'X', T); s = renameChat(s, 'a', '  Z  ', T); assert.equal(s.chats[0].title, 'Z'); s = deleteChat(s, 'a'); assert.equal(s.activeChatId, null); });
 test('Suche findet Nachrichteninhalte, nicht nur Titel', () => { let s = createChat(emptyStore(), 'a', 'Test', T); s = appendMessage(s, 'a', 'user', 'Kubernetes bitte', 'm1', T); assert.equal(searchChats(s, 'kube').length, 1); assert.equal(searchChats(s, 'xyz').length, 0); });
@@ -24,13 +24,13 @@ test('Projektwissen bleibt zunächst lokal und wird erst nach Freigabe an Ollama
   assert.equal(messages[1].content, 'Wie weiter?');
 });
 
-test('v1-Browser-Backup wird verlustfrei nach v2 migriert', () => {
+test('v1-Browser-Backup wird verlustfrei nach v3 migriert', () => {
   const legacy = { version: 1, chats: [{
     id: 'legacy', title: 'Alter Chat', createdAt: T, updatedAt: T,
     messages: [{ id: 'old', role: 'user', content: 'Bleibt erhalten', createdAt: T }]
   }], activeChatId: 'legacy', settings: { model: 'qwen2.5:3b' } };
   const result = parseBackup(legacy);
-  assert.equal(result.version, 2);
+  assert.equal(result.version, 3);
   assert.equal(result.chats[0].messages[0].content, 'Bleibt erhalten');
   assert.equal(result.chats[0].projectContext, '');
   assert.equal(result.chats[0].shareProjectContext, false);
@@ -102,4 +102,40 @@ test('UTC date filter normalizes time-zone-offset timestamps from valid backups'
   assert.deepEqual(filterChats(state, '', { from: '2026-10-21', to: '2026-10-21' }).map(chat => chat.id), ['tz']);
   assert.equal(filterChats(state, '', { to: '2026-10-20' }).length, 0);
   assert.deepEqual(filterChats(parseBackup(JSON.stringify(state)), '', { from: '2026-10-21', to: '2026-10-21' }).map(chat => chat.id), ['tz']);
+});
+
+test('v1.4 project workspaces survive JSON export and restore without model sharing', () => {
+  const at = '2026-10-21T08:00:00.000Z';
+  let state = createChat(emptyStore(), 'a', 'Alpha', at);
+  state = createChat(state, 'b', 'Beta', at);
+  state = createProject(state, 'p1', 'Cryo Omega');
+  state = createProject(state, 'p2', 'Game Engine');
+  state = setChatProject(state, 'a', 'p1');
+  state = setChatProject(state, 'b', 'p2');
+  state = setProjectNotes(state, 'p1', 'Private roadmap with <img src=x>');
+  state = setProjectNotes(state, 'p2', 'Spielentwicklung');
+  const restored = parseBackup(JSON.stringify(state));
+  assert.deepEqual(restored, state);
+  assert.deepEqual(filterChats(restored, '', { projectId: 'p1' }).map(chat => chat.id), ['a']);
+  assert.deepEqual(filterChats(restored, '', { projectId: 'p2' }).map(chat => chat.id), ['b']);
+  assert.deepEqual(toOllamaMessages(restored.chats[0]), []);
+  assert.throws(() => setChatProject(state, 'a', 'non-existent'));
+  assert.throws(() => setProjectNotes(state, 'p1', 'x'.repeat(4001)));
+  const orphan = structuredClone(state); orphan.chats[0].projectId = 'invalid';
+  assert.throws(() => parseBackup(orphan), /Projektzuordnung/);
+  const duplicate = structuredClone(state); duplicate.projects.push(duplicate.projects[0]);
+  assert.throws(() => parseBackup(duplicate), /Projekt/);
+});
+test('v2 backups migrate to v3 without losing consented per-chat notes or enabling shared project notes', () => {
+  const at = '2026-10-21T08:00:00.000Z';
+  let state = setProjectContext(createChat(emptyStore(), 'a', 'A', at), 'a', 'Freigegeben', true, at);
+  state.version = 2;
+  delete state.projects;
+  delete state.chats[0].projectId;
+  const migrated = parseBackup(JSON.stringify(state));
+  assert.equal(migrated.version, 3);
+  assert.deepEqual(migrated.projects, []);
+  assert.equal(migrated.chats[0].projectId, null);
+  assert.equal(migrated.chats[0].shareProjectContext, true);
+  assert.match(toOllamaMessages(migrated.chats[0])[0].content, /Freigegeben/);
 });

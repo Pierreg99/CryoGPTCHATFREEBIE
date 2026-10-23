@@ -16,3 +16,7 @@ Stand: 23. Oktober 2026. Die Workbench wurde mit PR #24 nach `main` integriert. 
 | Roadmap | 100 dokumentierte Entwicklungsmeilensteine, keine 100 veröffentlichten Releases | [Master-Roadmap](docs/roadmap/ROADMAP-100.md) |
 
 [README](README.md) · [AUDIT](AUDIT.md) · [PLAN](PLAN.md)
+
+## v1.4 · Lokale Projekt-Arbeitsräume
+
+Feature-Branch ergänzt Projektliste, Chatzuordnung, getrennte private Notizebenen, Projektfilter und Schema-3-Migration. Tests für zwei Projekte, Importvalidierung und Browser-Export. **Noch nicht durch CI oder manuelle Accessibility abgenommen.** Keine Cloud-Anfragen oder automatischen Agentenwrites ergänzt.

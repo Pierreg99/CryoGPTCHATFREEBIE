@@ -66,6 +66,7 @@ Der Cryo-Neon-Workspace bietet acht Ansichten: Chat, Projektwissen, Hyperfocus, 
 | Gesprächssuche | **Im Chat suchen** im geöffneten Gespräch; Treffer werden auch in momentan ausgeblendeten älteren Nachrichten gefunden |
 | Nachrichtenfenster v1.2 (in Abnahme) | Höchstens 80 Chat-Nachrichten gleichzeitig im DOM; ältere/neuere Seiten ausdrücklich anwählbar, gesamter Verlauf bleibt gespeichert |
 | Suchfilter v1.3 (in Abnahme) | Gespräch, Änderungsdatum, lokales Projektwissen und Rolle kombinieren; nur lokale Daten, keine Cloud-Anfrage |
+| Projekt-Arbeitsräume v1.4 (in Abnahme) | Mehrere lokale Projekte mit privaten Notizen; Chatzuordnung und Projektfilter; Backup-Schema 3 mit Migration aus 1/2 |
 | Fokusmodus | **Fokus** auf Desktop blendet im Chat die Seitenleiste aus; die Einstellung wird lokal gespeichert |
 | Startbereich | Tatsächliche Gesprächs-/Nachrichtenzahlen, aktiver Modus und vier vorbereitete Chat-Entwürfe |
 | Fehlerzentrale (v1.1 integriert; Abnahme offen) | Probleme in der Sitzung einsehen; Modellstatus oder lokale Speicherung bewusst erneut prüfen. Keine automatische Chat-Anfrage und keine Telemetrie. |
@@ -102,8 +103,8 @@ Die [vollständige Feature-Checkliste im Changelog](CHANGELOG.md) hakt abgeschlo
 | Bereich | Aktuelles Verhalten |
 | :--- | :--- |
 | Chat | Unterhaltungen erstellen, durchsuchen, umbenennen und löschen; Antworten streamen, stoppen und kopieren. Bei langen Verläufen in Fenstern von maximal 80 Nachrichten navigieren. |
-| Daten | IndexedDB mit localStorage-Fallback; JSON-Export und Import für Backup-Schema 1/2 mit Dry-run, Fehlerbericht und Rücksetzpunkt |
-| Projektwissen | Bis zu 4.000 Zeichen je Chat; Übergabe an ein Modell erst nach gespeicherter Freigabe |
+| Daten | IndexedDB mit localStorage-Fallback; JSON-Export und Import für Backup-Schemas 1/2/3 mit Dry-run, Fehlerbericht und Rücksetzpunkt |
+| Projektwissen | Bis zu 4.000 Zeichen je Chat; Übergabe an ein Modell erst nach gespeicherter Freigabe. Private Notizen lokaler Arbeitsräume werden nie automatisch mitgesendet. |
 | Modelle | Ollama und optional OpenAI; manuelle Auswahl, Suche und lokal gespeicherte Favoriten |
 | Hyperfocus | Ein freigegebener, begrenzter Rechercheplan; optional Ollama-Zusammenfassung und lokale Historie |
 | Agenten | Bis zu fünf einzeln bestätigte Leseaktionen; optionale Markdown-Ausgabe nach separater Aktivierung und Vorschau |
