@@ -139,3 +139,11 @@ test('v2 backups migrate to v3 without losing consented per-chat notes or enabli
   assert.equal(migrated.chats[0].shareProjectContext, true);
   assert.match(toOllamaMessages(migrated.chats[0])[0].content, /Freigegeben/);
 });
+
+test('timezone-less ISO date inputs have a deterministic UTC search day', () => {
+  const local = createChat(emptyStore(), 'local-day', 'Naive timestamp', '2026-10-21T23:30:00');
+  assert.deepEqual(filterChats(local, '', { from: '2026-10-21', to: '2026-10-21' }).map(c => c.id), ['local-day']);
+  assert.deepEqual(filterChats(local, '', { from: '2026-10-22' }), []);
+  const spaced = createChat(emptyStore(), 'space', 'Naive timestamp with space', '2026-10-21 23:30:00');
+  assert.deepEqual(filterChats(spaced, '', { to: '2026-10-21' }).map(c => c.id), ['space']);
+});

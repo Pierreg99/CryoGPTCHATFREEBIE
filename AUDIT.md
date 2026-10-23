@@ -41,3 +41,5 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 - Nur chatbezogenes `shareProjectContext` kann Modellkontext freigeben. Neue Projekt-Arbeitsraum-Notizen bleiben immer lokal.
 - Alte Clients mit Schema 2 können Schema-3-Backups nicht direkt lesen; vor Upgrade alten Export sichern. Kein automatischer Downgrade.
 - Unit-/Browser-Fälle und manuelle WCAG-Matrix M17 ergänzt. Gates erst nach grünem finalem PR-Head als bestanden bezeichnen.
+
+- Follow-up CodeAnt review: ISO-Zeitstempel ohne Offset werden bei der Datumssuche ausdrücklich als UTC behandelt. Tastatur-Paging überträgt den Fokus zum Nachfolgebutton; Pointer-Paging verzichtet auf zwangsweises Fokussieren und positioniert die neue Seite kontrolliert. Node-/Playwright-Regressionen ergänzt.

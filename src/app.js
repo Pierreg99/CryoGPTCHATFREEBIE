@@ -212,13 +212,17 @@ function renderMessages() {
     button.className = "message-page-button";
     button.dataset.page = direction;
     button.textContent = text;
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
       messageWindowEnd = end;
       renderMessages();
-      // The clicked button was replaced; return keyboard focus to the same paging action.
-      const successor = list.querySelector(`[data-page="${direction}"]`) || list.querySelector('.message-page-button');
-      if (!successor) list.tabIndex = -1;
-      (successor || list).focus();
+      // Only keyboard activation restores focus. Pointer activation must not trigger a scroll jump.
+      if (event.detail === 0) {
+        const successor = list.querySelector(`[data-page="${direction}"]`) || list.querySelector('.message-page-button');
+        if (!successor) list.tabIndex = -1;
+        (successor || list).focus({ preventScroll: true });
+      } else {
+        list.scrollTop = direction === "older" ? 0 : list.scrollHeight;
+      }
     });
     return button;
   };

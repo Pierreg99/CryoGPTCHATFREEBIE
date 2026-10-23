@@ -307,3 +307,13 @@ test("v1.4 creates isolated projects, assigns chats and preserves notes through 
   await page.locator("#chat-filter-workspace").selectOption({ label: "Cryo Alpha" });
   await expect(page.locator("#chat-list .chat-link")).toHaveCount(2);
 });
+
+test('pointer paging does not steal focus after replacing the page', async ({ page }) => {
+  await offline(page);
+  await page.addInitScript(backup =>
+    localStorage.setItem("crygptchat.alpha.v1", JSON.stringify(backup)), largeBackup());
+  await page.goto("/");
+  await page.locator('[data-page="older"]').click();
+  await expect(page.locator('[data-page="older"]')).not.toBeFocused();
+  await expect(page.locator('.message[data-message-id="m-440"]')).toHaveCount(1);
+});
