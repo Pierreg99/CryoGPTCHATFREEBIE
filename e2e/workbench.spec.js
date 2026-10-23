@@ -185,3 +185,71 @@ test("error center never executes a model request on open or dismiss", async ({ 
   await expect(page.locator("#error-center-open")).toBeFocused();
   expect(inference).toBe(0);
 });
+
+function largeBackup() {
+  const createdAt = "2026-10-20T12:00:00.000Z";
+  const messages = Array.from({ length: 600 }, (_, i) => ({
+    id: "m-" + i, role: i % 2 ? "assistant" : "user",
+    content: "archive-entry-" + String(i).padStart(3, "0"), createdAt,
+  }));
+  return {
+    version: 2,
+    activeChatId: "large",
+    settings: { model: "" },
+    chats: [{ id: "large", title: "Grosses Archiv", createdAt, updatedAt: createdAt,
+      messages, projectContext: "Cryo Projekt", shareProjectContext: false }],
+  };
+}
+test("v1.2 windows 600 messages and can find text outside the current DOM page", async ({ page }) => {
+  await offline(page);
+  await page.addInitScript(backup =>
+    localStorage.setItem("crygptchat.alpha.v1", JSON.stringify(backup)), largeBackup());
+  await page.goto("/");
+  await expect(page.locator("#metric-messages")).toHaveText("600");
+  await expect(page.locator(".message")).toHaveCount(80);
+  const duration = await page.evaluate(() => {
+    const start = performance.now();
+    document.querySelector('[data-page="older"]').click();
+    return performance.now() - start;
+  });
+  expect(duration).toBeLessThan(2500);
+  await expect(page.locator(".message")).toHaveCount(80);
+  await expect(page.locator('.message[data-message-id="m-440"]')).toHaveCount(1);
+  await page.locator("#conversation-find").click();
+  await page.locator("#conversation-query").fill("archive-entry-005");
+  await expect(page.locator("#conversation-matches")).toHaveText("1 / 1 Nachrichten");
+  await expect(page.locator(".search-current pre")).toHaveText("archive-entry-005");
+  await expect(page.locator(".message")).toHaveCount(80);
+  await expect(page.locator("#metric-messages")).toHaveText("600");
+});
+test("v1.3 filters combine local project, date, role and exact chat", async ({ page }) => {
+  await offline(page);
+  const now = "2026-10-21T12:00:00.000Z";
+  const earlier = "2026-10-20T12:00:00.000Z";
+  const mk = (id, title, createdAt, role, project) => ({
+    id, title, createdAt, updatedAt: createdAt,
+    projectContext: project, shareProjectContext: false,
+    messages: [{ id: id + "-m", content: "findable", role, createdAt }],
+  });
+  await page.addInitScript(backup =>
+    localStorage.setItem("crygptchat.alpha.v1", JSON.stringify(backup)), {
+      version: 2, settings: { model: "" }, activeChatId: "a",
+      chats: [mk("a", "Alpha", earlier, "user", "Cryo Projekt"),
+        mk("b", "Beta", now, "assistant", "andere"),
+        mk("c", "Gamma", now, "user", "Cryo Projekt")],
+    });
+  await page.goto("/");
+  await page.locator("#chat-filter-panel summary").click();
+  await page.locator("#chat-filter-project").fill("Cryo");
+  await expect(page.locator("#chat-filter-summary")).toHaveText("2 von 3 Gesprächen");
+  await page.locator("#chat-filter-role").selectOption("assistant");
+  await expect(page.locator("#chat-filter-summary")).toHaveText("0 von 3 Gesprächen");
+  await page.locator("#chat-filter-role").selectOption("user");
+  await page.locator("#chat-filter-from").fill("2026-10-21");
+  await expect(page.locator("#chat-filter-summary")).toHaveText("1 von 3 Gesprächen");
+  await page.locator("#chat-filter-chat").selectOption("c");
+  await expect(page.locator("#chat-list .chat-link")).toHaveCount(1);
+  await page.locator("#chat-filter-reset").click();
+  await expect(page.locator("#chat-filter-summary")).toHaveText("3 von 3 Gesprächen");
+  await expect(page.locator("#chat-list .chat-link")).toHaveCount(3);
+});

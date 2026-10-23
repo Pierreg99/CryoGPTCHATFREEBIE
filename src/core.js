@@ -54,10 +54,39 @@ export function setProjectContext(store, chatId, notes, share = false, now = new
   };
 }
 
+// Search is local and deterministic; private project notes never leave the browser.
+export function filterChats(store, query = '', filters = {}) {
+  const lower = value => String(value || '').trim().toLocaleLowerCase('de-DE');
+  const needle = lower(query);
+  const project = lower(filters.project);
+  const role = ['user', 'assistant'].includes(filters.role) ? filters.role : '';
+  const validDay = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : '';
+  const from = validDay(filters.from);
+  const to = validDay(filters.to);
+  return store.chats.filter(chat => {
+    if (filters.chatId && chat.id !== filters.chatId) return false;
+    const updated = chat.updatedAt.slice(0, 10);
+    if (from && updated < from || to && updated > to) return false;
+    if (project && !lower(chat.projectContext).includes(project)) return false;
+    const messages = role ? chat.messages.filter(message => message.role === role) : chat.messages;
+    if (role && !messages.length) return false;
+    return !needle ||
+      (!role && lower(chat.title).includes(needle)) ||
+      messages.some(message => lower(message.content).includes(needle));
+  });
+}
+
 export function searchChats(store, query) {
-  const needle = String(query || '').trim().toLocaleLowerCase('de-DE');
-  if (!needle) return store.chats;
-  return store.chats.filter(chat => chat.title.toLocaleLowerCase('de-DE').includes(needle) || chat.messages.some(message => message.content.toLocaleLowerCase('de-DE').includes(needle)));
+  return filterChats(store, query);
+}
+
+// Fixed-size DOM window; archived messages remain intact in the local store.
+export function messagePage(messages, end = messages.length, size = 80) {
+  const limit = Number.isInteger(size) ? Math.max(1, Math.min(80, size)) : 80;
+  const last = Number.isInteger(end) ? Math.max(0, Math.min(messages.length, end)) : messages.length;
+  const start = Math.max(0, last - limit);
+  return { start, end: last, items: messages.slice(start, last),
+    hasOlder: start > 0, hasNewer: last < messages.length };
 }
 
 export function parseBackup(raw) {

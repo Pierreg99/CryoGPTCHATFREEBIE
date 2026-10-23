@@ -63,7 +63,9 @@ Der Cryo-Neon-Workspace bietet acht Ansichten: Chat, Projektwissen, Hyperfocus, 
 | Werkzeug | Bedienung |
 | :--- | :--- |
 | Befehlssuche | **Strg+K / Cmd+K** oder das Suchsymbol im Kopfbereich; Ansichten öffnen, Chat erstellen und Backups aufrufen |
-| Gesprächssuche | **Im Chat suchen** im geöffneten Gespräch; passende Nachrichten vorwärts und rückwärts durchgehen |
+| Gesprächssuche | **Im Chat suchen** im geöffneten Gespräch; Treffer werden auch in momentan ausgeblendeten älteren Nachrichten gefunden |
+| Nachrichtenfenster v1.2 (in Abnahme) | Höchstens 80 Chat-Nachrichten gleichzeitig im DOM; ältere/neuere Seiten ausdrücklich anwählbar, gesamter Verlauf bleibt gespeichert |
+| Suchfilter v1.3 (in Abnahme) | Gespräch, Änderungsdatum, lokales Projektwissen und Rolle kombinieren; nur lokale Daten, keine Cloud-Anfrage |
 | Fokusmodus | **Fokus** auf Desktop blendet im Chat die Seitenleiste aus; die Einstellung wird lokal gespeichert |
 | Startbereich | Tatsächliche Gesprächs-/Nachrichtenzahlen, aktiver Modus und vier vorbereitete Chat-Entwürfe |
 | Fehlerzentrale (v1.1 integriert; Abnahme offen) | Probleme in der Sitzung einsehen; Modellstatus oder lokale Speicherung bewusst erneut prüfen. Keine automatische Chat-Anfrage und keine Telemetrie. |
@@ -99,7 +101,7 @@ Die [vollständige Feature-Checkliste im Changelog](CHANGELOG.md) hakt abgeschlo
 
 | Bereich | Aktuelles Verhalten |
 | :--- | :--- |
-| Chat | Unterhaltungen erstellen, durchsuchen, umbenennen und löschen; Antworten streamen, stoppen und kopieren |
+| Chat | Unterhaltungen erstellen, durchsuchen, umbenennen und löschen; Antworten streamen, stoppen und kopieren. Bei langen Verläufen in Fenstern von maximal 80 Nachrichten navigieren. |
 | Daten | IndexedDB mit localStorage-Fallback; JSON-Export und Import für Backup-Schema 1/2 mit Dry-run, Fehlerbericht und Rücksetzpunkt |
 | Projektwissen | Bis zu 4.000 Zeichen je Chat; Übergabe an ein Modell erst nach gespeicherter Freigabe |
 | Modelle | Ollama und optional OpenAI; manuelle Auswahl, Suche und lokal gespeicherte Favoriten |

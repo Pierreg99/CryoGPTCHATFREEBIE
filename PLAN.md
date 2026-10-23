@@ -1,6 +1,6 @@
 # PLAN · CryoGPTCHATFREEBIE
 
-Stand: 23. Oktober 2026.
+Stand: 23. Oktober 2026. PR #26 wurde mit erfolgreicher CI gemergt ([Run 40015621693](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/40015621693)).
 
 ## Workbench-Meilenstein
 
@@ -30,3 +30,14 @@ Stand: 23. Oktober 2026.
 | Realer Screenreader-Test der Fehlerzentrale | offen | M14 im [Accessibility-Bericht](docs/accessibility-report.md) |
 
 PR #25 wurde trotz roter Roadmap-Assertion nach `main` integriert. Die angepasste Statuszählung und Dokumentation müssen im Reparatur-PR #26 auf dem finalen Head unter Node 20/22/24 und Chromium geprüft werden. Das REQUIRED-Gate aus Issue #22 bleibt unverändert offen. Danach v1.2 Performance und v1.3 Suche priorisieren.
+
+## Roadmap v1.2/v1.3 · Begrenzte Verlaufdarstellung und Filter
+
+| Bereich | Umgesetzter Branch-Umfang | Abnahme |
+| --- | --- | --- |
+| v1.2 | Nachrichtenfenster von maximal 80 DOM-Elementen mit älter/neuere Navigation; unveränderter 600-Nachrichten-Store | Unit-Test für Grenzen; 600-Nachrichten-Browserfall und Renderbudget von 2500 ms im Testumfeld |
+| v1.2 | Volltextsuche indexiert nicht nur sichtbare DOM-Nachrichten, sondern den gesamten lokalen aktiven Chat | E2E findet Nachricht 005 außerhalb der letzten 80 |
+| v1.3 | Gespräch, letztes Änderungsdatum, Projektwissen und Nachrichtenrolle kombinierbar | Deterministische Node- und Browser-Filtertests |
+| Sicherheit | Keine Migration, Übertragung, automatische Tool-Aktion oder Freigabeänderung | Diff/Privacy Review; Node-Matrix, Chromium und Release-Check auf aktuellem PR-Head |
+
+Danach v1.4: mehrere lokale Projekträume mit gesichertem JSON-Roundtrip; Datenmigration erst mit Tests und Rücksetzpfad. Stable `1.0.0` bleibt durch [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) blockiert.

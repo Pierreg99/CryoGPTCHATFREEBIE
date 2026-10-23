@@ -9,7 +9,9 @@ Der Workspace führt Chat und Entwicklerwerkzeuge in einer ruhigeren, konsistent
 | Start | Zweispaltiger Desktop-Einstieg; auf kleinen Displays kompakte Gesprächsstatistik und früh erreichbarer Composer |
 | Navigation | Neuer Chat als primäre Aktion; Ansichten nach Denken, Werkzeugen und Workspace gruppiert |
 | Befehlssuche | Strg+K/Cmd+K oder Suchbutton; Textfilter, Pfeiltasten, Enter, Tab und Escape; zeigt auch Backup- und Entwurfsaktionen |
-| Chat durchsuchen | Im geöffneten Gespräch nach Text suchen; nächste/vorherige passende Nachricht; Status zählt Nachrichten, keine einzelnen Wortvorkommen |
+| Chat durchsuchen | Im geöffneten Gespräch nach Text suchen; auch im gespeicherten, nicht sichtbaren Verlauf; Treffer öffnet die betreffende Nachrichtenseite |
+| Langer Verlauf (v1.2) | Maximal 80 gleichzeitig gerenderte Nachrichten; ältere/neuere Seiten per Button, sämtliche Nachrichten bleiben im Backup |
+| Erweiterte Suche (v1.3) | Sidebar-Filter nach Gespräch, Änderungsdatum, lokalem Projektwissen und Nachrichtenrolle; Kriterien kombiniert |
 | Fokus | Desktop-Chat blendet die Seitenleiste aus; Fokus-Button bleibt erreichbar; Werkzeuge stellen die Navigation wieder her |
 | Composer | Zeichenzähler bis 12.000; Vorschläge bleiben Entwürfe bis zum Senden |
 | Überblick | Gesprächs- und Nachrichtenzahlen aus dem aktuellen lokalen Store; Modellmodus aus der tatsächlichen Modellauswahl |
@@ -35,7 +37,7 @@ Keine neue Laufzeitabhängigkeit. Die bestehenden CSS-Dateien werden weiter eing
 
 `cryo-focus-v1` enthält ausschließlich die boolesche Layoutpräferenz als String in localStorage. Die Einstellung gehört wie Favoriten und Motion-Präferenzen nicht zum Chat-JSON-Backup. Bei gesperrtem localStorage funktioniert sie nur für die Sitzung.
 
-Suchbegriffe, Suchtreffer und der Zustand der Befehlssuche bleiben im Arbeitsspeicher. Die Gesprächssuche wird beim Wechsel der aktiven Chat-ID zurückgesetzt. Nachrichten werden weiterhin als Text dargestellt. Das Rendering von Modell-/Nutzerinhalten als HTML wurde nicht eingeführt.
+Suchbegriffe, Suchtreffer und der Zustand der Befehlssuche bleiben im Arbeitsspeicher. Die neuen Filter sind lokale UI-Einstellungen, keine persistierten Daten und keine Netzwerk-Anfragen. Das Datum wird als UTC-Tag aus `updatedAt` verglichen. Das 80er-Nachrichtenfenster wird separat vom weiterhin vollständigen Store verwaltet; bei Suchtreffern außerhalb des aktuellen DOM wird das Fenster neu ausgerichtet. Die Gesprächssuche wird beim Wechsel der aktiven Chat-ID zurückgesetzt. Nachrichten werden weiterhin als Text dargestellt. Das Rendering von Modell-/Nutzerinhalten als HTML wurde nicht eingeführt.
 
 ## Nachweise und Reproduktion
 
@@ -55,3 +57,9 @@ Die lokale Verifikation verwendet Node 24 und Chromium 153. Für den Browserlauf
 Die Screenshots zeigen einen leeren Offline-Workspace, keine Live-Inferenz. Die Backup-Bilder zeigen die noch nicht angewandte Vorschau eines leeren Beispiel-Backups. Die Desktop-Ansichten wurden bei 1440 × 1040, die mobilen bei 390 × 844 aufgenommen.
 
 Die automatische Suite prüft unter anderem acht Ansichten bei 320/360/768/1440 CSS-Pixeln, die Befehlssuche, Fokus-Rückgabe, Modell-Streaming mit simulierten Providern und echte IndexedDB-Wiederherstellung. Sie ersetzt die [manuelle Accessibility-Abnahme](accessibility-report.md) nicht. Neue manuelle Fälle M11–M13 sind offen.
+
+## v1.2/v1.3 · Technische Regressionen
+
+- `tests/core.test.js`: kombinierte Filter und feste 80er-Grenze auf 600 Nachrichten.
+- `e2e/workbench.spec.js`: importierter großer Verlauf, Seitenwechselzeit unter 2500 ms in CI-Chromium, Suche nach verstecktem Verlauf, Filterkombinationen.
+- Der Seitenwechsel ist eine explizite Bedienaktion, keine automatische Netzwerk- oder AI-Aktion. Für Release-Kandidaten bleiben manuelle Screenreader-Prüfungen M15–M16 notwendig.

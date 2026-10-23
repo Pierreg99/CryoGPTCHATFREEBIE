@@ -15,9 +15,17 @@ Prüfbarer Kandidat für das 1.0-Ziel. Der folgende Stand umfasst auch die histo
 - [x] Nachrichten kopieren; Senden per Enter und Zeilenumbruch per Shift+Enter.
 - [x] Unicode-Inhalte einschließlich eigener Emojis beim Speichern, Neuladen und JSON-Export erhalten.
 
-### Fehlerzentrale v1.1 · PR #25 integriert (CI-Nachprüfung in PR #26 und manuelle Abnahme offen)
+### Roadmap v1.2 und v1.3 · Entwicklungsbranch (CI/AT-Gates offen)
 
-- [ ] Vollständige Qualitätssicherung und Integration des Entwicklungsmeilensteins.
+- [ ] Auf finaler Commit-SHA alle Pflichtprüfungen ausführen und manuelle Accessibility-Abnahme nachweisen.
+- [x] Bei großen Chatverläufen höchstens 80 Nachrichten gleichzeitig rendern; alle Nachrichten bleiben gespeichert.
+- [x] Vorherige/nächste Nachrichtenseite bewusst per Button anzeigen; Volltextsuche berücksichtigt auch nicht gerenderte Nachrichten.
+- [x] Gespräch, letztes Änderungsdatum, Projektwissen und Nachrichtenrolle lokal kombinierbar filtern.
+- [x] Deterministische Node- und Playwright-Regressionstests einschließlich Performance-Budget ergänzen.
+
+### Fehlerzentrale v1.1 · PR #25 / PR #26 in main (manuelle Abnahme offen)
+
+- [ ] Manuelle Accessibility-Abnahme der Fehlerzentrale (M14) offen; technische PR-CI nach Korrektur #26 grün.
 - [x] Temporäre, kontextbezogene Problemübersicht für Speicherung, Modellstatus, Chat und Aktionen implementiert.
 - [x] Bewusste Wiederholungen ohne automatische erneute KI-Anfrage implementiert.
 - [x] Node- und Browser-Testfälle ergänzt; Ergebnisse am endgültigen PR-Commit gesondert zu prüfen.

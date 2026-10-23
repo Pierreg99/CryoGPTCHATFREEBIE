@@ -23,3 +23,12 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 - Ein Eintrag bleibt beim erneuten Fehler offen; erfolgreiche Modellstatus-Prüfung oder Speicherung entfernt ihn.
 - Neue Node-Tests, Playwright-Browserfälle und manuelle Prüfung M14 sind angelegt. Der initiale `main`-Lauf nach PR #25 scheiterte an einer veralteten Roadmap-Zählung. PR #26 passt die Erwartung auf 8 implementiert / 4 teilweise / 88 geplant an. CI-/AT-Ergebnisse erst am finalen Fix-PR-Head bewerten.
 - Keine Änderung der Cloud-Zustimmungsgrenzen, des Servers außerhalb der expliziten neuen statischen Modul-URL oder des Release-Gates.
+
+## Roadmap v1.2/v1.3 · Branch-Prüfpunkte
+
+- Der vollständige Chatverlauf bleibt mit bis zu 600 Nachrichten in IndexedDB/Backup; nur die angezeigte Seite ist auf 80 DOM-Nachrichten begrenzt. Der Seitenwechsel erfolgt bewusst über beschriftete Buttons, keine unsichtbare Scrollmagie.
+- Die Gesprächssuche verwendet das vollständige lokale Nachrichtenarray, nicht nur die aktuell gerenderten `article`-Elemente. Treffer außerhalb des Fensters steuern die aktuelle Nachrichtenansicht.
+- Seitenleistenfilter verarbeiten ausschließlich vorhandene Daten (`title`, `updatedAt`, `projectContext`, `role` und Nachrichteninhalt). Projektwissen bleibt privat und löst kein Opt-in aus.
+- Alle Texte werden weiterhin über `textContent` oder `Option` erstellt; Datum ist als UTC-ISO-Tag aus `updatedAt` definiert.
+- Performance-Budget des Browser-Testfalls: `<= 80` sichtbare Nachrichten und maximal 2500 ms für einen Seitenwechsel mit 600 gespeicherten Nachrichten auf dem CI-Chromium. Ein bestandener automatischer Test beweist noch keine unabhängige AT-Abnahme.
+- Bestehende Freigabe-, Backup-, Netzwerk- und Stabilitäts-Gates nicht ändern. PR-Checks auf dem finalen Head und reale AT-Fälle M15–M16 bleiben separate Gates.

@@ -17,7 +17,8 @@ import {
   renameChat,
   deleteChat,
   appendMessage,
-  searchChats,
+  filterChats,
+  messagePage,
   toOllamaMessages,
   setProjectContext,
 } from "./core.js";
@@ -131,7 +132,20 @@ function renderList() {
   const list = el("chat-list");
   list.replaceChildren();
   el("chat-count").textContent = String(store.chats.length);
-  const results = searchChats(store, el("search").value);
+  // Rebuild from text nodes; never interpret imported chat titles as markup.
+  const chatFilter = el("chat-filter-chat");
+  const selected = chatFilter.value;
+  chatFilter.replaceChildren(new Option("Alle Gespräche", ""));
+  for (const chat of store.chats) chatFilter.add(new Option(chat.title, chat.id));
+  chatFilter.value = store.chats.some(chat => chat.id === selected) ? selected : "";
+  const results = filterChats(store, el("search").value, {
+    chatId: chatFilter.value,
+    from: el("chat-filter-from").value,
+    to: el("chat-filter-to").value,
+    project: el("chat-filter-project").value,
+    role: el("chat-filter-role").value,
+  });
+  el("chat-filter-summary").textContent = `${results.length} von ${store.chats.length} Gesprächen`;
   if (!results.length) {
     const empty = document.createElement("p");
     empty.className = "empty-list";
@@ -165,10 +179,35 @@ function renderList() {
     list.append(button);
   }
 }
+const MESSAGE_PAGE_SIZE = 80;
+let messageWindowChat = null;
+let messageWindowLength = 0;
+let messageWindowEnd = 0;
 function renderMessages() {
   const chat = active(),
     list = el("messages");
+  const all = chat?.messages || [];
+  if (chat?.id !== messageWindowChat || all.length > messageWindowLength)
+    messageWindowEnd = all.length;
+  messageWindowChat = chat?.id || null;
+  messageWindowLength = all.length;
+  const page = messagePage(all, messageWindowEnd, MESSAGE_PAGE_SIZE);
+  messageWindowEnd = page.end;
   list.replaceChildren();
+  const pagination = (text, end, direction) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "message-page-button";
+    button.dataset.page = direction;
+    button.textContent = text;
+    button.addEventListener("click", () => {
+      messageWindowEnd = end;
+      renderMessages();
+    });
+    return button;
+  };
+  if (page.hasOlder)
+    list.append(pagination("Ältere Nachrichten anzeigen", page.start, "older"));
   el("welcome").hidden = Boolean(chat?.messages.length);
   el("top-title").textContent = chat?.title || "Neuer Chat";
   el("chat-heading").textContent = chat?.title || "CryoGPTChat.";
@@ -177,9 +216,10 @@ function renderMessages() {
     : "Dein Arbeitsbereich für Ideen, Code und Gespräche – ohne Cloud-Zwang.";
   el("rename-chat").disabled = !chat || (sending && chat?.id === busyChatId);
   el("delete-chat").disabled = !chat || (sending && chat?.id === busyChatId);
-  for (const msg of chat?.messages || []) {
+  for (const msg of page.items) {
     const row = document.createElement("article");
     row.className = "message " + msg.role;
+    row.dataset.messageId = msg.id;
     const avatar = document.createElement("div");
     avatar.className = "avatar";
     avatar.setAttribute("aria-hidden", "true");
@@ -212,7 +252,9 @@ function renderMessages() {
     row.append(avatar, body);
     list.append(row);
   }
-  if (sending && chat?.id === busyChatId) {
+  if (page.hasNewer)
+    list.append(pagination("Neuere Nachrichten anzeigen", Math.min(all.length, page.end + MESSAGE_PAGE_SIZE), "newer"));
+  if (sending && chat?.id === busyChatId && !page.hasNewer) {
     const typing = document.createElement("p");
     typing.className = "typing";
     typing.id = "streaming-reply";
@@ -221,7 +263,18 @@ function renderMessages() {
     list.append(typing);
   }
   list.scrollTop = list.scrollHeight;
+  document.dispatchEvent(new Event("workspace:messages"));
 }
+document.addEventListener("workspace:reveal-message", event => {
+  const messages = active()?.messages || [];
+  const index = messages.findIndex(message => message.id === event.detail);
+  if (index === -1) return;
+  const nextEnd = Math.min(messages.length, Math.max(MESSAGE_PAGE_SIZE, index + 40));
+  if (nextEnd !== messageWindowEnd) {
+    messageWindowEnd = nextEnd;
+    renderMessages();
+  }
+});
 function renderProjectPanel() {
   const chat = active();
   const button = el("notes-toggle");
@@ -520,6 +573,17 @@ el("new-chat").addEventListener("click", () => {
   el("prompt").focus();
 });
 el("search").addEventListener("input", renderList);
+for (const id of ["chat-filter-chat", "chat-filter-from", "chat-filter-to", "chat-filter-role", "chat-filter-project"]) {
+  el(id).addEventListener("input", renderList);
+  el(id).addEventListener("change", renderList);
+}
+el("chat-filter-reset").addEventListener("click", () => {
+  for (const id of ["chat-filter-chat", "chat-filter-from", "chat-filter-to", "chat-filter-role", "chat-filter-project"])
+    el(id).value = "";
+  el("search").value = "";
+  renderList();
+  el("search").focus();
+});
 el("refresh").addEventListener("click", refreshModels);
 el("model").addEventListener("change", (e) => {
   store.settings.model = e.target.value;

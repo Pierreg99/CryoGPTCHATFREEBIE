@@ -71,6 +71,8 @@ Die Browser-Suite verwendet die Tags `wcag2a`, `wcag2aa`, `wcag21aa` und `wcag22
 | M12 | Gesprächssuche | Trefferstatus, nächste/vorherige Nachricht, sichtbare Auswahl, Escape und Chatwechsel | offen |
 | M13 | Fokusmodus | Seitenleiste auf Desktop aus-/einblenden, gespeicherte Präferenz, Rückkehr über Befehlssuche und mobile Navigation | offen |
 | M14 | Fehlerzentrale | Modellstatus-Fehler simulieren, Dialog öffnen, Status ansagen, Retry/Entfernen bedienen, Escape und Fokusrückgabe, mobile Darstellung | offen |
+| M15 | Nachrichtenfenster | 600 Nachrichten, ältere/neuere Seiten, Fokus und Ansage, Suche nach ausgeblendeten Texten, keine fehlenden oder doppelt gelesenen Nachrichten | offen |
+| M16 | Suchfilter | Gespräch, Datum, private Notizen, Rolle kombinieren und zurücksetzen; mobile Darstellung, Beschriftungen, Trefferstatus und Tastaturbedienung | offen |
 
 ### Querschnittsprüfungen
 
@@ -106,7 +108,7 @@ Jeder echte Befund erhält eine eindeutige ID und wird hier oder in einem verlin
 
 ## Exit-Kriterien für stabile 1.0
 
-- [ ] Alle M01–M14-Kernflows in mindestens einer dokumentierten realen Screenreader-/Browser-Kombination geprüft.
+- [ ] Alle M01–M16-Kernflows in mindestens einer dokumentierten realen Screenreader-/Browser-Kombination geprüft.
 - [ ] X01–X10 vollständig bewertet; nicht anwendbare Punkte begründet.
 - [ ] Blocker und Major-Befunde behoben und erneut getestet.
 - [ ] Automatisierte Node-, Browser- und Release-Checks nach den letzten Fixes erfolgreich.
