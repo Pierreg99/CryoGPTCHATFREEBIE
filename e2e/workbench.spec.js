@@ -283,7 +283,8 @@ test("v1.4 creates isolated projects, assigns chats and preserves notes through 
   await page.locator("#workspace-notes").fill("Only locally stored alpha notes");
   await page.locator("#save-workspace-notes").click();
   await page.locator("#new-chat").click();
-  // The project panel stays open when a new chat is created.
+  // A chat switch collapses the details panel; explicitly open it for the next chat.
+  await page.locator("#notes-toggle").click();
   await page.locator("#create-project").click();
   await page.locator("#cryo-dialog-input").fill("Cryo Beta");
   await page.locator("#cryo-dialog-confirm").click();
