@@ -1,23 +1,20 @@
 # HANDOFF · Nächste konkrete Arbeit
 
-## Abgeschlossener README-Meilenstein
+Stand: 23. Oktober 2026. Die Workbench-Überarbeitung liegt auf `feat/workspace-overhaul-20261023`.
 
-[PR #20](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/20) ist nach erfolgreichem Node-, Browser- und Release-CI-Lauf in `main` gemergt. Der [Main-Lauf nach Merge](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732254173) war ebenfalls erfolgreich. Das Dashboard bietet sechs klickbare SVG-Kacheln, eine Screenshot-Galerie und den dokumentierten Cryo-Review-Ablauf.
+## Umgesetzt
 
-## README-Workflow
+- Startansicht, gruppierte Navigation und responsive Shell für acht Ansichten.
+- Befehlssuche mit Strg+K/Cmd+K, Gesprächssuche, Desktop-Fokusmodus und Zeichenzähler.
+- Aktuelle Screenshots und reproduzierbarer Screenshot-Befehl.
+- Ergänzende Browser-Tests sowie synchronisierte README, Changelog und Projektdokumente.
 
-1. Für neue README-Änderungen einen Branch und Pull Request verwenden; keine direkten ungeprüften Main-Schreiboperationen.
-2. Alle sechs Dashboard-Kacheln, die Screenshot-Galerie, Navigation, Mermaid und aufklappbaren Abschnitte auf GitHub kontrollieren.
-3. Lokale Pfade und Überschriften-Anker über `npm test` validieren; Node-Matrix, Browser-E2E und Paketprüfung abwarten.
-4. PR-Reviews, Security-Befunde, Branch-Regeln und GitHub-Mergeability prüfen; erst dann mergen.
-5. Nach Merge `main`-CI überprüfen und Projektunterlagen auf den neuen Stand setzen.
+## Nächste Schritte
 
-## Aktiver P0-Produktmeilenstein
+1. Die Checks des zugehörigen PRs und den vollständigen Diff prüfen; lokale Browser-Evidenz stammt aus Chromium 153, die CI verwendet reguläres Playwright-Chromium.
+2. Erst nach erfolgreichen Pflichtchecks und erfüllten Repository-Regeln integrieren; danach `main`-CI prüfen.
+3. [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) mit realem Screenreader durchführen. Die Testmatrix umfasst jetzt M01–M13 und X01–X10.
 
-Die manuelle WCAG-2.2-AA-Abnahme wird über [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) gesteuert. [docs/accessibility-report.md](docs/accessibility-report.md) enthält die M01–M10-Kernflows, X01–X10-Querschnittschecks, Befundvorlage und Exit-Kriterien.
+Die Paketversion bleibt `1.0.0-rc.1`. Das manuelle REQUIRED-Gate bleibt offen. Keine Live-Modellinferenz oder unabhängige Accessibility-Freigabe aus den automatisierten Tests ableiten.
 
-Nächste reale Aktion: Eine konkrete OS-/Browser-/Screenreader-Kombination auf dem Release-Candidate starten, Commit-SHA und Versionen protokollieren und die Matrix ohne positive Annahmen abarbeiten.
-
-**Nicht behaupten:** Stabile 1.0, echte externe Modell-E2E oder vollständige Accessibility-Freigabe. Auto-Merge nicht als aktiv voraussetzen.
-
-[PLAN](PLAN.md) · [PROGRESS](PROGRESS.md) · [AUDIT](AUDIT.md) · [README](README.md#dashboard)
+[Prüfbericht](docs/workbench-overhaul.md) · [PLAN](PLAN.md) · [PROGRESS](PROGRESS.md) · [AUDIT](AUDIT.md)

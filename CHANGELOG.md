@@ -15,6 +15,16 @@ Prüfbarer Kandidat für das 1.0-Ziel. Der folgende Stand umfasst auch die histo
 - [x] Nachrichten kopieren; Senden per Enter und Zeilenumbruch per Shift+Enter.
 - [x] Unicode-Inhalte einschließlich eigener Emojis beim Speichern, Neuladen und JSON-Export erhalten.
 
+### Workbench-Überarbeitung · 23.10.2026
+
+- [x] Neue zweispaltige Startansicht mit tatsächlichen Gesprächszahlen und aktivem Modellmodus.
+- [x] Gruppierte Navigation, violette Design-Tokens und einheitliche Oberflächen für acht Ansichten.
+- [x] Befehlssuche per Strg+K/Cmd+K mit Filter, Pfeiltasten, nativer Dialogsemantik und Fokusrückgabe.
+- [x] Suche innerhalb des Gesprächs mit Trefferwechsel, Leerzustand und Rücksetzung beim Chatwechsel.
+- [x] Desktop-Fokusmodus mit lokaler Präferenz und zugänglicher Rückkehr zur Navigation.
+- [x] Zeichenzähler und kompakte mobile Startansicht mit früh erreichbarem Eingabefeld.
+- [x] Reproduzierbare Offline-Screenshots und ergänzende Browser-Regressionstests.
+
 ### Workspace, Navigation und Design
 
 - [x] Acht Ansichten für Chat, Projektwissen, Hyperfocus, Agenten, GitHub & Skills, Godot MCP, Roadmap und Modelle.

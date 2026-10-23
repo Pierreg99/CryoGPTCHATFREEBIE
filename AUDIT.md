@@ -1,19 +1,16 @@
-# AUDIT · Dokumentations-, CI- und Release-Check
+# AUDIT · Workbench-Überarbeitung
 
-Stand: 22. Oktober 2026.
+Stand: 23. Oktober 2026.
 
-| Priorität | Prüfung | Verifiziertes Ergebnis | Folgemaßnahme |
-| --- | --- | --- | --- |
-| P1 | README-Navigation | Sechs lokale SVG-Kacheln, Dashboard und echte Screenshot-Galerie mit [PR #20](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/20) integriert | Nur künftige Änderungen erneut prüfen |
-| P1 | Markdown-/Asset-Vertrag | [Dokumentationstests](tests/documentation.test.js) prüfen lokale Links, Anker, zugängliche SVG-Metadaten, Galerie und Details; PR- und Main-CI grün | Bei künftigen Designänderungen Tests mitführen |
-| P1 | Release-Gate-Checkboxen | Ungültige `- []`-Checkboxen zu `- [ ]` korrigiert und in Tests abgesichert | Manuelle WCAG-Abnahme weiterhin offen lassen |
-| P1 | README-Markdown-Rendering | Kopfbereich HTML-strukturiert, SVG-Kacheln als lokale Links, Details und Mermaid als GitHub-kompatible Blöcke angelegt | Visuelle GitHub-Prüfung bei Layout-Änderungen wiederholen |
-| P0 | Manuelle Accessibility | Version `1.0.0-rc.1`; Issue #22 und detaillierte M01–M10/X01–X10-Testmatrix bereiten die reale AT-Abnahme vor, liefern aber noch keinen positiven Nachweis | [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) vollständig ausführen; Stable-1.0 bis danach blockieren |
-| P1 | CI-Baseline | Main-Lauf nach PR #20 mit Erfolg abgeschlossen | [Lauf 39732254173](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732254173); jeden neuen PR separat prüfen |
-| P1 | Merge-Politik | Repository meldete `allow_auto_merge=false` | Kein ungeprüfter Merge; CI, PR-Review und GitHub-Regeln beachten |
+| Prüfung | Ergebnis / Nachweis | Grenze |
+| --- | --- | --- |
+| Darstellung | Desktop- und Mobilansichten im Chromium erfasst und visuell geprüft; neue SVG-Illustration passt zum Workbench | [Aktuelle Screenshots](docs/screenshots/) |
+| Neue Interaktionen | Sieben Browser-Tests für Befehlssuche, reale Statistiken, Entwürfe, Nachrichtensuche, Fokus und responsive Dialoge | [Tests](e2e/workbench.spec.js) |
+| Bestehende Flows | Gesamte Browser-Suite prüft weiterhin Chat/Streaming, Modelle, Agenten, Skills, Roadmap und Backup/Undo | Externe Provider und Godot simuliert |
+| Statische Auslieferung | Nur zwei neue Dateien zur expliziten Allowlist ergänzt | Keine allgemeine Verzeichnisfreigabe |
+| Daten und Sicherheit | Suchtext bleibt im Speicher; Fokuspräferenz ohne Chatinhalt in localStorage; Nachrichten bleiben Text; bestehende Berechtigungsgrenzen weiter aktiv | [Workbench-Datenmodell](docs/workbench-overhaul.md#daten-und-zustand) |
+| Dokumentation | README, Changelog, Screenshots und Übergaben aktualisiert; lokale Links und SVG-Struktur durch Node-Tests geprüft | GitHub-Rendering zusätzlich im PR kontrollieren |
+| Manuelle Accessibility | Neue Fälle M11–M13 aufgenommen, noch kein positiver manueller AT-Nachweis | [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) blockiert Stable-1.0 |
+| CSS-Architektur | Neue Shell-Schicht mit zentralen Tokens; fachliche Komponenten bleiben in bisherigen Dateien | Historische CSS-Schichten noch nicht vollständig konsolidiert |
 
-## Grenzen des Audits
-
-Ein erfolgreicher automatischer Browser-Test ist kein manueller WCAG-Nachweis. Das tatsächliche Rendern von SVG und Mermaid in GitHub sollte im PR kontrolliert werden. Inhalte verlinkter externer Ressourcen und assistive Technologien wurden nicht vollumfänglich getestet.
-
-[README](README.md) · [PLAN](PLAN.md) · [PROGRESS](PROGRESS.md) · [Release-Gates](docs/RELEASE-CHECKLIST.md)
+Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/workbench-overhaul.md). PR-CI und Merge-Status müssen getrennt am konkreten Commit geprüft werden.

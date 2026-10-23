@@ -1,5 +1,8 @@
 // Local SVG icons keep labels independent of platform emoji fonts.
 const paths = {
+  plus: "M12 5v14M5 12h14",
+  arrow: "M6 18 18 6M6 6h12v12",
+  search: "M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z",
   chat: "M4 4h16v12H9l-5 4V4Z",
   knowledge: "M5 3h11l3 3v15H5V3Zm3 6h8M8 13h8M8 17h5",
   focus: "m13 2-8 12h7l-1 8 8-12h-7l1-8Z",

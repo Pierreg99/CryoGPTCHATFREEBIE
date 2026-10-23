@@ -1,19 +1,16 @@
 # PROGRESS · Verifizierbarer Projektfortschritt
 
-Stand der Prüfung: 22. Oktober 2026. Keine frei erfundenen Prozentangaben.
+Stand: 23. Oktober 2026. Dieser Stand beschreibt den Workbench-Feature-Branch; eine Integration in `main` ist damit nicht behauptet.
 
-| Bereich | Verifizierter Stand | Nachweis |
+| Bereich | Stand | Nachweis |
 | --- | --- | --- |
-| Anwendung | Paketversion `1.0.0-rc.1`; kein Stable-1.0-Release belegt | [package.json](package.json) · [Release-Checkliste](docs/RELEASE-CHECKLIST.md) |
-| Letzter kontrollierter README-Merge | PR #20 am 22.10.2026 nach erfolgreichem PR-CI-Lauf in `main` integriert | [PR #20](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/20) · [Merge-Commit 1d137652](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/commit/1d1376523178bff1993b85408dd627eb8c391532) |
-| CI-Baseline von `main` | Node 20/22/24, Browser-E2E und Release-Check beim Merge-Commit von PR #20 erfolgreich | [Lauf 39732254173](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732254173) |
-| Dashboard-Erweiterung | Sechs lokale SVG-Navigationskacheln, Screenshot-Galerie, Workflow-Diagramm und Dokumentationschecks in `main`; Build-Checks grün | [README-Dashboard](README.md#dashboard) · [PR #20](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/pull/20) · [PR-CI](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/39732170322) |
-| Roadmap | 100 Entwicklungsmeilensteine dokumentiert; keine 100 veröffentlichten Releases | [Master-Roadmap](docs/roadmap/ROADMAP-100.md) |
-| Accessibility | Automatische Prüfungen vorhanden; P0-Manuallauf als Issue #22 mit M01–M10/X01–X10-Testmatrix vorbereitet, aber noch nicht ausgeführt | [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) · [Release-Gates](docs/RELEASE-CHECKLIST.md) · [Accessibility-Bericht](docs/accessibility-report.md) |
-| Sicherheitsgrenzen | Lokaler Einzelbenutzerbetrieb mit separat freizugebenden Integrationen | [Threat Model](docs/security/THREAT-MODEL.md) |
-
-## Nachweisregel
-
-Jede Statusänderung benötigt einen konkreten Commit-, PR-, Issue-, Test- oder Prüfbericht-Link. Ein angelegter Workflow oder Pull Request ist noch kein bestandener Test und kein erfolgreicher Merge. Aktuellen Live-Status über GitHub Actions prüfen.
+| Paket | `1.0.0-rc.1`, weiterhin Release Candidate | [Paket](package.json), [Release-Gates](docs/RELEASE-CHECKLIST.md) |
+| Workbench | Neue Startansicht, tatsächliche Statistiken, gruppierte Navigation, acht konsistent gestaltete Ansichten | [Shell](src/workbench.js), [Design](src/workbench.css) |
+| Bedienung | Befehlssuche, Gesprächssuche, Fokusmodus, Zeichenzähler | [Browser-Tests](e2e/workbench.spec.js) |
+| Screenshots | Aktuelle Offline-Ansichten mit frischem Profil; reproduzierbarer Capture-Befehl | [Galerie](docs/screenshots/), [Script](scripts/screenshots.mjs) |
+| Lokale Tests | 86 Node-Tests und 34 Browser-Tests; detaillierte Umgebung und Grenzen im Prüfbericht | [Workbench-Nachweis](docs/workbench-overhaul.md), [Testquellen](e2e/) |
+| CI | Neuer PR muss seine eigenen Checks bestehen; frühere grüne Läufe sind keine Evidenz für diesen Branch | [GitHub Actions](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions) |
+| Accessibility | M01–M13 und X01–X10 noch manuell zu prüfen | [Accessibility-Bericht](docs/accessibility-report.md), [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) |
+| Roadmap | 100 dokumentierte Entwicklungsmeilensteine, keine 100 veröffentlichten Releases | [Master-Roadmap](docs/roadmap/ROADMAP-100.md) |
 
 [README](README.md) · [AUDIT](AUDIT.md) · [PLAN](PLAN.md)

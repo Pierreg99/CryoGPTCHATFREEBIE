@@ -1,12 +1,12 @@
 # Accessibility-Prüfbericht · 1.0.0-rc.1
 
-Stand: 22. Oktober 2026. Roadmap v0.7, Kernflows des lokalen Einzelbenutzer-Workspace. Dieser Bericht dokumentiert technische Prüfungen gegen WCAG 2.2 A/AA und den Plan für die noch ausstehende manuelle Abnahme. Er ist keine vollständige Konformitätserklärung oder unabhängige Zertifizierung.
+Stand: 23. Oktober 2026. Roadmap v0.7, Kernflows des lokalen Einzelbenutzer-Workspace. Dieser Bericht dokumentiert technische Prüfungen gegen WCAG 2.2 A/AA und den Plan für die noch ausstehende manuelle Abnahme. Er ist keine vollständige Konformitätserklärung oder unabhängige Zertifizierung.
 
 **P0-Tracking:** [Issue #22 · Manual WCAG 2.2 AA release audit for 1.0](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22)
 
 ## Gegenstand und Methode
 
-Geprüft werden Navigation, Chat/Stoppen, Modellwahl, Projektwissen, Agentenfreigaben, GitHub/Skills, Hyperfocus, Godot-Formulare, Roadmap und Backup-Wiederherstellung. Grundlage der automatisierten Evidenz sind echte Chromium-Browserläufe, DOM-/Accessibility-Regeln mit axe, Tastatureingaben, Fokus-/Geometrieprüfungen und Fehler-Injektion. Externe Provider und Godot sind dabei simuliert. Viewports: 320, 360, 768 und 1440 CSS-Pixel. Die Tests stehen in `e2e/accessibility.spec.js`, `e2e/recovery.spec.js` und `e2e/workspace.spec.js`.
+Geprüft werden Navigation, Chat/Stoppen, Modellwahl, Projektwissen, Agentenfreigaben, GitHub/Skills, Hyperfocus, Godot-Formulare, Roadmap und Backup-Wiederherstellung. Grundlage der automatisierten Evidenz sind echte Chromium-Browserläufe, DOM-/Accessibility-Regeln mit axe, Tastatureingaben, Fokus-/Geometrieprüfungen und Fehler-Injektion. Externe Provider und Godot sind dabei simuliert. Viewports: 320, 360, 768 und 1440 CSS-Pixel. Die Tests stehen in `e2e/accessibility.spec.js`, `e2e/recovery.spec.js`, `e2e/workspace.spec.js` und `e2e/workbench.spec.js`.
 
 Für die stabile Freigabe muss zusätzlich ein Mensch die Kernflows mit realer Assistive Technology prüfen. Automatisierte Regeln bleiben unterstützende Evidenz und ersetzen weder tatsächliche Screenreader-Ausgabe noch eine manuelle Beurteilung von Lesereihenfolge, Fokus, Textvergrößerung oder Bedienbarkeit.
 
@@ -67,6 +67,9 @@ Die Browser-Suite verwendet die Tags `wcag2a`, `wcag2aa`, `wcag21aa` und `wcag22
 | M08 | GitHub & Skills | Suche/Übernahme, Status, Freigabegrenzen, Lesereihenfolge | offen |
 | M09 | Godot MCP | Formulare, Freigabe, Vorschau, Bestätigung, Fehlermeldungen | offen |
 | M10 | Roadmap | Suche, Filter, Karten/Details, Lesereihenfolge, Zoom/Reflow | offen |
+| M11 | Befehlssuche | Strg+K/Cmd+K, Suchfeld, Trefferzahl, Pfeiltasten, Enter, Escape und Fokusrückgabe mit echtem Screenreader | offen |
+| M12 | Gesprächssuche | Trefferstatus, nächste/vorherige Nachricht, sichtbare Auswahl, Escape und Chatwechsel | offen |
+| M13 | Fokusmodus | Seitenleiste auf Desktop aus-/einblenden, gespeicherte Präferenz, Rückkehr über Befehlssuche und mobile Navigation | offen |
 
 ### Querschnittsprüfungen
 

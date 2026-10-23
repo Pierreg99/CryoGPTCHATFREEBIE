@@ -52,11 +52,22 @@
 
 **1.0.0-rc.1 ist ein Release Candidate.** Die stabile 1.0 wartet auf die dokumentierte manuelle WCAG-2.2-AA-Abnahme mit echter assistiver Technik. Offene Gates blockieren den stabilen Paketbau. [Release-Politik](docs/RELEASE.md) · [Release-Checkliste](docs/RELEASE-CHECKLIST.md) · [Changelog](CHANGELOG.md)
 
-Der Cryo-Neon-Workspace bietet acht Ansichten: Chat, Projektwissen, Hyperfocus, Agenten, GitHub & Skills, Godot MCP, Roadmap und Modellzentrale. Die Oberfläche nutzt einheitliche SVG-Icons, mobile Navigation, Tastaturbedienung und pausierbare Animationen. Ohne ausgewähltes Modell dient sie als lokales Chat-Notizbuch.
+Der Cryo-Neon-Workspace bietet acht Ansichten: Chat, Projektwissen, Hyperfocus, Agenten, GitHub & Skills, Godot MCP, Roadmap und Modellzentrale. Der überarbeitete Workbench nutzt eine gruppierte Navigation, violette Akzente, eine Befehlssuche, Gesprächssuche und einen Fokusmodus. SVG-Icons, mobile Navigation, Tastaturbedienung und pausierbare Animationen sind durchgängig verfügbar. Ohne ausgewähltes Modell dient sie als lokales Chat-Notizbuch.
 
 ![Aktueller Cryo-Neon-Workspace auf Desktop](docs/screenshots/workspace-desktop.png)
 
 [Mobile Ansicht](docs/screenshots/workspace-mobile.png) · [Bedienung und Konfiguration](docs/workspace.md)
+
+### Workbench: schneller zum nächsten Schritt
+
+| Werkzeug | Bedienung |
+| :--- | :--- |
+| Befehlssuche | **Strg+K / Cmd+K** oder das Suchsymbol im Kopfbereich; Ansichten öffnen, Chat erstellen und Backups aufrufen |
+| Gesprächssuche | **Im Chat suchen** im geöffneten Gespräch; passende Nachrichten vorwärts und rückwärts durchgehen |
+| Fokusmodus | **Fokus** auf Desktop blendet im Chat die Seitenleiste aus; die Einstellung wird lokal gespeichert |
+| Startbereich | Tatsächliche Gesprächs-/Nachrichtenzahlen, aktiver Modus und vier vorbereitete Chat-Entwürfe |
+
+[Workbench-Anleitung und Architektur](docs/workbench-overhaul.md) · [Befehlssuche als Screenshot](docs/screenshots/commands.png)
 
 ## Schnellstart
 
@@ -134,7 +145,7 @@ Alle Grafiken liegen in [assets/readme](assets/readme/); externe Bild-CDNs sind 
 
 ## Oberflächen-Galerie
 
-Die folgenden Abbildungen sind im Repository gespeicherte Screenshots. Klicke auf ein Bild für die Originalgröße. Die SVG-Banner unter [Drei Designwelten](#drei-designwelten) sind dagegen Illustrationen.
+Die folgenden Abbildungen sind aktuelle, im Repository gespeicherte Workbench-Screenshots. Sie wurden mit frischem Browserprofil ohne Modellanbieter erstellt; die Backup-Ansicht zeigt die Vorschau einer leeren Beispieldatei. `npm run screenshots` erstellt diese Ansichten erneut. Klicke auf ein Bild für die Originalgröße. Die SVG-Banner unter [Drei Designwelten](#drei-designwelten) sind dagegen Illustrationen.
 
 <table>
 <tr>
@@ -159,7 +170,7 @@ Die folgenden Abbildungen sind im Repository gespeicherte Screenshots. Klicke au
 
 | Schicht | Einstieg | Aufgabe |
 | :--- | :--- | :--- |
-| Oberfläche | [index.html](index.html), [Workspace](src/workspace.js), [Designsystem](src/interface.css) | Acht Ansichten, SVG-Icons, mobile Navigation und Fokusführung |
+| Oberfläche | [index.html](index.html), [Workspace](src/workspace.js), [Workbench](src/workbench.js), [Shell-Design](src/workbench.css) | Acht Ansichten, Befehlssuche, Gesprächssuche, Fokusmodus und responsive Navigation |
 | Chat und Speicher | [Core](src/core.js), [Speicherung](src/storage.js), [Recovery](src/recovery-storage.js) | Schema, Migration, atomare Snapshots und Wiederherstellung |
 | Server und Modelle | [Server](server.mjs), [Provider](src/providers.mjs), [Request-Grenzen](src/security.mjs) | Loopback-API, Streaming, Validierung und Limits |
 | Entwickler-Werkzeuge | [GitHub](src/github-integration.mjs), [Agenten-Ausgabe](src/agent-workspace.mjs), [Godot MCP](src/godot-mcp-client.mjs) | Explizite Freigaben und begrenzte Zugriffe |
