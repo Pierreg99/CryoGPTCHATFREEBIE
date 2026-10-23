@@ -297,8 +297,9 @@ test("v1.4 creates isolated projects, assigns chats and preserves notes through 
   await expect(page.locator("#workspace-notes")).toHaveValue("Unsaved beta draft");
   await page.locator("#workspace-notes").fill("Independent beta notes");
   await page.locator("#save-workspace-notes").click();
+  // Projectwissen is a real #knowledge route, preserved across a reload.
   await page.reload();
-  await page.locator("#notes-toggle").click();
+  await expect(page).toHaveURL(/#knowledge$/);
   await expect(page.locator("#workspace-notes")).toHaveValue("Independent beta notes");
   await page.locator("#chat-project").selectOption({ label: "Cryo Alpha" });
   await expect(page.locator("#workspace-notes")).toHaveValue("Only locally stored alpha notes");
