@@ -113,7 +113,7 @@ test("v1 migration is previewed and does not reactivate old project consent", as
   backup.version = 1;
   await preview(page, backup);
   await expect(page.locator("#restore-issues")).toContainText(
-    "Version 1 wird nach Version 2 migriert",
+    "Version 1 wird nach Version 3 migriert",
   );
   await commit(page);
   await page.goto("/#knowledge");

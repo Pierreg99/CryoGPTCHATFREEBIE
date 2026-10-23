@@ -21,6 +21,9 @@ import {
   messagePage,
   toOllamaMessages,
   setProjectContext,
+  createProject,
+  setChatProject,
+  setProjectNotes,
 } from "./core.js";
 
 const el = (id) => document.getElementById(id);
@@ -34,6 +37,8 @@ let streamController = null,
   streamedText = "",
   persistence = null;
 const storageWarnings = [];
+// Unsaved per-project drafts survive chat/project switches only within this session.
+const workspaceNoteDrafts = new Map();
 const errorCenter = createErrorCenter();
 
 function notice(message) {
@@ -133,6 +138,11 @@ function renderList() {
   list.replaceChildren();
   el("chat-count").textContent = String(store.chats.length);
   // Rebuild from text nodes; never interpret imported chat titles as markup.
+  const workspaceFilter = el("chat-filter-workspace");
+  const workspaceSelected = workspaceFilter.value;
+  workspaceFilter.replaceChildren(new Option("Alle Projekte", ""));
+  for (const project of store.projects) workspaceFilter.add(new Option(project.name, project.id));
+  workspaceFilter.value = store.projects.some(project => project.id === workspaceSelected) ? workspaceSelected : "";
   const chatFilter = el("chat-filter-chat");
   const selected = chatFilter.value;
   chatFilter.replaceChildren(new Option("Alle Gespräche", ""));
@@ -143,6 +153,7 @@ function renderList() {
     from: el("chat-filter-from").value,
     to: el("chat-filter-to").value,
     project: el("chat-filter-project").value,
+    projectId: workspaceFilter.value,
     role: el("chat-filter-role").value,
   });
   el("chat-filter-summary").textContent = `${results.length} von ${store.chats.length} Gesprächen`;
@@ -166,7 +177,8 @@ function renderList() {
     const name = document.createElement("strong");
     name.textContent = chat.title;
     const count = document.createElement("small");
-    count.textContent = chat.messages.length + " Nachrichten";
+    const workspaceName = store.projects.find(project => project.id === chat.projectId)?.name;
+    count.textContent = chat.messages.length + " Nachrichten" + (workspaceName ? " · " + workspaceName : "");
     button.append(name, count);
     button.addEventListener("click", () => {
       store.activeChatId = chat.id;
@@ -288,7 +300,24 @@ document.addEventListener("workspace:reveal-message", event => {
 function renderProjectPanel() {
   const chat = active();
   const button = el("notes-toggle");
-  button.disabled = !chat || (sending && chat.id === busyChatId);
+  const locked = !chat || (sending && chat.id === busyChatId);
+  const projectSelect = el("chat-project");
+  projectSelect.replaceChildren(new Option("Ohne Projekt", ""));
+  for (const project of store.projects) projectSelect.add(new Option(project.name, project.id));
+  projectSelect.value = store.projects.some(project => project.id === chat?.projectId) ? chat.projectId : "";
+  projectSelect.disabled = locked;
+  el("create-project").disabled = locked || store.projects.length >= 40;
+  const assigned = store.projects.find(project => project.id === chat?.projectId);
+  el("workspace-notes").value = assigned && workspaceNoteDrafts.has(assigned.id)
+    ? workspaceNoteDrafts.get(assigned.id) : (assigned?.notes || "");
+  el("workspace-notes").disabled = !assigned || locked;
+  el("save-workspace-notes").disabled = !assigned || locked;
+  el("workspace-notes-status").textContent = assigned
+    ? workspaceNoteDrafts.has(assigned.id)
+      ? "Ungespeicherter Entwurf für Projekt „" + assigned.name + "“ – nur während dieser Sitzung vorhanden."
+      : "Private Notizen für Projekt „" + assigned.name + "“. Sie werden nie automatisch an KI-Modelle übermittelt."
+    : "Kein Projekt gewählt. Erstelle oder wähle ein lokales Projekt.";
+  button.disabled = locked;
   el("project-context").disabled = !chat || (sending && chat.id === busyChatId);
   el("project-share").disabled = !chat || (sending && chat.id === busyChatId);
   el("save-project-notes").disabled =
@@ -558,6 +587,41 @@ el("notes-toggle").addEventListener("click", () => {
   panel.hidden = !panel.hidden;
   el("notes-toggle").setAttribute("aria-expanded", String(!panel.hidden));
 });
+el("create-project").addEventListener("click", async () => {
+  const chat = active();
+  if (!chat || sending || restoring) return;
+  const name = await requestText("Neues lokales Projekt:", "Neues Projekt");
+  if (name === null) return;
+  if (mutate(s => {
+    const updated = createProject(s, undefined, name);
+    return setChatProject(updated, chat.id, updated.projects[0].id);
+  })) notice("Projekt erstellt und Chat zugeordnet. Projektnotizen bleiben privat.");
+});
+el("chat-project").addEventListener("change", event => {
+  const chat = active();
+  if (chat) mutate(s => setChatProject(s, chat.id, event.target.value));
+});
+el("workspace-notes").addEventListener("input", event => {
+  const id = active()?.projectId;
+  const saved = store.projects.find(project => project.id === id)?.notes;
+  if (saved === undefined) return;
+  if (event.target.value === saved) workspaceNoteDrafts.delete(id);
+  else workspaceNoteDrafts.set(id, event.target.value);
+  el("workspace-notes-status").textContent = workspaceNoteDrafts.has(id)
+    ? "Ungespeicherter Entwurf – nur während dieser Sitzung vorhanden."
+    : "Änderungen entsprechen den gespeicherten Projektnotizen.";
+});
+document.addEventListener("workspace:restore", () => workspaceNoteDrafts.clear());
+el("save-workspace-notes").addEventListener("click", () => {
+  const chat = active();
+  if (!chat?.projectId) return;
+  const draft = el("workspace-notes").value;
+  if (mutate(s => setProjectNotes(s, chat.projectId, draft))) {
+    workspaceNoteDrafts.delete(chat.projectId);
+    renderProjectPanel();
+    notice("Private Projektnotizen lokal gespeichert.");
+  }
+});
 el("save-project-notes").addEventListener("click", () => {
   const chat = active();
   if (!chat) return;
@@ -583,12 +647,12 @@ el("new-chat").addEventListener("click", () => {
   el("prompt").focus();
 });
 el("search").addEventListener("input", renderList);
-for (const id of ["chat-filter-chat", "chat-filter-from", "chat-filter-to", "chat-filter-role", "chat-filter-project"]) {
+for (const id of ["chat-filter-chat", "chat-filter-from", "chat-filter-to", "chat-filter-role", "chat-filter-project", "chat-filter-workspace"]) {
   el(id).addEventListener("input", renderList);
   el(id).addEventListener("change", renderList);
 }
 el("chat-filter-reset").addEventListener("click", () => {
-  for (const id of ["chat-filter-chat", "chat-filter-from", "chat-filter-to", "chat-filter-role", "chat-filter-project"])
+  for (const id of ["chat-filter-chat", "chat-filter-from", "chat-filter-to", "chat-filter-role", "chat-filter-project", "chat-filter-workspace"])
     el(id).value = "";
   el("search").value = "";
   renderList();

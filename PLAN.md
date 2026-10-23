@@ -41,3 +41,11 @@ PR #25 wurde trotz roter Roadmap-Assertion nach `main` integriert. Die angepasst
 | Sicherheit | Keine Migration, Übertragung, automatische Tool-Aktion oder Freigabeänderung | Diff/Privacy Review; Node-Matrix, Chromium und Release-Check auf aktuellem PR-Head |
 
 Danach v1.4: mehrere lokale Projekträume mit gesichertem JSON-Roundtrip; Datenmigration erst mit Tests und Rücksetzpfad. Stable `1.0.0` bleibt durch [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22) blockiert.
+
+## Roadmap v1.4 · Projekt-Arbeitsräume (in Abnahme)
+
+- Projekte mit ID, Name und bis zu 4000 Zeichen ausschließlich lokaler Notizen; höchstens 40 Projekte.
+- Chatzuordnung per Auswahl, Erstellung über nativen Bestätigungsdialog und lokale Filterung.
+- Backup-Schema 3: v1/v2 bleiben lesbar; v2-Freigaben erhalten; v1-Freigaben weiterhin widerrufen; Projekt-IDs und Chatreferenzen werden im Roundtrip validiert.
+- Private Arbeitsraum-Notizen sind **kein** automatisch erlaubter Modellkontext; chatbezogenes Opt-in bleibt separat.
+- Gates: Node 20/22/24, Chromium, Release-Check, echte Screenreader-Abnahme M17, Security-/Migrations-Review. Kein Stable-1.0 ohne Issue #22.
