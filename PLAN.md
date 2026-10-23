@@ -49,3 +49,14 @@ Danach v1.4: mehrere lokale Projekträume mit gesichertem JSON-Roundtrip; Datenm
 - Backup-Schema 3: v1/v2 bleiben lesbar; v2-Freigaben erhalten; v1-Freigaben weiterhin widerrufen; Projekt-IDs und Chatreferenzen werden im Roundtrip validiert.
 - Private Arbeitsraum-Notizen sind **kein** automatisch erlaubter Modellkontext; chatbezogenes Opt-in bleibt separat.
 - Gates: Node 20/22/24, Chromium, Release-Check, echte Screenreader-Abnahme M17, Security-/Migrations-Review. Kein Stable-1.0 ohne Issue #22.
+
+## Roadmap v1.5 · Schema-Migration und Rücksetzpfad
+
+| Gate | Erwarteter Nachweis | Grenze |
+| --- | --- | --- |
+| Migration | Fixtures für Schemas 1/2/3, deterministische Umwandlung nach 3 | Alte Freigaben v1 nie automatisch aktivieren |
+| Private Daten | Schema-3-Projektnotizen nur lokal, Fehlerberichte redigiert | Kein automatischer Modellzugriff |
+| Import und Undo | Zwei Projekte inklusive Chats über Backup/Restore/Rücksetzpunkt testen | Fallback localStorage nicht atomar |
+| Release | CI-Matrix Node 20/22/24, Browser, reproducible release und manueller Flow M18 | Stable 1.0 durch Issue #22 weiterhin blockiert |
+
+Migrationsmatrix: [docs/schema-migration.md](docs/schema-migration.md). Nächster größerer Entwicklungsblock bleibt v1.6 optionale sichere Backup-Verschlüsselung; diese darf nicht ohne gesondertes Cryptography-Review als fertig gelten.

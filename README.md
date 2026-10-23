@@ -103,7 +103,7 @@ Die [vollständige Feature-Checkliste im Changelog](CHANGELOG.md) hakt abgeschlo
 | Bereich | Aktuelles Verhalten |
 | :--- | :--- |
 | Chat | Unterhaltungen erstellen, durchsuchen, umbenennen und löschen; Antworten streamen, stoppen und kopieren. Bei langen Verläufen in Fenstern von maximal 80 Nachrichten navigieren. |
-| Daten | IndexedDB mit localStorage-Fallback; JSON-Export und Import für Backup-Schemas 1/2/3 mit Dry-run, Fehlerbericht und Rücksetzpunkt |
+| Daten | IndexedDB mit localStorage-Fallback; JSON-Export und Import für Backup-Schemas 1/2/3 mit Dry-run, Fehlerbericht und Rücksetzpunkt; [Schema-Migrationsmatrix und Rollback-Grenzen](docs/schema-migration.md) |
 | Projektwissen | Bis zu 4.000 Zeichen je Chat; Übergabe an ein Modell erst nach gespeicherter Freigabe. Private Notizen lokaler Arbeitsräume werden nie automatisch mitgesendet. |
 | Modelle | Ollama und optional OpenAI; manuelle Auswahl, Suche und lokal gespeicherte Favoriten |
 | Hyperfocus | Ein freigegebener, begrenzter Rechercheplan; optional Ollama-Zusammenfassung und lokale Historie |

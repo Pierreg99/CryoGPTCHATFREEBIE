@@ -74,6 +74,7 @@ Die Browser-Suite verwendet die Tags `wcag2a`, `wcag2aa`, `wcag21aa` und `wcag22
 | M15 | Nachrichtenfenster | 600 Nachrichten, ältere/neuere Seiten, Fokus und Ansage, Suche nach ausgeblendeten Texten, keine fehlenden oder doppelt gelesenen Nachrichten | offen |
 | M16 | Suchfilter | Gespräch, Datum, private Notizen, Rolle kombinieren und zurücksetzen; mobile Darstellung, Beschriftungen, Trefferstatus und Tastaturbedienung | offen |
 | M17 | Projekt-Arbeitsräume | Projekt erstellen, Chat zuordnen und zwischen Projekten wechseln, getrennte Notizen speichern, Statusansage, Export/Import und 320px-Reflow | offen |
+| M18 | Migrationsassistent | Schema-1/2/3-Backup prüfen, Freigabewarnungen und Projektzählung lesen, Import/Undo ohne Datenverlust bedienen, Fokusrückgabe und Reflow | offen |
 
 ### Querschnittsprüfungen
 

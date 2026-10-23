@@ -27,3 +27,7 @@ Cloud- und Schreibzugriffe bleiben ausdrücklich freizugeben. Stable-1.0 wartet 
 ## Lokale Projekt-Arbeitsräume v1.4
 
 Ab Schema 3 enthält `src/core.js` eigenständige Projekte und `chat.projectId`. Die Bedienung erfolgt lokal im bestehenden Projektwissen-Panel über `src/app.js`; `src/backup.js` prüft v1/v2/v3 einschließlich referenzieller Integrität. Neue Projektnotizen werden nie automatisch an Modelle gesendet; chatbezogenes Projektwissen benötigt weiterhin das separate Opt-in. Vor einem Rollback einen kompatiblen Backup-Export aufbewahren. CI- und AT-Gates sind separat nachzuweisen.
+
+## v1.5 · Migrationsmatrix
+
+`tests/schema-migration.test.js` lädt versionierte synthetische Backup-Fixtures 1/2/3, prüft deterministische Migration nach Schema 3 sowie Freigaben, Projektreferenzen, redigierte Negativberichte und ein Restore/Undo im localStorage-Fallback. Die Dokumentation `docs/schema-migration.md` erklärt die Grenzen des Downgrades auf alte Clients. Keine automatische verlustfreie Konvertierung von Schema-3-Projekten auf Schema 2. Releaseversion bleibt `1.0.0-rc.1`.

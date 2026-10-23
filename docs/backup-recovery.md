@@ -1,6 +1,6 @@
 # Geprüfte Backup-Wiederherstellung
 
-Roadmap v0.8 ist für das bestehende Chat-/Projektwissen-Format umgesetzt. Die App unterstützt jetzt Sicherungen der Schemas 1, 2 und 3. Bestehende v1/v2-Backups bleiben importierbar. Die App prüft eine Datei lokal; kein Backup wird dafür an einen Server oder ein Modell übertragen.
+Roadmap v0.8 ist für das bestehende Chat-/Projektwissen-Format umgesetzt. Die App unterstützt jetzt Sicherungen der Schemas 1, 2 und 3. [Fixtures, Versionsregeln und Downgrade-Grenzen](schema-migration.md) sind separat dokumentiert. Bestehende v1/v2-Backups bleiben importierbar. Die App prüft eine Datei lokal; kein Backup wird dafür an einen Server oder ein Modell übertragen.
 
 ## Ablauf
 
@@ -28,4 +28,4 @@ Bereits geplante Agenten-/Hyperfocus-/GitHub-Vorschauen werden beim Restore auch
 
 ## Nachweise
 
-`tests/backup-recovery.test.js` prüft v1/v2, UTF-8-Größenlimits, redigierte Fehlerberichte, atomaren Commit/Rollback, Quota-Fehler, konkurrierende Änderungen, Fallback und Löschen des Punkts. `e2e/recovery.spec.js` führt echte IndexedDB-/Browser-Flows aus: Vorschau ohne Mutation, Import/Reload/Undo, Altformat, kaputte Datei und Schreibfehler. Weitere Restore-E2E prüfen das Verwerfen alter Freigaben und die geschützte Hyperfocus-Historie.
+`tests/backup-recovery.test.js` und `tests/schema-migration.test.js` prüfen v1/v2/v3 anhand versionierter Fixtures, UTF-8-Größenlimits, redigierte Fehlerberichte, atomaren Commit/Rollback, Quota-Fehler, konkurrierende Änderungen, Fallback und Löschen des Punkts. `e2e/recovery.spec.js` führt echte IndexedDB-/Browser-Flows aus: Vorschau ohne Mutation, Import/Reload/Undo, Altformat, kaputte Datei und Schreibfehler. Weitere Restore-E2E prüfen das Verwerfen alter Freigaben und die geschützte Hyperfocus-Historie.

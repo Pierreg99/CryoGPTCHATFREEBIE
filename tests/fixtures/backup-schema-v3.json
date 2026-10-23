@@ -1,0 +1,55 @@
+{
+  "version": 3,
+  "projects": [
+    {
+      "id": "cryo",
+      "name": "Cryo Omega",
+      "notes": "Private roadmap notes"
+    },
+    {
+      "id": "games",
+      "name": "Game Engine",
+      "notes": "Private engine notes"
+    }
+  ],
+  "chats": [
+    {
+      "id": "cryo-chat",
+      "title": "Cryo Chat",
+      "createdAt": "2026-10-21T09:00:00.000Z",
+      "updatedAt": "2026-10-21T09:00:00.000Z",
+      "messages": [
+        {
+          "id": "cryo-chat-m1",
+          "role": "user",
+          "content": "Hello Cryo",
+          "createdAt": "2026-10-21T09:00:00.000Z"
+        }
+      ],
+      "projectContext": "Consented chat notes",
+      "shareProjectContext": true,
+      "projectId": "cryo"
+    },
+    {
+      "id": "game-chat",
+      "title": "Game Chat",
+      "createdAt": "2026-10-21T09:00:00.000Z",
+      "updatedAt": "2026-10-21T09:00:00.000Z",
+      "messages": [
+        {
+          "id": "game-chat-m1",
+          "role": "user",
+          "content": "Hello Game",
+          "createdAt": "2026-10-21T09:00:00.000Z"
+        }
+      ],
+      "projectContext": "",
+      "shareProjectContext": false,
+      "projectId": "games"
+    }
+  ],
+  "activeChatId": "game-chat",
+  "settings": {
+    "model": ""
+  }
+}
