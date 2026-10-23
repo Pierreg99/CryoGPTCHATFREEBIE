@@ -15,7 +15,14 @@ Prüfbarer Kandidat für das 1.0-Ziel. Der folgende Stand umfasst auch die histo
 - [x] Nachrichten kopieren; Senden per Enter und Zeilenumbruch per Shift+Enter.
 - [x] Unicode-Inhalte einschließlich eigener Emojis beim Speichern, Neuladen und JSON-Export erhalten.
 
-### Roadmap v1.4 · Lokale Projekt-Arbeitsräume (Entwicklungsbranch)
+### Roadmap v1.5 · Versionsmigration (Entwicklungsbranch)
+
+- [ ] Vollständige Qualitätssicherung und manuelle Wiederherstellungs-/Accessibility-Abnahme M18 ausstehend.
+- [x] Synthetische JSON-Fixtures für die unterstützten Schemas 1, 2 und 3 und deterministische Migrationstests ergänzt.
+- [x] Import/Export-Roundtrip, Verweigerung ungültiger Daten und Restore/Undo mit zwei Projekten automatisiert geprüft (Testfälle ergänzt, CI-Gate am PR-Head separat).
+- [x] Upgrade- und Rücksetzverfahren samt Grenzen des Downgrades auf alte Schema-2-Clients dokumentiert.
+
+### Roadmap v1.4 · Lokale Projekt-Arbeitsräume (PR #29 in main, manuelle Abnahme offen)
 
 - [ ] CI auf dem exakten v1.4-PR-Head und manuelle Accessibility-Abnahme M17 abschließen.
 - [x] Bis zu 40 Projekt-Arbeitsräume, Chatzuordnung und lokale Projektfilter ergänzt.

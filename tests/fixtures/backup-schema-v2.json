@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "chats": [
+    {
+      "id": "legacy-two",
+      "title": "Legacy 2",
+      "createdAt": "2026-10-21T09:00:00.000Z",
+      "updatedAt": "2026-10-21T09:00:00.000Z",
+      "messages": [
+        {
+          "id": "legacy-two-m1",
+          "role": "user",
+          "content": "Work in v2",
+          "createdAt": "2026-10-21T09:00:00.000Z"
+        }
+      ],
+      "projectContext": "Explicit v2 context",
+      "shareProjectContext": true
+    }
+  ],
+  "activeChatId": "legacy-two",
+  "settings": {
+    "model": ""
+  }
+}

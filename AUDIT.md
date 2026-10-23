@@ -45,3 +45,10 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 - Follow-up CodeAnt review: ISO-Zeitstempel ohne Offset werden bei der Datumssuche ausdrücklich als UTC behandelt. Tastatur-Paging überträgt den Fokus zum Nachfolgebutton; Pointer-Paging verzichtet auf zwangsweises Fokussieren und positioniert die neue Seite kontrolliert. Node-/Playwright-Regressionen ergänzt.
 
 - Review-Fix v1.4: Änderungsdatum wird bei geänderter Projektzuordnung aktualisiert, nicht bei idempotenter Wahl. Ungespeicherte lokale Notizen werden projektweise im Sitzungs-Memory vorgehalten und bei Import/Rücksetzung verworfen; niemals ungefragt in Modellkontext übertragen. Unit-/Browser-Regressionen ergänzt.
+
+## v1.5 · Migrationsreview
+
+- Keine Laufzeit-Datenbankmigration hinzugefügt; statt dessen bestehende Parser-/Restore-Gates mit synthetischen Fixtures für Schemas 1, 2, 3 regressionstesten. `tests/schema-migration.test.js` ist Bestandteil von `npm test`.
+- Die App verwirft weiterhin unzulässige Fremd-/Zukunftsversionen und verwaiste Projektzuordnungen. Fehlerberichte bleiben ohne Notiz- und Nachrichteninhalte.
+- Wiederherstellung (v3→v2-fixture→v3-Rücksetzpunkt) prüft Projekte/Chat-Zuordnungen. Quell-Backup vor einem Upgrade bleibt notwendig, denn ein alter v2-Client kann das neue v3-Format nicht direkt lesen.
+- Die Fixture-Daten sind künstlich. Keine tatsächlichen Nutzerbackups oder Live-Cloud-Provider im CI; manueller Browser-/Screenreader-Test M18 ausstehend.

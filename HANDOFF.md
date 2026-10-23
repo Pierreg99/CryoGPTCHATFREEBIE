@@ -30,3 +30,10 @@ Stand: 23. Oktober 2026.
 2. v1.4 gegen Schema 1/2/3 sowie Recovery-Rollback testen, Testbefunde beheben und nur nach CI auf finalem Head integrieren.
 3. M17 (Projekt erstellen, zuordnen, Notizen, Fokus, mobile Ansicht) mit echtem Screenreader prüfen; Issue #22 blockiert stabile 1.0.
 4. v1.5 Migration/Downgrade-Pfade danach weiter ausbauen.
+
+## v1.5 · Nächster Operator-Schritt
+
+1. Den vollständigen PR-Head samt Node 20/22/24, Chromium/axe und Release-Check prüfen und alle echten Fehler reparieren; nur mit grünem Gate mergen.
+2. Das Schema-Migrationshandbuch und die synthetischen `tests/fixtures/backup-schema-v*.json` gegen Parser/Restore-Tests prüfen.
+3. Eine reale manuelle Wiederherstellungsprobe unter M18 sowie das übergreifende WCAG-2.2-AA-Issue #22 bleiben separat offen.
+4. Danach v1.6 (optionale Backup-Verschlüsselung mit KDF) als eigener Sicherheitsmeilenstein mit Bedrohungsmodell angehen; keinesfalls ungeprüfte Kryptographie shippen.
