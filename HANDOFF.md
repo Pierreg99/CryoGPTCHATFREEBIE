@@ -44,3 +44,10 @@ Stand: 23. Oktober 2026.
 2. Kritische Regressionen: falsches Passwort / Ciphertext-Manipulation ersetzt niemals gespeicherte Daten; erlaubte Restore-Vorschau und Undo sind weiterhin manuell.
 3. Alle Pflichtjobs, Review-Anforderungen und Branch-Policy prüfen, dann erst mergen; CI-Fehler reparieren statt umgehen.
 4. M19 sowie Issue #22 bleiben echte menschliche Prüfungen. Kein Stable-1.0-Tag.
+
+## Roadmap v1.7 · Nächste Prüfungen
+
+1. Feature-Branch `feat/roadmap-v1-7-offline-pwa-20261024` per PR öffnen, Node-Matrix, Chromium-Offline-Test und Release-Check auf exaktem Commit bewerten.
+2. Diff hinsichtlich Service-Worker-Scope, statischer Allowlist, Cache-Hygiene und Offline-Fehlerzuständen prüfen; rote/unvollständige Checks reparieren.
+3. Bei erfüllten GitHub-Gates mergen und neuen Main-Run prüfen; manuelle M20-Screenreader- und echte Geräte-Installationsabnahme offen halten.
+4. Danach v1.8 Modellverwaltung mit Offline-/Timeout-/Modellwechsel-Tests priorisieren.

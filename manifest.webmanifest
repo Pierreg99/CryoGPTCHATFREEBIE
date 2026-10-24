@@ -1,0 +1,20 @@
+{
+  "name": "CryoGPTCHATFREEBIE – Lokaler KI-Workspace",
+  "short_name": "CryoGPT",
+  "description": "Lokale Chats und Notizen, optional mit KI-Modellanbietern.",
+  "lang": "de",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b0d12",
+  "theme_color": "#0b0d12",
+  "icons": [
+    {
+      "src": "/assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

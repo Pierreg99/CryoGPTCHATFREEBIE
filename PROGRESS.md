@@ -28,3 +28,7 @@ Test-Fixtures für jedes unterstützte JSON-Backup-Schema 1/2/3 und eigene Node-
 ## v1.6 · Verschlüsselte Backups
 
 Code und Tests auf Entwicklungsbranch vorbereitet: WebCrypto PBKDF2-SHA-256/AES-GCM, lokaler Export/Import mit ausdrücklich eingegebenem Passwort, bestehender Restore-/Undo-Gate, Testfälle für falsches Passwort, Manipulation und Browser-Roundtrip. **CI und manuelle Abnahme sind nicht mit dieser Implementierung belegt**; Status erst nach tatsächlichen GitHub-Checks aktualisieren. [Anleitung](docs/encrypted-backups.md).
+
+## Roadmap v1.7 · Offline-Notizmodus
+
+Feature-Branch mit begrenzt statischer Service-Worker-Shell, Web-App-Manifest, sicherer Registrierungsgrenze, Offline-Test und separatem Security-Test. Noch keine Aussage über erfolgreiche PR-CI oder manuelle Installation; `main` nach v1.6 war grün: [Run 40038835623](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/actions/runs/40038835623). Eine vollständige Freigabe erfordert exakten Head-Test und M20; Version `1.0.0-rc.1` unverändert.

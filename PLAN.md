@@ -71,3 +71,14 @@ Migrationsmatrix: [docs/schema-migration.md](docs/schema-migration.md). Nächste
 | Geschütztes Format maximal 4 MiB, Klartext maximal 3 MiB | Malformed-/Oversize-Rejection, no untrusted algorithm or KDF parameters |
 
 **Abnahme:** PR-CI auf finalem Head, Review und manuelle Screenreader-Probe M19 offen. Stable-1.0 bleibt durch Issue #22 gesperrt.
+
+## Roadmap v1.7 · Offline-PWA
+
+| Schritt | Umsetzung | Akzeptanz |
+| --- | --- | --- |
+| Shell | `manifest.webmanifest`, `service-worker.js`, `src/pwa.js` | Browser-Offline-Roundtrip mit lokalem Notizmodus |
+| Sicherheitsgrenzen | Statische GET-Allowlist; keine API, Querys, fremde Origins oder Writes | `tests/offline-shell.test.js` |
+| Browser | Offline-Neustart, Chat/Notiz speichern und nach erneutem Laden wiederfinden | `e2e/offline.spec.js` |
+| Freigabe | CI auf finalem Commit, Security-Review, Accessibility M20 | Node 20/22/24, Chromium, Release-Gates ohne Bypass |
+
+Stabile 1.0 weiterhin gesperrt durch [Issue #22](https://github.com/Pierreg99/CryoGPTCHATFREEBIE/issues/22).

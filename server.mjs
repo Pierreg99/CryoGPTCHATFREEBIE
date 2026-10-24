@@ -62,10 +62,14 @@ const mime = {
   ".css": "text/css; charset=utf-8",
   ".svg": "image/svg+xml",
   ".json": "application/json; charset=utf-8",
+  ".webmanifest": "application/manifest+json; charset=utf-8",
 };
 const allow = new Set([
   "/index.html",
   "/src/app.js",
+  "/src/pwa.js",
+  "/service-worker.js",
+  "/manifest.webmanifest",
   "/src/accessibility.js",
   "/src/backup.js",
   "/src/backup-ui.js",

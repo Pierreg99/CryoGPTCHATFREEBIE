@@ -35,3 +35,7 @@ Ab Schema 3 enthält `src/core.js` eigenständige Projekte und `chat.projectId`.
 ## v1.6 · Verschlüsselte Backups
 
 `src/encrypted-backup.js` implementiert ausschließlich Dateiverschlüsselung mit Browser-WebCrypto (AES-256-GCM / PBKDF2-SHA-256), keine Verschlüsselung des laufenden Speichers. `src/backup-ui.js` ergänzt separate Export-Passworteingabe und Entsperrung vor dem alten Restore-Dialog. Die vorhandene JSON-Vorschau, Importfreigabe und lokale Rücksetzfunktion bleiben die verbindlichen Daten-Gates. [Format und Bedienung](docs/encrypted-backups.md). Neue manuelle AT-Matrix M19 offen; bestehende Cloud-Opt-ins unverändert.
+
+## v1.7 · PWA und Offline-Notizen
+
+`manifest.webmanifest` stellt eine Standalone-PWA-Shell bereit. `src/pwa.js` registriert `service-worker.js` auf `127.0.0.1` bzw. HTTPS. Der Worker cached **nur statische Programmdateien**, nie `/api`, private Chat-/Projektzustände oder Anfragen mit Suchparametern; Chatdaten bleiben wie bisher im Browserprofil. Nach einem ersten erfolgreichen Online-Besuch ist ein Offline-Neustart ohne Modell möglich. Manuelle Bedienbarkeit/Installation M20 offen. [Anleitung](docs/offline-pwa.md) · [WCAG-Gate](docs/RELEASE-CHECKLIST.md).

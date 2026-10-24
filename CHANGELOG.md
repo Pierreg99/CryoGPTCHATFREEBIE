@@ -15,6 +15,13 @@ Prüfbarer Kandidat für das 1.0-Ziel. Der folgende Stand umfasst auch die histo
 - [x] Nachrichten kopieren; Senden per Enter und Zeilenumbruch per Shift+Enter.
 - [x] Unicode-Inhalte einschließlich eigener Emojis beim Speichern, Neuladen und JSON-Export erhalten.
 
+### Roadmap v1.7 · Offline-PWA-Notizmodus (PR-CI und manuelle Abnahme offen)
+
+- [ ] Node-/Chromium-/Release-Gates auf finalem PR-Head prüfen und Screenreader M20 manuell abnehmen.
+- [x] Standalone-Manifest und optionale Service-Worker-Registrierung ergänzen.
+- [x] Strikten Cache nur für statische Programmdateien einrichten, ohne API-/Modell-/Chatdaten im Worker.
+- [x] Node- und Browser-Regressionstests für Offline-Kaltstart und lokalen Notiz-Roundtrip ergänzt.
+
 ### Roadmap v1.6 · Optionale Backup-Verschlüsselung (PR-CI und manuelle Abnahme offen)
 
 - [ ] Sicherheitsreview, Node/Chromium/Release-Gates und Screenreader-Fall M19 abschließen.
