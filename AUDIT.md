@@ -61,3 +61,11 @@ Lokale Testumgebung und Reproduktionsbefehle: [Workbench-Prüfbericht](docs/work
 - Kein Schutz für bestehende IndexedDB/localStorage-Daten, Standard-JSON-Exporte, Restore-Checkpoints oder vom Nutzer anderswo gespeicherte Dateien. Kein Schutz gegen kompromittierten Browser/Host oder ein schwaches Passwort.
 - Der Restore-Dry-run mit expliziter Zustimmung und Undo läuft weiter; verschlüsselte Dateien werden erst nach Entsperren der regulären Schema-Validierung unterzogen.
 - Offen: Node-/Browser-Gates, manuelle AT-Prüfung M19, ggf. unabhängige Cryptography Review.
+
+## v1.7 · Offline-PWA Sicherheitsprüfung
+
+- **Cache-Isolation:** Nur exakt bekannte, in `server.mjs` erlaubte statische Dateien und Route `/`; nur GET ohne Suchparameter vom kanonischen Ursprung. `/api/*`, Modellrequests, private Chats und Exfiltrationsziele sind ausgeschlossen.
+- **Resilienz:** Network-first mit Shell-Cache-Fallback und Cache-Versionierung; Installationsfehler ersetzen keinen alten aktiven Worker.
+- **Datenschutz:** Chat-/Projektzustand bleibt in IndexedDB bzw. localStorage und gelangt nicht in CacheStorage; reguläre lokale Daten sind weiterhin nicht automatisch verschlüsselt.
+- **Abnahmen:** Neue Node-Tests für Allowlist/Methoden, Browser-Test für Cache-Installation und Offline-Lade-/Speicher-Roundtrip. Live-CI und manuelle AT-Abnahme M20 getrennt kontrollieren.
+- **Grenzen:** Ein SVG-PWA-Icon garantiert keine Installation auf jedem mobilen System, und Offline-Modus unterstützt keine Modellinferenz, keine externen Anbieter und keine Tool-Writes.

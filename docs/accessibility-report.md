@@ -76,6 +76,7 @@ Die Browser-Suite verwendet die Tags `wcag2a`, `wcag2aa`, `wcag21aa` und `wcag22
 | M17 | Projekt-Arbeitsräume | Projekt erstellen, Chat zuordnen und zwischen Projekten wechseln, getrennte Notizen speichern, Statusansage, Export/Import und 320px-Reflow | offen |
 | M18 | Migrationsassistent | Schema-1/2/3-Backup prüfen, Freigabewarnungen und Projektzählung lesen, Import/Undo ohne Datenverlust bedienen, Fokusrückgabe und Reflow | offen |
 | M19 | Passwortgeschützte Backups | Passwortfelder und Bestätigung, Exportstatus, Entsperrfehler, Rückkehr zum Import-Dry-run, Fokus und mobile Ansicht mit echter Assistive Technology prüfen | offen |
+| M20 | Offline-PWA-Notizmodus | Online-Erststart, Installation, Offline-Neustart, Notiz speichern, erneutes Laden, Status und Rückkehr online mit echter Assistive Technology prüfen | offen |
 
 ### Querschnittsprüfungen
 

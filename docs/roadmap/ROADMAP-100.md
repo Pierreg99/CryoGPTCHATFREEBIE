@@ -176,11 +176,16 @@ Datenbeständigkeit, UX und vorhersagbaren Betrieb etablieren.
 
 **Nachweise:** [Krypto-Modul](../../src/encrypted-backup.js), [Export-/Import-UI](../../src/backup-ui.js), [Tests](../../tests/encrypted-backup.test.js), [Anleitung](../encrypted-backups.md).
 
-#### Geplant v1.7 · Offline-Installierbarkeit
+#### Teilweise umgesetzt v1.7 · Offline-Installierbarkeit
 
 **Lieferobjekt:** Lokale PWA-Shell ohne Cloud-Abhängigkeit für Notizmodus. **Abnahme:** Cold-start/offline Smoke-Test.
 
-- [ ] Entwicklungsmeilenstein vollständig abschließen.
+- [ ] Entwicklungsmeilenstein vollständig abschließen; finalen PR-Head mit echtem Offline-Chromium und Screenreader-Abnahme M20 prüfen.
+- [x] Web-App-Manifest und optionalen Service Worker für sichere Kontexte und lokalen Loopback ergänzen.
+- [x] Statische App-Shell begrenzt zwischenspeichern; API, Modellrequests, fremde Hosts und unbekannte URLs strikt ausschließen.
+- [x] Sicherheitsregressionen und Offline-Neustart-/Notiztests ergänzt.
+
+**Nachweise:** [Offline-Anleitung](../offline-pwa.md), [Worker](../../service-worker.js), [Browserprüfung](../../e2e/offline.spec.js).
 
 #### Geplant v1.8 · Modellverwaltung
 

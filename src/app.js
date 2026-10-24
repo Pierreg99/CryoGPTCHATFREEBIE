@@ -1,3 +1,4 @@
+import { registerOfflineShell } from "./pwa.js";
 import { setupAccessibility } from "./accessibility.js";
 import { setupWorkbench } from "./workbench.js";
 import { createErrorCenter } from "./error-center.js";
@@ -889,3 +890,6 @@ if (location.hash === "#godot") checkGodotStatus();
 refreshModels();
 if (storageWarnings.length)
   queueMicrotask(() => notice(storageWarnings.join(" ")));
+
+// Install an opt-in local PWA shell cache; model/API requests are never cached.
+void registerOfflineShell();
